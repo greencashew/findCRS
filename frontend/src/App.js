@@ -2,10 +2,9 @@ import React from 'react';
 import {Col, Container, Row} from 'reactstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import InteractiveMap from './interactive_map/InteractiveMap.js'
-
-const old_map = require('./input_map/old-map-england.jpg')
-
+import InteractiveMap from './interactive_map/InteractiveMap'
+import InputMap from './input_map/inputMap'
+import HowTo from './how_to/howTo'
 
 function App() {
     return (
@@ -18,12 +17,7 @@ function App() {
                 </Row>
                 <Row>
                     <Col xs={12} sm={5} md={4}>
-                        <img src={old_map} alt="old map"/>
-                        Add your points:
-                        <input type="text"/>
-                        <input type="text"/>
-                        <input type="text"/>
-                        <input type="text"/>
+                        <InputMap/>
                     </Col>
                     <Col xs={12} sm={2} md={2}>
 
@@ -33,8 +27,7 @@ function App() {
                     </Col>
 
                     <Col xs={12} sm={12} md={2}>
-                        How to use:
-
+                        <HowTo/>
                     </Col>
                 </Row>
                 <Row>

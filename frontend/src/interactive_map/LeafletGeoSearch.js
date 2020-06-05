@@ -15,7 +15,7 @@ class Search extends MapControl {
             animateZoom: true,
             keepResult: false,
             autoComplete: true,
-            searchLabel: 'search'
+            searchLabel: 'Find place for matching marker'
         });
     }
 }
