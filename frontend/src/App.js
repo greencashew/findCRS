@@ -4,7 +4,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import InteractiveMap from './interactive_map/InteractiveMap'
 import InputMap from './input_map/InputMap'
-import InputMapCoordinates from './coordinates/Coordinate'
+import CoordinateList from './coordinates/CoordinateList'
 import HowTo from './how_to/HowTo'
 
 class App extends Component {
@@ -14,19 +14,21 @@ class App extends Component {
             continent: "any",
             markers: [
                 {
-                    inputMap: {latitude: null, longitude: null},
-                    interactiveMap: {latitude: null, longitude: null},
+                    inputMap: [null, null],
+                    interactiveMap: [null, null],
+                    isEdit: true
+                },
+                {
+                    inputMap: [12, 32],
+                    interactiveMap: [1, 5],
                     isEdit: true
                 }
             ]
         };
     }
 
-    setContinent = (continent) => {
-        this.setState({
-            continent: continent
-        });
-    }
+    setContinent = (continent) => this.setState({continent: continent})
+    updateMarkers = (markers) => this.setState({markers: markers})
 
     render() {
         return (
@@ -50,26 +52,16 @@ class App extends Component {
                             <HowTo/>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col xs="hidden" md={1}/>
-                        <Col xs={12} sm={5} md={4}>
-                            <p>Your map coordinates:</p>
-                            <InputMapCoordinates/>
-                        </Col>
-                        <Col xs="hidden" md={1}/>
-                        <Col xs={12} sm={5} md={4}>
-                            <p>Interactive map coordinates: (You can choose on the map or type)</p>
-                            <InputMapCoordinates/>
-                        </Col>
-                        <Col xs="hidden" md={1}/>
-                    </Row>
+                    <CoordinateList markers={[...this.state.markers]} updateMarkers={this.updateMarkers}/>
                     <Row>
                         <Col md={3}>
                             <InputGroup>
-                                <Button color="primary" size="md">Add one more location</Button>
                                 <Button color="primary">Find projection</Button>
                             </InputGroup>
                         </Col>
+                    </Row>
+                    <Row>
+                        <div>{JSON.stringify(this.state)}</div>
                     </Row>
                     <Row>
                         <footer>
