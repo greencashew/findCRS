@@ -6,6 +6,7 @@ import InteractiveMap from './interactive_map/InteractiveMap'
 import InputMap from './input_map/InputMap'
 import CoordinateList from './coordinates/CoordinateList'
 import HowTo from './how_to/HowTo'
+import axios from 'axios';
 
 class App extends Component {
     constructor() {
@@ -21,7 +22,7 @@ class App extends Component {
                 {
                     inputMap: [12, 32],
                     interactiveMap: [1, 5],
-                    isEdit: true
+                    isEdit: false
                 }
             ]
         };
@@ -29,6 +30,16 @@ class App extends Component {
 
     setContinent = (continent) => this.setState({continent: continent})
     updateMarkers = (markers) => this.setState({markers: markers})
+
+    requestForProjectionFind = event => {
+        event.preventDefault();
+
+        axios.post(`/api/projection`, {continent: this.state.continent, markers: this.state.markers})
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+            })
+    }
 
     render() {
         return (
@@ -56,7 +67,7 @@ class App extends Component {
                     <Row>
                         <Col md={3}>
                             <InputGroup>
-                                <Button color="primary">Find projection</Button>
+                                <Button color="primary" onClick={this.requestForProjectionFind}>Find projection</Button>
                             </InputGroup>
                         </Col>
                     </Row>

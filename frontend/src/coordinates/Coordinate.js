@@ -53,7 +53,8 @@ class Coordinate extends PureComponent {
                     <InputGroupAddon addonType="prepend">
                         <InputGroupText>Latitude:</InputGroupText>
                     </InputGroupAddon>
-                    <AvInput name="latitude" className="is-valid" value={this.state.latitude} placeholder="00.00"
+                    <AvInput disabled={this.props.disabled} name="latitude" className="is-valid"
+                             value={this.state.latitude} placeholder="00.00"
                              onChange={this.handleChange} required validate={{
                         pattern: {value: latitudeRegex, errorMessage: "Latitude should be between -90 to 90 degrees"}
                     }}
@@ -61,7 +62,8 @@ class Coordinate extends PureComponent {
                     <InputGroupAddon addonType="prepend">
                         <InputGroupText>Longitude:</InputGroupText>
                     </InputGroupAddon>
-                    <AvInput name="longitude" className="is-valid" value={this.state.longitude} placeholder="00.00"
+                    <AvInput disabled={this.props.disabled} name="longitude" className="is-valid"
+                             value={this.state.longitude} placeholder="00.00"
                              onChange={this.handleChange} required validate={{
                         pattern: {
                             value: longitudeRegex,
