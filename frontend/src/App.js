@@ -4,32 +4,39 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import InteractiveMap from './interactive_map/InteractiveMap'
 import InputMap from './input_map/InputMap'
-import CoordinateList from './coordinates/CoordinateList'
+import Coordinates from './coordinates/Coordinates'
 import HowTo from './how_to/HowTo'
 import axios from 'axios';
+
+const markersInitialValue = [
+    {
+        inputMap: ["", ""],
+        interactiveMap: ["", ""],
+        isEdit: true
+    }
+];
 
 class App extends Component {
     constructor() {
         super();
+
         this.state = {
             continent: "any",
-            markers: [
-                {
-                    inputMap: [null, null],
-                    interactiveMap: [null, null],
-                    isEdit: true
-                },
-                {
-                    inputMap: [12, 32],
-                    interactiveMap: [1, 5],
-                    isEdit: false
-                }
-            ]
-        };
+            markers: markersInitialValue
+        }
+
+        this.setContinent = this.setContinent.bind(this);
+        this.updateMarkers = this.updateMarkers.bind(this);
+        this.resetCoordinates = this.resetCoordinates.bind(this);
+        this.requestForProjectionFind = this.requestForProjectionFind.bind(this);
     }
 
     setContinent = (continent) => this.setState({continent: continent})
     updateMarkers = (markers) => this.setState({markers: markers})
+    resetCoordinates = () => {
+        this.updateMarkers([...markersInitialValue])
+        console.log("Coordinates reseted");
+    }
 
     requestForProjectionFind = event => {
         event.preventDefault();
@@ -63,11 +70,15 @@ class App extends Component {
                             <HowTo/>
                         </Col>
                     </Row>
-                    <CoordinateList markers={[...this.state.markers]} updateMarkers={this.updateMarkers}/>
+                    <Coordinates markers={this.state.markers} updateMarkers={this.updateMarkers}/>
                     <Row>
                         <Col md={3}>
                             <InputGroup>
-                                <Button color="primary" onClick={this.requestForProjectionFind}>Find projection</Button>
+                                <Button color="primary" size="md"
+                                        onClick={this.resetCoordinates}>Reset all
+                                    coordinates</Button>
+
+                                <Button color="primary">Find projection</Button>
                             </InputGroup>
                         </Col>
                     </Row>
