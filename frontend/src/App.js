@@ -22,7 +22,9 @@ const App = () => {
     const [continent, setContinent] = useState("any");
     const [markers, updateMarkers] = useState(markersInitialValue);
 
-    const resetCoordinates = () => this.updateMarkers(markersInitialValue)
+    const resetCoordinates = () => {
+        updateMarkers(markersInitialValue)
+    }
     const requestForProjectionFind = event => {
         event.preventDefault();
 
