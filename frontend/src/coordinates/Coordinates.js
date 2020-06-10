@@ -54,34 +54,34 @@ const Coordinates = ({markers, updateMarkers}) => {
                 <Col xs={12} sm={5} md={4}>
                     <p>Your map coordinates:</p>
                 </Col>
-                <Col xs="hidden" md={1}/>
                 <Col xs={12} sm={5} md={4}>
                     <p>Interactive map coordinates: (You can choose on the map or type)</p>
                 </Col>
                 <Col xs="hidden" md={1}/>
             </Row>
             {markers.map((marker, index) =>
-                <Row key={index}>
+                <Row key={index} className="mt-2">
                     <Col xs="hidden" md={1}/>
                     <Col xs={12} sm={5} md={4}>
-                        <strong>{index}</strong>
                         <Coordinate id={index} latitude={marker.inputMap[0]} longitude={marker.inputMap[1]}
                                     updateMarker={updateInputMapMarker} disabled={!marker.isEdit}/>
                     </Col>
-                    <Col xs="hidden" md={1}/>
                     <Col xs={12} sm={5} md={4}>
                         <Coordinate id={index} latitude={marker.interactiveMap[0]}
                                     longitude={marker.interactiveMap[1]}
                                     updateMarker={updateInteractiveMapMarker} disabled={!marker.isEdit}/>
+                    </Col>
+                    <Col xs={12} md={2}>
                         <Button color="info" disabled={marker.isEdit}
                                 onClick={() => handleEdit(index)}>Edit</Button>
                         <Button color="danger" onClick={() => handleDeletion(index)}>Delete</Button>
                     </Col>
-                    <Col xs="hidden" md={1}/>
                 </Row>
             )}
             <Row>
-                <Button color="primary" size="md" onClick={handleOnAddItem}>Add one more location</Button>
+                <Col xs={12} md={{size: 2, offset: 9}} className="mt-4">
+                    <Button color="primary" size="md" onClick={handleOnAddItem}>Add one more location</Button>
+                </Col>
             </Row>
         </div>
     )

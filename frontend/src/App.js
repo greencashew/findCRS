@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Button, Col, Container, InputGroup, Row} from 'reactstrap';
+import React, {useState} from 'react';
+import {Button, Col, Container, Row} from 'reactstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import InteractiveMap from './interactive_map/InteractiveMap'
@@ -8,93 +8,79 @@ import Coordinates from './coordinates/Coordinates'
 import HowTo from './how_to/HowTo'
 import axios from 'axios';
 
-const markersInitialValue = [
-    {
-        inputMap: ["", ""],
-        interactiveMap: ["", ""],
-        isEdit: true
-    }
-];
 
-class App extends Component {
-    constructor() {
-        super();
+const App = () => {
 
-        this.state = {
-            continent: "any",
-            markers: markersInitialValue
+    const markersInitialValue = [
+        {
+            inputMap: [null, null],
+            interactiveMap: [null, null],
+            isEdit: true
         }
+    ];
 
-        this.setContinent = this.setContinent.bind(this);
-        this.updateMarkers = this.updateMarkers.bind(this);
-        this.resetCoordinates = this.resetCoordinates.bind(this);
-        this.requestForProjectionFind = this.requestForProjectionFind.bind(this);
-    }
+    const [continent, setContinent] = useState("any");
+    const [markers, updateMarkers] = useState(markersInitialValue);
 
-    setContinent = (continent) => this.setState({continent: continent})
-    updateMarkers = (markers) => this.setState({markers: markers})
-    resetCoordinates = () => {
-        this.updateMarkers([...markersInitialValue])
-        console.log("Coordinates reseted");
-    }
-
-    requestForProjectionFind = event => {
+    const resetCoordinates = () => this.updateMarkers(markersInitialValue)
+    const requestForProjectionFind = event => {
         event.preventDefault();
 
-        axios.post(`/api/projection`, {continent: this.state.continent, markers: this.state.markers})
+        axios.post(`/api/projection`, {continent: continent, markers: markers})
             .then(res => {
                 console.log(res);
                 console.log(res.data);
             })
     }
 
-    render() {
-        return (
-            <div className="App">
-                <Container fluid>
-                    <Row>
-                        <header className="App-header">
+    return (
+        <div className="App">
+            <Container fluid>
+                <Row>
+                    <Col xs="hidden" md={1}/>
+                    <Col xs={12} md={8}>
+                        <header className="app-header">
                             <h1>Find projection for historical maps</h1>
                         </header>
-                    </Row>
-                    <Row>
-                        <Col xs="hidden" md={1}/>
-                        <Col xs={12} sm={5} md={4}>
-                            <InputMap setContinent={this.setContinent}/>
-                        </Col>
-                        <Col xs="hidden" md={1}/>
-                        <Col xs={12} sm={5} md={4}>
-                            <InteractiveMap/>
-                        </Col>
-                        <Col xs={12} sm={12} md={2}>
-                            <HowTo/>
-                        </Col>
-                    </Row>
-                    <Coordinates markers={this.state.markers} updateMarkers={this.updateMarkers}/>
-                    <Row>
-                        <Col md={3}>
-                            <InputGroup>
-                                <Button color="primary" size="md"
-                                        onClick={this.resetCoordinates}>Reset all
-                                    coordinates</Button>
-
-                                <Button color="primary">Find projection</Button>
-                            </InputGroup>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <div>{JSON.stringify(this.state)}</div>
-                    </Row>
-                    <Row>
-                        <footer>
-                            With support <a href="https://pyproj4.github.io/pyproj/stable/"
-                                            className="text-left">PyProj</a>, &copy; 2020
-                        </footer>
-                    </Row>
-                </Container>
-            </div>
-        );
-    }
+                    </Col>
+                </Row>
+                <Row className="mb-3">
+                    <Col xs="hidden" md={1}/>
+                    <Col xs={12} sm={5} md={4}>
+                        <InputMap setContinent={setContinent}/>
+                    </Col>
+                    <Col xs={12} sm={5} md={4}>
+                        <InteractiveMap/>
+                    </Col>
+                    <Col xs={12} sm={12} md={2}>
+                        <HowTo/>
+                    </Col>
+                </Row>
+                <Coordinates markers={markers} updateMarkers={updateMarkers}/>
+                <Row className="mt-4">
+                    <Col xs="hidden" md={1}/>
+                    <Col xs={6} md={2}>
+                        <Button color="warning" size="md"
+                                onClick={resetCoordinates}>Reset all
+                            coordinates</Button>
+                    </Col>
+                    <Col xs={6} md={{size: 2, offset: 5}}>
+                        <Button color="success" size="md" onClick={requestForProjectionFind}>Find projection</Button>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs="hidden" md={1}/>
+                    <div>{JSON.stringify(markers)}</div>
+                </Row>
+                <Row>
+                    <footer>
+                        With support <a href="https://pyproj4.github.io/pyproj/stable/"
+                                        className="text-left">PyProj</a>, &copy; 2020
+                    </footer>
+                </Row>
+            </Container>
+        </div>
+    );
 }
 
 export default App;
