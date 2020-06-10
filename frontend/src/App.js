@@ -72,12 +72,12 @@ const App = () => {
                     <Col xs="hidden" md={1}/>
                     <div>{JSON.stringify(markers)}</div>
                 </Row>
-                <Row>
-                    <footer>
+                <footer className="bg-dark text-white mt-4 py-1">
+                    <Col xs={12} md={{size: 2, offset: 1}}>
                         With support <a href="https://pyproj4.github.io/pyproj/stable/"
                                         className="text-left">PyProj</a>, &copy; 2020
-                    </footer>
-                </Row>
+                    </Col>
+                </footer>
             </Container>
         </div>
     );
