@@ -26,7 +26,14 @@ const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) =>
 
     const updateInputMapMarker = (id, lat, long) => {
         let newMarkers = [...markers];
-        newMarkers[id].inputMap = [lat, long];
+        const newCoordinates = [lat, long];
+        if (markers[id].inputMap[0] === markers[id].interactiveMap[0] &&
+            markers[id].inputMap[1] === markers[id].interactiveMap[1]
+        ) {
+            newMarkers[id].interactiveMap = newCoordinates;
+        }
+
+        newMarkers[id].inputMap = newCoordinates;
         updateMarkers(newMarkers);
     }
 
@@ -69,7 +76,8 @@ const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) =>
             )}
             <Row>
                 <Col xs={12} md={{size: 2, offset: 9}} className="mt-4">
-                    <Button color="primary" size="md" onClick={handleOnAddItem}>Add one more location</Button>
+                    <Button color="primary" size="md" onClick={handleOnAddItem} disabled={markers.length > 8}>Add one
+                        more location</Button>
                 </Col>
             </Row>
         </div>
