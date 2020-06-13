@@ -52,7 +52,7 @@ const App = () => {
                         <InputMap setContinent={setContinent}/>
                     </Col>
                     <Col xs={12} sm={5} md={4}>
-                        <InteractiveMap markers={markers} updateMarkers={updateMarkers}/>
+                        <InteractiveMap markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}/>
                     </Col>
                     <Col xs={12} sm={12} md={2}>
                         <HowTo/>

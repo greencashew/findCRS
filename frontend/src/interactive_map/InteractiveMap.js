@@ -6,7 +6,7 @@ import Search from "./LeafletGeoSearch"
 import L from "leaflet";
 
 
-const InteractiveMap = ({markers, updateMarkers}) => {
+const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
 
     const markerIcons = [
         "img/markers/marker-icon-2x-blue.png",
@@ -29,6 +29,14 @@ const InteractiveMap = ({markers, updateMarkers}) => {
         shadowSize: [41, 41]
     });
 
+    const updateMarkerLocation = (event) => {
+        let newMarkers = [...markers];
+        const id = event.target.options.id;
+        const latLng = event.target.getLatLng();
+        newMarkers[id].interactiveMap = [latLng.lat, latLng.lng];
+        updateMarkers(newMarkers);
+    }
+
     const addMarker = (e) => {
         // console.log("Marker added " + e.latlng)
         // const {markers} = this.state
@@ -42,7 +50,8 @@ const InteractiveMap = ({markers, updateMarkers}) => {
         <Map center={[52.5134, 13.4225]} zoom={12} onClick={addMarker}>
             {markers.map((position, idx) =>
                 (position.interactiveMap[0] !== null && position.interactiveMap[1] !== null) &&
-                <Marker key={`marker-${idx}`} position={position.interactiveMap} icon={getLeafletIcon(idx)}/>
+                <Marker key={`marker-${idx}`} id={idx} position={position.interactiveMap} icon={getLeafletIcon(idx)}
+                        draggable={onEditMarker === idx} onDragend={updateMarkerLocation}/>
             )}
             <GeoSearch/>
             <TileLayer
