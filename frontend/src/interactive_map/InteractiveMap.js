@@ -44,13 +44,16 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
         // this.setState({markers})
     }
 
+    function isNullMarker(marker) {
+        return marker.interactiveMap[0] === null && marker.interactiveMap[1] === null;
+    }
+
     const GeoSearch = withLeaflet(Search);
 
     return (
         <Map center={[52.5134, 13.4225]} zoom={12} onClick={addMarker}>
-            {markers.map((position, idx) =>
-                (position.interactiveMap[0] !== null && position.interactiveMap[1] !== null) &&
-                <Marker key={`marker-${idx}`} id={idx} position={position.interactiveMap} icon={getLeafletIcon(idx)}
+            {markers.map((marker, idx) => !isNullMarker(marker) &&
+                <Marker key={`marker-${idx}`} id={idx} position={marker.interactiveMap} icon={getLeafletIcon(idx)}
                         draggable={onEditMarker === idx} onDragend={updateMarkerLocation}/>
             )}
             <GeoSearch/>
