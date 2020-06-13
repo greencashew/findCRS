@@ -15,12 +15,12 @@ const App = () => {
         {
             inputMap: [null, null],
             interactiveMap: [null, null],
-            isEdit: true
         }
     ];
 
     const [continent, setContinent] = useState("any");
     const [markers, updateMarkers] = useState(markersInitialValue);
+    const [onEditMarker, setOnEditMarker] = useState(0);
 
     const resetCoordinates = () => {
         updateMarkers(markersInitialValue)
@@ -52,13 +52,14 @@ const App = () => {
                         <InputMap setContinent={setContinent}/>
                     </Col>
                     <Col xs={12} sm={5} md={4}>
-                        <InteractiveMap/>
+                        <InteractiveMap markers={markers} updateMarkers={updateMarkers}/>
                     </Col>
                     <Col xs={12} sm={12} md={2}>
                         <HowTo/>
                     </Col>
                 </Row>
-                <Coordinates markers={markers} updateMarkers={updateMarkers}/>
+                <Coordinates markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}
+                             setOnEditMarker={setOnEditMarker}/>
                 <Row className="mt-4">
                     <Col xs="hidden" md={1}/>
                     <Col xs={6} md={2}>
@@ -72,7 +73,8 @@ const App = () => {
                 </Row>
                 <Row>
                     <Col xs="hidden" md={1}/>
-                    <div>{JSON.stringify(markers)}</div>
+                    <div>Active edit: {JSON.stringify(onEditMarker)}</div>
+                    <div>{JSON.stringify(markers)} </div>
                 </Row>
                 <footer className="bg-dark text-white mt-4 py-1">
                     <Col xs={12} md={{size: 2, offset: 1}}>
