@@ -18,8 +18,10 @@ const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) =>
     }
 
     const handleOnAddItem = () => {
-        updateMarkers(markers.concat(DEFAULT_MARKER_STRUCTURE));
-        setOnEditMarker(markers.length)
+        if (markers.length < 9) {
+            updateMarkers(markers.concat(DEFAULT_MARKER_STRUCTURE));
+            setOnEditMarker(markers.length)
+        }
     }
 
     const updateInputMapMarker = (id, lat, long) => {
@@ -59,7 +61,7 @@ const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) =>
                                     updateMarker={updateInteractiveMapMarker} disabled={onEditMarker !== index}/>
                     </Col>
                     <Col xs={12} md={2}>
-                        <Button color="info" disabled={marker.isEdit}
+                        <Button color="info" disabled={onEditMarker === index}
                                 onClick={() => handleEdit(index)}>Edit</Button>
                         <Button color="danger" onClick={() => handleDeletion(index)}>Delete</Button>
                     </Col>
