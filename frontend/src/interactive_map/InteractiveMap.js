@@ -37,31 +37,33 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
         updateMarkers(newMarkers);
     }
 
-    const addMarker = (e) => {
-        // console.log("Marker added " + e.latlng)
-        // const {markers} = this.state
-        // markers.push(e.latlng)
-        // this.setState({markers})
+    const changeMarkerLocationOnMapClick = (event) => {
+        let newMarkers = [...markers];
+        newMarkers[onEditMarker].interactiveMap = [event.latlng.lat, event.latlng.lng]
+        updateMarkers(newMarkers);
     }
 
     function isNullMarker(marker) {
-        return marker.interactiveMap[0] === null && marker.interactiveMap[1] === null;
+        return marker == null || marker.interactiveMap[0] === null || marker.interactiveMap[1] === null;
     }
 
     const GeoSearch = withLeaflet(Search);
-
     return (
-        <Map center={[52.5134, 13.4225]} zoom={12} onClick={addMarker}>
-            {markers.map((marker, idx) => !isNullMarker(marker) &&
-                <Marker key={`marker-${idx}`} id={idx} position={marker.interactiveMap} icon={getLeafletIcon(idx)}
-                        draggable={onEditMarker === idx} onDragend={updateMarkerLocation}/>
-            )}
-            <GeoSearch/>
-            <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; '
-            />
-        </Map>
+        <div>
+            <Map
+                center={isNullMarker(markers[onEditMarker]) ? [52.5134, 13.4225] : markers[onEditMarker].interactiveMap}
+                zoom={10} onClick={changeMarkerLocationOnMapClick}>
+                {markers.map((marker, idx) => !isNullMarker(marker) &&
+                    <Marker key={`marker-${idx}`} id={idx} position={marker.interactiveMap} icon={getLeafletIcon(idx)}
+                            draggable={true} onDragend={updateMarkerLocation}/>
+                )}
+                <GeoSearch/>
+                <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution='&copy; '
+                />
+            </Map>
+        </div>
     )
 }
 
