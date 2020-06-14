@@ -1,6 +1,8 @@
 import {Input, InputGroup, InputGroupAddon, InputGroupText} from "reactstrap";
 import React from "react";
 import './Coordinate.css'
+import "../interactive_map/MarkerIcons"
+import markerIcons from "../interactive_map/MarkerIcons";
 
 const latitudeRegex = "^(-?[1-8]?\\d(?:\\.\\d{1,18})?|90(?:\\.0{1,18})?)$";
 const longitudeRegex = "^(-?(?:1[0-7]|[1-9])?\\d(?:\\.\\d{1,18})?|180(?:\\.0{1,18})?)$";
@@ -32,6 +34,9 @@ const Coordinate = ({id, latitude, longitude, updateMarker, disabled}) => {
 
     return (
         <InputGroup>
+            <InputGroupAddon addonType="prepend">
+                <InputGroupText><img alt="markerIcon" className="markerIcon" src={markerIcons[id]}/></InputGroupText>
+            </InputGroupAddon>
             <InputGroupAddon addonType="prepend">
                 <InputGroupText>Latitude:</InputGroupText>
             </InputGroupAddon>

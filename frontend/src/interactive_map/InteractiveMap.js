@@ -4,21 +4,10 @@ import 'leaflet/dist/leaflet.css'
 import './InteractiveMap.css'
 import Search from "./LeafletGeoSearch"
 import L from "leaflet";
+import markerIcons from "./MarkerIcons";
 
 
 const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
-
-    const markerIcons = [
-        "img/markers/marker-icon-2x-blue.png",
-        "img/markers/marker-icon-2x-gold.png",
-        "img/markers/marker-icon-2x-green.png",
-        "img/markers/marker-icon-2x-red.png",
-        "img/markers/marker-icon-2x-orange.png",
-        "img/markers/marker-icon-2x-grey.png",
-        "img/markers/marker-icon-2x-yellow.png",
-        "img/markers/marker-icon-2x-violet.png",
-        "img/markers/marker-icon-2x-black.png",
-    ]
 
     const getLeafletIcon = (index) => new L.Icon({
         iconUrl: markerIcons[index],
