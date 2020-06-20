@@ -10,6 +10,9 @@ const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) =>
     };
 
     const handleDeletion = (index) => {
+        if (index === onEditMarker) {
+            setOnEditMarker(null);
+        }
         updateMarkers(markers.filter((item, i) => i !== index))
     };
 

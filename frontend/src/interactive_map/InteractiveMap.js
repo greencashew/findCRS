@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Map, Marker, TileLayer, withLeaflet} from "react-leaflet";
 import 'leaflet/dist/leaflet.css'
 import './InteractiveMap.css'
@@ -8,6 +8,8 @@ import markerIcons from "./MarkerIcons";
 
 
 const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
+
+    const [zoom, setZoom] = useState(10);
 
     const getLeafletIcon = (index) => new L.Icon({
         iconUrl: markerIcons[index],
@@ -19,6 +21,9 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
     });
 
     const updateMarkerLocation = (event) => {
+        if (onEditMarker === null) {
+            return;
+        }
         let newMarkers = [...markers];
         const id = event.target.options.id;
         const latLng = event.target.getLatLng();
@@ -27,6 +32,10 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
     }
 
     const changeMarkerLocationOnMapClick = (event) => {
+        if (onEditMarker === null) {
+            return;
+        }
+        setZoom(event.target._zoom)
         let newMarkers = [...markers];
         newMarkers[onEditMarker].interactiveMap = [event.latlng.lat, event.latlng.lng]
         updateMarkers(newMarkers);
@@ -41,10 +50,10 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
         <div>
             <Map
                 center={isNullMarker(markers[onEditMarker]) ? [52.5134, 13.4225] : markers[onEditMarker].interactiveMap}
-                zoom={10} onClick={changeMarkerLocationOnMapClick}>
+                zoom={zoom} onClick={changeMarkerLocationOnMapClick}>
                 {markers.map((marker, idx) => !isNullMarker(marker) &&
                     <Marker key={`marker-${idx}`} id={idx} position={marker.interactiveMap} icon={getLeafletIcon(idx)}
-                            draggable={true} onDragend={updateMarkerLocation}/>
+                            draggable={onEditMarker === idx} onDragend={updateMarkerLocation}/>
                 )}
                 <GeoSearch/>
                 <TileLayer
