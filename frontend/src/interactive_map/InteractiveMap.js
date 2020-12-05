@@ -27,7 +27,7 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
         let newMarkers = [...markers];
         const id = event.target.options.id;
         const latLng = event.target.getLatLng();
-        newMarkers[id].interactiveMap = [latLng.lat, latLng.lng];
+        newMarkers[id].interactiveMap = [latLng.wrap().lat, latLng.wrap().lng];
         updateMarkers(newMarkers);
     }
 
@@ -37,7 +37,7 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
         }
         setZoom(event.target._zoom)
         let newMarkers = [...markers];
-        newMarkers[onEditMarker].interactiveMap = [event.latlng.lat, event.latlng.lng]
+        newMarkers[onEditMarker].interactiveMap = [event.latlng.wrap().lat, event.latlng.wrap().lng]
         updateMarkers(newMarkers);
     }
 

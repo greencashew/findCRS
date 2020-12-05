@@ -4,9 +4,6 @@ import './Coordinate.css'
 import "../interactive_map/MarkerIcons"
 import markerIcons from "../interactive_map/MarkerIcons";
 
-const latitudeRegex = "^(-?[1-8]?\\d(?:\\.\\d{1,18})?|90(?:\\.0{1,18})?)$";
-const longitudeRegex = "^(-?(?:1[0-7]|[1-9])?\\d(?:\\.\\d{1,18})?|180(?:\\.0{1,18})?)$";
-
 const Coordinate = ({id, latitude, longitude, updateMarker, disabled}) => {
 
     const handleChange = (event) => {
@@ -15,7 +12,7 @@ const Coordinate = ({id, latitude, longitude, updateMarker, disabled}) => {
         const value = target.value;
         const isValid = target.validity.valid
 
-        if (name === "latitude" && isValid) {
+        if (name === "latitude" && isValid && ((value >= -90 && value <= 90))) {
             updateMarker(
                 id,
                 value,
@@ -23,7 +20,7 @@ const Coordinate = ({id, latitude, longitude, updateMarker, disabled}) => {
             )
         }
 
-        if (name === "longitude" && isValid) {
+        if (name === "longitude" && isValid && ((value >= -180 && value <= 180))) {
             updateMarker(
                 id,
                 latitude,
@@ -41,13 +38,13 @@ const Coordinate = ({id, latitude, longitude, updateMarker, disabled}) => {
                 <InputGroupText>Latitude:</InputGroupText>
             </InputGroupAddon>
             <Input type="number" step="0.0000000001" name="latitude" value={latitude || ""} placeholder="00.00"
-                   onChange={handleChange} disabled={disabled} pattern={latitudeRegex}
+                   onChange={handleChange} disabled={disabled}
             />
             <InputGroupAddon addonType="prepend">
                 <InputGroupText>Longitude:</InputGroupText>
             </InputGroupAddon>
             <Input type="number" step="0.0000000001" name="longitude" value={longitude || ""} placeholder="00.00"
-                   onChange={handleChange} disabled={disabled} pattern={longitudeRegex}/>
+                   onChange={handleChange} disabled={disabled}/>
         </InputGroup>
     )
 }
