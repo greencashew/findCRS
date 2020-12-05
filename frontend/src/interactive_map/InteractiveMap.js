@@ -21,7 +21,7 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
     });
 
     const updateMarkerLocation = (event) => {
-        if (onEditMarker === null) {
+        if (onEditMarker == null) {
             return;
         }
         let newMarkers = [...markers];
@@ -32,7 +32,7 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
     }
 
     const changeMarkerLocationOnMapClick = (event) => {
-        if (onEditMarker === null) {
+        if (onEditMarker == null) {
             return;
         }
         setZoom(event.target._zoom)

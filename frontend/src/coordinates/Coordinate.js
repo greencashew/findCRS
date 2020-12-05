@@ -41,13 +41,13 @@ const Coordinate = ({id, latitude, longitude, updateMarker, disabled}) => {
                 <InputGroupText>Latitude:</InputGroupText>
             </InputGroupAddon>
             <Input type="number" step="0.0000000001" name="latitude" value={latitude || ""} placeholder="00.00"
-                   onChange={handleChange} disabled={disabled} required pattern={latitudeRegex}
+                   onChange={handleChange} disabled={disabled} pattern={latitudeRegex}
             />
             <InputGroupAddon addonType="prepend">
                 <InputGroupText>Longitude:</InputGroupText>
             </InputGroupAddon>
             <Input type="number" step="0.0000000001" name="longitude" value={longitude || ""} placeholder="00.00"
-                   onChange={handleChange} disabled={disabled} required pattern={longitudeRegex}/>
+                   onChange={handleChange} disabled={disabled} pattern={longitudeRegex}/>
         </InputGroup>
     )
 }

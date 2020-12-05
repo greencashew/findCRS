@@ -8,7 +8,6 @@ import Coordinates from './coordinates/Coordinates'
 import HowTo from './how_to/HowTo'
 import axios from 'axios';
 
-
 const App = () => {
 
     const markersInitialValue = [
@@ -21,6 +20,7 @@ const App = () => {
     const [continent, setContinent] = useState("any");
     const [markers, updateMarkers] = useState(markersInitialValue);
     const [onEditMarker, setOnEditMarker] = useState(0);
+    const [response, setResponse] = useState(null);
 
     const resetCoordinates = () => {
         updateMarkers(markersInitialValue)
@@ -31,6 +31,9 @@ const App = () => {
         axios.post(`/api/projection`, {continent: continent, markers: markers})
             .then(res => {
                 console.log(res);
+                if (res.status === 200) {
+                    setResponse(res.data)
+                }
                 console.log(res.data);
             })
     }
@@ -75,6 +78,15 @@ const App = () => {
                     <Col xs="hidden" md={1}/>
                     <div>Active edit: {JSON.stringify(onEditMarker)}</div>
                     <div>{JSON.stringify(markers)} </div>
+                </Row>
+                <Row>
+                    <Col xs="hidden"/>
+                    <Col>
+                        <h2>Response:</h2>
+                        <p>
+                            {JSON.stringify(response)}
+                        </p>
+                    </Col>
                 </Row>
                 <footer className="bg-dark text-white mt-4 py-1">
                     <Col xs={12} md={{size: 2, offset: 1}}>

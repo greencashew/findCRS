@@ -289,3 +289,4 @@ pip-selfcheck.json
 
 # End of https://www.gitignore.io/api/venv,react,flask,python,pycharm,visualstudiocode
 /.idea
+activate
