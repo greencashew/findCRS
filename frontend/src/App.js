@@ -17,7 +17,6 @@ const App = () => {
         }
     ];
 
-    const [continent, setContinent] = useState("any");
     const [markers, updateMarkers] = useState(markersInitialValue);
     const [onEditMarker, setOnEditMarker] = useState(0);
     const [response, setResponse] = useState(null);
@@ -28,7 +27,7 @@ const App = () => {
     const requestForProjectionFind = event => {
         event.preventDefault();
 
-        axios.post(`/api/projection`, {continent: continent, markers: markers})
+        axios.post(`/api/projection`, {markers: markers})
             .then(res => {
                 console.log(res);
                 if (res.status === 200) {
@@ -52,7 +51,7 @@ const App = () => {
                 <Row className="mb-3">
                     <Col xs="hidden" md={1}/>
                     <Col xs={12} sm={5} md={4}>
-                        <InputMap setContinent={setContinent}/>
+                        <InputMap/>
                     </Col>
                     <Col xs={12} sm={5} md={4}>
                         <InteractiveMap markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}/>
@@ -67,8 +66,7 @@ const App = () => {
                     <Col xs="hidden" md={1}/>
                     <Col xs={6} md={2}>
                         <Button color="warning" size="md"
-                                onClick={resetCoordinates}>Reset all
-                            coordinates</Button>
+                                onClick={resetCoordinates}>Reset all coordinates</Button>
                     </Col>
                     <Col xs={6} md={{size: 2, offset: 5}}>
                         <Button color="success" size="md" onClick={requestForProjectionFind}>Find projection</Button>
@@ -76,8 +74,7 @@ const App = () => {
                 </Row>
                 <Row>
                     <Col xs="hidden" md={1}/>
-                    <div>Active edit: {JSON.stringify(onEditMarker)}</div>
-                    <div>{JSON.stringify(markers)} </div>
+                    <div>DEBUGGING: {JSON.stringify(markers)}</div>
                 </Row>
                 <Row>
                     <Col xs="hidden"/>

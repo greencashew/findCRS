@@ -11,5 +11,5 @@ input[type=number] {
 
 .markerIcon {
     height: 25px;
-    width: 100%;
+    max-width: 100%;
 }

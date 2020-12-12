@@ -1,8 +1,8 @@
-import React, {Fragment, PureComponent} from 'react';
+import React, {Fragment} from 'react';
 import {Input, InputGroup, InputGroupAddon} from "reactstrap";
 
-class SelectContinent extends PureComponent {
-    state = {
+const SelectContinent = (continent, setContinent) => {
+    const state = {
         options: [
             {
                 name: 'Any',
@@ -28,32 +28,29 @@ class SelectContinent extends PureComponent {
         ],
     };
 
-    handleChange = (event) => {
+    const handleChange = (event) => {
         const continentName = event.target.value;
-        this.setState({name: continentName});
-        this.props.setContinent(continentName);
+        setContinent(continentName);
     };
 
-    render() {
-        const {options, name} = this.state;
+    const {options} = state;
 
-        return (
-            <Fragment>
-                <InputGroup>
-                    <InputGroupAddon addonType="prepend">
-                        For which continent is this map?
-                    </InputGroupAddon>
-                    <Input type="select" onChange={this.handleChange} value={name}>
-                        {options.map(item => (
-                            <option key={item.name} value={item.name}>
-                                {item.name}
-                            </option>
-                        ))}
-                    </Input>
-                </InputGroup>
-            </Fragment>
-        );
-    }
+    return (
+        <Fragment>
+            <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                    For which continent is this map?
+                </InputGroupAddon>
+                <Input type="select" onChange={handleChange} value={continent}>
+                    {options.map(item => (
+                        <option key={item.name} value={item.name}>
+                            {item.name}
+                        </option>
+                    ))}
+                </Input>
+            </InputGroup>
+        </Fragment>
+    );
 }
 
 export default SelectContinent;
