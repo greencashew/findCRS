@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {FormGroup, Input, Label} from "reactstrap";
+import {Col, FormGroup, Input, Label} from "reactstrap";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 
 import './inputMap.css'
@@ -39,10 +39,12 @@ const InputMap = () => {
                     </React.Fragment>
                 )}
             </TransformWrapper>
-            <FormGroup>
-                <Label for="upload-button">Add your map:</Label>
-                <Input type="file" id="upload-button" onChange={handleSetPhoto}/>
-            </FormGroup>
+            <Col xs={12} sm={12} md={5}>
+                <FormGroup>
+                    <Label for="upload-button">Add your map:</Label>
+                    <Input type="file" id="upload-button" onChange={handleSetPhoto}/>
+                </FormGroup>
+            </Col>
         </div>
     )
 }
