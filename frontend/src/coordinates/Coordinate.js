@@ -4,7 +4,7 @@ import './Coordinate.css'
 import "../interactive_map/MarkerIcons"
 import markerIcons from "../interactive_map/MarkerIcons";
 
-const Coordinate = ({id, latitude, longitude, updateMarker, disabled}) => {
+const Coordinate = ({id, latitude, longitude, updateMarker, disabled, latLong}) => {
 
     const handleChange = (event) => {
         const target = event.target;
@@ -35,13 +35,13 @@ const Coordinate = ({id, latitude, longitude, updateMarker, disabled}) => {
                 <InputGroupText><img alt="markerIcon" className="markerIcon" src={markerIcons[id]}/></InputGroupText>
             </InputGroupAddon>
             <InputGroupAddon addonType="prepend">
-                <InputGroupText>Latitude:</InputGroupText>
+                <InputGroupText>{latLong ? "Latitude:" : "Lat/Value:"}</InputGroupText>
             </InputGroupAddon>
             <Input type="number" step="0.0000000001" name="latitude" value={latitude || ""} placeholder="00.00"
                    onChange={handleChange} disabled={disabled}
             />
             <InputGroupAddon addonType="prepend">
-                <InputGroupText>Longitude:</InputGroupText>
+                <InputGroupText>{latLong ? "Longitude:" : "Long/Value:"}</InputGroupText>
             </InputGroupAddon>
             <Input type="number" step="0.0000000001" name="longitude" value={longitude || ""} placeholder="00.00"
                    onChange={handleChange} disabled={disabled}/>

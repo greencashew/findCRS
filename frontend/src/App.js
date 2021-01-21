@@ -7,6 +7,7 @@ import InputMap from './input_map/InputMap'
 import Coordinates from './coordinates/Coordinates'
 import HowTo from './how_to/HowTo'
 import axios from 'axios';
+import CrsTable from "./response/CrsTable";
 
 const App = () => {
 
@@ -24,6 +25,7 @@ const App = () => {
     const resetCoordinates = () => {
         updateMarkers(markersInitialValue)
     }
+
     const requestForProjectionFind = event => {
         event.preventDefault();
 
@@ -74,15 +76,8 @@ const App = () => {
                 </Row>
                 <Row>
                     <Col xs="hidden" md={1}/>
-                    <div>DEBUGGING: {JSON.stringify(markers)}</div>
-                </Row>
-                <Row>
-                    <Col xs="hidden"/>
-                    <Col>
-                        <h2>Response:</h2>
-                        <p>
-                            {JSON.stringify(response)}
-                        </p>
+                    <Col xs={12} md={8}>
+                        {response && <CrsTable response={response}/>}
                     </Col>
                 </Row>
                 <footer className="bg-dark text-white mt-4 py-1">

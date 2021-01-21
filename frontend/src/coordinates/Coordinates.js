@@ -63,12 +63,14 @@ const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) =>
                     <Col xs="hidden" md={1}/>
                     <Col xs={12} sm={5} md={4}>
                         <Coordinate id={index} latitude={marker.inputMap[0]} longitude={marker.inputMap[1]}
-                                    updateMarker={updateInputMapMarker} disabled={onEditMarker !== index}/>
+                                    updateMarker={updateInputMapMarker} disabled={onEditMarker !== index}
+                                    latLong={false}/>
                     </Col>
                     <Col xs={12} sm={5} md={4}>
                         <Coordinate id={index} latitude={marker.interactiveMap[0]}
                                     longitude={marker.interactiveMap[1]}
-                                    updateMarker={updateInteractiveMapMarker} disabled={onEditMarker !== index}/>
+                                    updateMarker={updateInteractiveMapMarker} disabled={onEditMarker !== index}
+                                    latLong={true}/>
                     </Col>
                     <Col xs={12} md={2}>
                         <Button color="info" disabled={onEditMarker === index}
