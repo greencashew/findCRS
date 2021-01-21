@@ -74,7 +74,7 @@ const App = () => {
                         <Button color="success" size="md" onClick={requestForProjectionFind}>Find projection</Button>
                     </Col>
                 </Row>
-                <Row>
+                <Row className="mt-4">
                     <Col xs="hidden" md={1}/>
                     <Col xs={12} md={8}>
                         {response && <CrsTable response={response}/>}
