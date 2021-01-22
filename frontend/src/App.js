@@ -81,10 +81,13 @@ const App = () => {
                     </Col>
                 </Row>
                 <footer className="bg-dark text-white mt-4 py-1">
-                    <Col xs={12} md={{size: 2, offset: 1}}>
-                        With support <a href="https://pyproj4.github.io/pyproj/stable/"
-                                        className="text-left">PyProj</a>, &copy; 2020
-                    </Col>
+                    <Row>
+                        <Col xs={6} md={{size: 8, offset: 1}}>
+                            &copy; 2021 <a href="https://greencashew.dev">Jan Górkiewicz</a>, with support
+                            <a href="https://pyproj4.github.io/pyproj/stable/"
+                               className="text-left"> PyProj</a> library.
+                        </Col>
+                    </Row>
                 </footer>
             </Container>
         </div>
