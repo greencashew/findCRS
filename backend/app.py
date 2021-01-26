@@ -10,8 +10,13 @@ CORS(app)
 
 # app.config["DEBUG"] = True
 
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    return jsonify({'health': 'true'}), 200
+
+
 @app.route('/api/projection', methods=['POST'])
-def create_task():
+def request_crs_find():
     if not request.json:
         abort(400)
     if 'markers' not in request.json:
