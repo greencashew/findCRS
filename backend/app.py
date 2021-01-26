@@ -41,4 +41,5 @@ def validate_received_data(expected_values_map, input_values_map):
         abort(400)
 
 
-app.run()
+if __name__ == "__main__":
+    app.run()
