@@ -8,7 +8,7 @@ const old_map = require('./old-map-england.jpg')
 
 const InputMap = () => {
 
-    const [image, setImage] = useState({preview: old_map, raw: ""})
+    const [image, setImage] = useState({preview: old_map.default, raw: ""})
 
     const handleSetPhoto = e => {
         if (e.target.files.length) {
