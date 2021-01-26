@@ -1,9 +1,11 @@
-# Find projection - Raster maps calibration 
+# Find projection - Raster maps calibration
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/2ae6c796-91bb-4dc9-b9d5-1deffd91b155/deploy-status)](https://app.netlify.com/sites/find-coordinates/deploys)
 
 ## Overall Description
 
-Purpose of the application is finding the most possible 
-projection of the historical map based on the common points defined in both maps.
+Purpose of the application is finding the most possible projection of the historical map based on the common points
+defined in both maps.
 
 ### Usage
 
