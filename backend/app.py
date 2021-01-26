@@ -1,11 +1,14 @@
 #!flask/bin/python
 from flask import Flask, jsonify, request, abort
+from flask_cors import CORS
 
 from backend.coordinates_transformer import get_possible_crs
 
 app = Flask(__name__)
-app.config["DEBUG"] = True
+CORS(app)
 
+
+# app.config["DEBUG"] = True
 
 @app.route('/api/projection', methods=['POST'])
 def create_task():

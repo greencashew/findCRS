@@ -29,7 +29,7 @@ const App = () => {
     const requestForProjectionFind = event => {
         event.preventDefault();
 
-        axios.post(`/api/projection`, {markers: markers})
+        axios.post(`${process.env.API_URL}/api/projection`, {markers: markers})
             .then(res => {
                 console.log(res);
                 if (res.status === 200) {
