@@ -2,14 +2,14 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/2ae6c796-91bb-4dc9-b9d5-1deffd91b155/deploy-status)](https://app.netlify.com/sites/find-coordinates/deploys)
 
-## Application DEMO
+## Application
 
 https://find-coordinates.netlify.app/
 
 ## Overall Description
 
-Purpose of the application is finding the most possible projection of the historical map based on the common points
-defined in both maps.
+Purpose of the application is finding the most possible coordinate system of the historical map based on the common
+points defined in both maps.
 
 ### Usage
 
@@ -25,14 +25,6 @@ defined in both maps.
 ## Development
 
 Backend url: https://find-coordinates.herokuapp.com/api/projection
-
-### TODO
-
-- Importing historical maps
-- Projection calculation part
-- Response panel
-- Prettier Layout
-- Responsiveness
 
 ### Project Setup
 
@@ -76,6 +68,5 @@ npm start
 Backend:
 
 ```python
-cd backend
-python3 app.py
+gunicorn backend.app:app
 ```
