@@ -8,7 +8,6 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
-    "env-cmd": "^10.1.0",
     "leaflet": "^1.7.1",
     "leaflet-geosearch": "^3.2.1",
     "react": "^16.14.0",
@@ -19,8 +18,8 @@
     "reactstrap": "^8.9.0"
   },
   "scripts": {
-    "start": "env-cmd -f .env.local react-scripts start",
-    "build": "env-cmd -f .env.prod react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
