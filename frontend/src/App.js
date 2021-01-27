@@ -10,6 +10,8 @@ import axios from 'axios';
 import CrsTable from "./response/CrsTable";
 import Header from "./partials/Header"
 import Footer from "./partials/Footer";
+import 'react-notifications/lib/notifications.css';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 const App = () => {
 
@@ -30,14 +32,17 @@ const App = () => {
 
     const requestForProjectionFind = event => {
         event.preventDefault();
+        NotificationManager.warning("Calculation started...", 'Please wait');
 
         axios.post(`${process.env.REACT_APP_API_URL}/api/projection`, {markers: markers})
             .then(res => {
                 console.log(res);
                 if (res.status === 200) {
+                    NotificationManager.success('Result received.', 'Success!');
                     setResponse(res.data)
+                } else {
+                    NotificationManager.error('Some error happen.', 'Error');
                 }
-                console.log(res.data);
             })
     }
 
@@ -77,6 +82,7 @@ const App = () => {
                 </Row>
                 <Footer/>
             </Container>
+            <NotificationContainer/>
         </div>
     );
 }
