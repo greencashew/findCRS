@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Col, Container, Row} from 'reactstrap';
+import {Button, Col, Container, Form, Row} from 'reactstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import InteractiveMap from './interactive_map/InteractiveMap'
@@ -32,7 +32,7 @@ const App = () => {
 
     const requestForProjectionFind = event => {
         event.preventDefault();
-        NotificationManager.warning("Calculation started...", 'Please wait');
+        NotificationManager.info("Calculation started...", 'Please wait');
 
         axios.post(`${process.env.REACT_APP_API_URL}/api/projection`, {markers: markers})
             .then(res => {
@@ -40,9 +40,10 @@ const App = () => {
                 if (res.status === 200) {
                     NotificationManager.success('Result received.', 'Success!');
                     setResponse(res.data)
-                } else {
-                    NotificationManager.error('Some error happen.', 'Error');
                 }
+            })
+            .catch(err => {
+                NotificationManager.error(err + " Try again.", 'Error');
             })
     }
 
@@ -62,18 +63,21 @@ const App = () => {
                         <HowTo/>
                     </Col>
                 </Row>
-                <Coordinates markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}
-                             setOnEditMarker={setOnEditMarker}/>
-                <Row className="mt-4">
-                    <Col xs="hidden" md={1}/>
-                    <Col xs={6} md={2}>
-                        <Button color="warning" size="md"
-                                onClick={resetCoordinates}>Reset all coordinates</Button>
-                    </Col>
-                    <Col xs={6} md={{size: 2, offset: 5}}>
-                        <Button color="success" size="md" onClick={requestForProjectionFind}>Find projection</Button>
-                    </Col>
-                </Row>
+                <Form>
+                    <Coordinates markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}
+                                 setOnEditMarker={setOnEditMarker}/>
+                    <Row className="mt-4">
+                        <Col xs="hidden" md={1}/>
+                        <Col xs={6} md={2}>
+                            <Button color="warning" size="md"
+                                    onClick={resetCoordinates}>Reset all coordinates</Button>
+                        </Col>
+                        <Col xs={6} md={{size: 2, offset: 5}}>
+                            <Button color="success" size="md" onClick={requestForProjectionFind}>Find
+                                Coordinates</Button>
+                        </Col>
+                    </Row>
+                </Form>
                 <Row className="mt-4">
                     <Col xs="hidden" md={1}/>
                     <Col xs={12} md={8}>

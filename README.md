@@ -24,14 +24,19 @@ points defined in both maps.
 
 ## Development
 
-Backend url: https://find-coordinates.herokuapp.com/api/projection
+Backend url:
+
+https://find-coordinates.herokuapp.com/api/projection
+
+https://find-coordinates.herokuapp.com/api/health
 
 ### Project Setup
 
 To run project locally you need to have installed:
- - python 3.7+
- - node latest
- - npm latest
+
+- python 3.7+
+- node latest
+- npm latest
 
 Frontend
 
