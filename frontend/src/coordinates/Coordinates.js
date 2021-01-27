@@ -21,7 +21,7 @@ const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) =>
     }
 
     const handleOnAddItem = () => {
-        if (markers.length < 9) {
+        if (markers.length < 4) {
             updateMarkers(markers.concat(DEFAULT_MARKER_STRUCTURE));
             setOnEditMarker(markers.length)
         }
