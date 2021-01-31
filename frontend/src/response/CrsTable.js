@@ -25,7 +25,7 @@ const CrsTable = (response) => {
                             <td>{element[0]}</td>
                             <td>{element[1]}</td>
                             <td>{element[2].map((coordinate) =>
-                                <p>Lat: <strong>{coordinate[0]}</strong>, Lon: <strong>{coordinate[0]}</strong></p>
+                                <p>Lat: <strong>{coordinate[0]}</strong>, Lon: <strong>{coordinate[1]}</strong></p>
                             )}</td>
                             <td>{element[3]}</td>
                         </tr>;
