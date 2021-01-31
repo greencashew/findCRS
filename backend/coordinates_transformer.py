@@ -15,7 +15,6 @@ def get_possible_crs(inputs_map, expected_values):
         ["RGF93 / Lambert-93", "EPSG:2154", "France - onshore and offshore, mainland and Corsica.", "1m"],
         ["Belge 1972 / Belgian Lambert 72", "EPSG:31370", "Belgium - onshore.", "m"],
         ["ETRS89 / TM35FIN(E,N)", "EPSG:3067", "Finland - onshore and offshore.", "1m"],
-        ["Układ współrzędnych 1992", "EPSG:2180", "Polska", "1 m"],
         ["New Zealand - North Island, South Island, Stewart Island - onshore.", "m"],
         ["S-JTSK / Krovak East North", "EPSG:5514", "Czechia; Slovakia.", "6m"],
         ["ETRS89 / Poland CS92", "EPSG:2180", "Poland - onshore and offshore.", "1m"],
