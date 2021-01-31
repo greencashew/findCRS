@@ -12,7 +12,7 @@ const Coordinate = ({id, latitude, longitude, updateMarker, disabled, latLong}) 
         const value = target.value;
         const isValid = target.validity.valid
 
-        if (name === "latitude" && isValid && ((value >= -90 && value <= 90))) {
+        if (name === "latitude" && isValid) {
             updateMarker(
                 id,
                 value,
@@ -20,7 +20,7 @@ const Coordinate = ({id, latitude, longitude, updateMarker, disabled, latLong}) 
             )
         }
 
-        if (name === "longitude" && isValid && ((value >= -180 && value <= 180))) {
+        if (name === "longitude" && isValid) {
             updateMarker(
                 id,
                 latitude,

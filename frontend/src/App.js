@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Button, Col, Container, Form, Row} from 'reactstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'react-notifications/dist/react-notifications.css';
 import InteractiveMap from './interactive_map/InteractiveMap'
 import InputMap from './input_map/InputMap'
 import Coordinates from './coordinates/Coordinates'
@@ -10,7 +11,6 @@ import axios from 'axios';
 import CrsTable from "./response/CrsTable";
 import Header from "./partials/Header"
 import Footer from "./partials/Footer";
-import 'react-notifications/lib/notifications.css';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 const App = () => {

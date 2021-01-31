@@ -42,7 +42,8 @@ INPUT_CRS_LIST = [
      "1 m"],
     ["ED50", "EPSG:4230",
      "Europe - west: Andorra; Cyprus; Denmark - onshore and offshore; Faroe Islands - onshore; France - offshore; Germany - offshore North Sea; Gibraltar; Greece - offshore; Israel - offshore; Italy including San Marino and Vatican City State; Ireland offshore; Malta; Netherlands - offshore; North Sea; Norway including Svalbard - onshore and offshore; Portugal - mainland - offshore; Spain - onshore; Turkey - onshore and offshore; United Kingdom UKCS offshore east of 6°W including Channel Islands (Guernsey and Jersey). Egypt - Western Desert; Iraq - onshore; Jordan.",
-     "10 m"]
+     "10 m"],
+    ["Układ współrzędnych 1992", "EPSG:2180", "Polska", "1 m"]
 ]
 
 
@@ -57,7 +58,11 @@ def get_possible_crs(inputs_map, expected_values):
             if math.isinf(pt[0]) or math.isinf(pt[1]):
                 break
 
-            points_distance += distance.distance(expected_values[i], pt).km
+            try:
+                points_distance += distance.distance(expected_values[i], pt).km
+            except:
+                break
+
             new_points.append(pt)
             i += 1
         if points_distance == 0:
