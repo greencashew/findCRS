@@ -60,7 +60,7 @@ def get_possible_crs(inputs_map, expected_values):
             i = 0
             new_points = []
             points_distance = 0
-            for pt in transformer.itransform(inputs_map):
+            for pt in transformer.itransform(inputs_map, switch=True):
                 if math.isinf(pt[0]) or math.isinf(pt[1]):
                     break
 
