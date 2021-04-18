@@ -6,7 +6,6 @@ import 'react-notifications/dist/react-notifications.css';
 import InteractiveMap from './interactive_map/InteractiveMap'
 import InputMap from './input_map/InputMap'
 import Coordinates from './coordinates/Coordinates'
-import HowTo from './how_to/HowTo'
 import axios from 'axios';
 import CrsTable from "./response/CrsTable";
 import Header from "./partials/Header"
@@ -53,15 +52,14 @@ const App = () => {
                 <Header/>
                 <Row className="mb-3">
                     <Col xs="hidden" md={1}/>
-                    <Col xs={12} sm={5} md={4}>
-                        <InputMap/>
+                    <Col xs={12} sm={4} md={4}>
+                        <InputMap markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}/>
                     </Col>
-                    <Col xs={12} sm={5} md={4}>
+                    <Col xs="hidden" md={1}/>
+                    <Col xs={12} sm={4} md={4}>
                         <InteractiveMap markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}/>
                     </Col>
-                    <Col xs={12} sm={12} md={2}>
-                        <HowTo/>
-                    </Col>
+                    <Col xs="hidden" md={1}/>
                 </Row>
                 <Form>
                     <Coordinates markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}

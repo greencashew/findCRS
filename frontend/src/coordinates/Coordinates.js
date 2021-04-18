@@ -3,7 +3,7 @@ import {Button, Col, Row} from "reactstrap";
 import Coordinate from "./Coordinate"
 
 const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) => {
-
+    const MAX_ITEM_NUMBER_TO_ADD = 8;
     const DEFAULT_MARKER_STRUCTURE = {
         inputMap: [null, null],
         interactiveMap: [null, null],
@@ -21,7 +21,7 @@ const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) =>
     }
 
     const handleOnAddItem = () => {
-        if (markers.length < 4) {
+        if (markers.length < MAX_ITEM_NUMBER_TO_ADD) {
             updateMarkers(markers.concat(DEFAULT_MARKER_STRUCTURE));
             setOnEditMarker(markers.length)
         }
@@ -51,10 +51,10 @@ const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) =>
             <Row>
                 <Col xs="hidden" md={1}/>
                 <Col xs={12} sm={5} md={4}>
-                    <p>Your map coordinates:</p>
+                    <p>Raster map coordinates:</p>
                 </Col>
                 <Col xs={12} sm={5} md={4}>
-                    <p>Interactive map coordinates: (You can choose on the map or type)</p>
+                    <p>Interactive map coordinates:</p>
                 </Col>
                 <Col xs="hidden" md={1}/>
             </Row>
@@ -81,7 +81,8 @@ const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) =>
             )}
             <Row>
                 <Col xs={12} md={{size: 2, offset: 9}} className="mt-4">
-                    <Button color="primary" size="md" onClick={handleOnAddItem} disabled={markers.length > 8}>Add one
+                    <Button color="primary" size="md" onClick={handleOnAddItem}
+                            disabled={markers.length >= MAX_ITEM_NUMBER_TO_ADD}>Add one
                         more location</Button>
                 </Col>
             </Row>

@@ -4,6 +4,17 @@ img {
 
 .map, .leaflet-container {
     height: 50vh;
+    max-width: 100%;
+    cursor: pointer;
+}
+
+.app-header {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.app-header h1 {
+    font-size: 2rem;
 }
 
 .footer {
@@ -18,3 +29,4 @@ img {
     color: #6eaef3;
     text-decoration: none;
 }
+
