@@ -7,13 +7,13 @@ import MarkerImage from "./MarkerImage";
 
 const old_map = require('./old-map-england.jpg')
 
-const InputMap = ({markers, updateMarkers, onEditMarker}) => {
+const InputMap = ({markers, updateMarkers, onEditMarker, resetCoordinates}) => {
 
     const [image, setImage] = useState()
 
     const [stageX, setStageX] = useState(0);
     const [stageY, setStageY] = useState(0);
-    const [stageScale, setStageScale] = useState(0.6);
+    const [stageScale, setStageScale] = useState(1);
     const [stageWidth, setStageWidth] = useState(0);
     const [stageHeight, setStageHeight] = useState(0);
     const [imageWidth, setImageWidth] = useState(1600);
@@ -45,6 +45,7 @@ const InputMap = ({markers, updateMarkers, onEditMarker}) => {
             setImageHeight(img.height);
             setImage(img);
         });
+        resetCoordinates();
     }
 
 
@@ -111,6 +112,23 @@ const InputMap = ({markers, updateMarkers, onEditMarker}) => {
         setStageY(pos.y);
     }
 
+    function isNullMarker(marker) {
+        return marker == null || marker.inputMap[0] === null || marker.inputMap[1] === null;
+    }
+
+    const changeMarkerLocationOnMapClick = (event) => {
+        if (onEditMarker == null) {
+            return;
+        }
+        const transform = event.target.parent.getAbsoluteTransform().copy();
+        transform.invert();
+        const pos = transform.point(event.target.getStage().getPointerPosition());
+
+        let newMarkers = [...markers];
+        newMarkers[onEditMarker].inputMap = [pos.x, pos.y]
+        updateMarkers(newMarkers);
+    }
+
     return (
         <>
             <div className="map" ref={stageCanvasParentRef}>
@@ -119,7 +137,6 @@ const InputMap = ({markers, updateMarkers, onEditMarker}) => {
                     <span onClick={zoomOut} title="Zoom out" role="button" aria-label="Zoom out">−</span>
                 </div>
                 <Stage
-                    // style={{background: "red", width: stageWidth, height: stageHeight}}
                     ref={stageCanvasRef}
                     x={stageX}
                     y={stageY}
@@ -130,8 +147,13 @@ const InputMap = ({markers, updateMarkers, onEditMarker}) => {
                     onWheel={handleWheel}
                 >
                     <Layer draggable={true} dragBoundFunc={dragBoundFunc}>
-                        <Image image={image}/>
-                        <MarkerImage/>
+                        <Image image={image} onClick={changeMarkerLocationOnMapClick}/>
+                        {markers.map((marker, idx) => !isNullMarker(marker) &&
+                            <MarkerImage key={`marker-${idx}`} idx={idx} position={marker.inputMap}
+                                         draggable={onEditMarker === idx}
+                                         markers={markers} updateMarkers={updateMarkers}
+                            />
+                        )}
                     </Layer>
                 </Stage>
             </div>

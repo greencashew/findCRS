@@ -29,14 +29,7 @@ const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) =>
 
     const updateInputMapMarker = (id, lat, long) => {
         let newMarkers = [...markers];
-        const newCoordinates = [lat, long];
-        if (markers[id].inputMap[0] === markers[id].interactiveMap[0] &&
-            markers[id].inputMap[1] === markers[id].interactiveMap[1]
-        ) {
-            newMarkers[id].interactiveMap = newCoordinates;
-        }
-
-        newMarkers[id].inputMap = newCoordinates;
+        newMarkers[id].inputMap = [lat, long];
         updateMarkers(newMarkers);
     }
 

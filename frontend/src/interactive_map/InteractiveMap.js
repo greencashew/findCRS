@@ -5,6 +5,7 @@ import './InteractiveMap.css'
 import Search from "./LeafletGeoSearch"
 import L from "leaflet";
 import markerIcons from "./MarkerIcons";
+import MapScale from "./MapScale";
 
 
 const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
@@ -56,6 +57,7 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
                             draggable={onEditMarker === idx} onDragend={updateMarkerLocation}/>
                 )}
                 <GeoSearch/>
+                <MapScale/>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; '

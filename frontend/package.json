@@ -11,15 +11,16 @@
     "gdal-js": "^2.0.0",
     "konva": "^7.2.5",
     "leaflet": "^1.7.1",
-    "leaflet-geosearch": "^3.2.1",
+    "leaflet-geosearch": "^3.3.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-konva": "^17.0.2-0",
     "react-leaflet": "^2.8.0",
     "react-notifications": "^1.7.2",
-    "react-scripts": "^4.0.1",
+    "react-scripts": "^4.0.3",
     "react-zoom-pan-pinch": "^1.6.1",
-    "reactstrap": "^8.9.0"
+    "reactstrap": "^8.9.0",
+    "use-leaflet": "^1.6.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -26,7 +26,8 @@ const App = () => {
     const [response, setResponse] = useState(null);
 
     const resetCoordinates = () => {
-        updateMarkers(markersInitialValue)
+        updateMarkers(markersInitialValue);
+        setOnEditMarker(0);
     }
 
     const requestForProjectionFind = event => {
@@ -53,7 +54,8 @@ const App = () => {
                 <Row className="mb-3">
                     <Col xs="hidden" md={1}/>
                     <Col xs={12} sm={4} md={4}>
-                        <InputMap markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}/>
+                        <InputMap markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}
+                                  resetCoordinates={resetCoordinates}/>
                     </Col>
                     <Col xs="hidden" md={1}/>
                     <Col xs={12} sm={4} md={4}>
