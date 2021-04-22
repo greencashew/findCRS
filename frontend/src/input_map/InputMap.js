@@ -27,6 +27,7 @@ const InputMap = ({markers, updateMarkers, onEditMarker, resetCoordinates}) => {
     useEffect(() => {
         loadMap(old_map.default);
         updateMapSize();
+        // eslint-disable-next-line
     }, []);
 
 
