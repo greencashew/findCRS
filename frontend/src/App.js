@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Col, Container, Form, Row} from 'reactstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -11,6 +11,7 @@ import CrsTable from "./response/CrsTable";
 import Header from "./partials/Header"
 import Footer from "./partials/Footer";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
+import {useCookies} from 'react-cookie';
 
 const App = () => {
 
@@ -21,18 +22,33 @@ const App = () => {
         }
     ];
 
+    const [cookies, setCookie] = useCookies(['find-coordinates']);
     const [markers, updateMarkers] = useState(markersInitialValue);
     const [onEditMarker, setOnEditMarker] = useState(0);
     const [response, setResponse] = useState(null);
 
+
+    useEffect(() => {
+        cookies.Markers && updateMarkers(cookies.Markers)
+        // eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
+        setCookie('Markers', markers, {path: '/'});
+    }, [markers, onEditMarker]);
+
+
     const resetCoordinates = () => {
         updateMarkers(markersInitialValue);
+        setCookie('Markers', markersInitialValue, {path: '/'});
         setOnEditMarker(0);
     }
 
     const requestForProjectionFind = event => {
         event.preventDefault();
         NotificationManager.info("Calculation started...", 'Please wait');
+
+        console.log(markers);
 
         axios.post(`${process.env.REACT_APP_API_URL}/api/projection`, {markers: markers})
             .then(res => {

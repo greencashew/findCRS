@@ -7,7 +7,7 @@ import MarkerImage from "./MarkerImage";
 
 const old_map = require('./old-map-england.jpg')
 
-const InputMap = ({markers, updateMarkers, onEditMarker, resetCoordinates}) => {
+const InputMap = ({markers, updateMarkers, onEditMarker}) => {
 
     const [image, setImage] = useState()
 
@@ -46,7 +46,6 @@ const InputMap = ({markers, updateMarkers, onEditMarker, resetCoordinates}) => {
             setImageHeight(img.height);
             setImage(img);
         });
-        resetCoordinates();
     }
 
 
