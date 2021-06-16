@@ -47,10 +47,15 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
     }
 
     const GeoSearch = withLeaflet(Search);
+
+    function setDefaultPositionIfPreviousAlsoNull() {
+        return onEditMarker - 1 < 0 || isNullMarker(markers[onEditMarker - 1]) ? [51.10283426063734, 17.064867493793372] : markers[onEditMarker - 1].interactiveMap;
+    }
+
     return (
         <div>
             <Map
-                center={isNullMarker(markers[onEditMarker]) ? [51.10283426063734, 17.064867493793372] : markers[onEditMarker].interactiveMap}
+                center={isNullMarker(markers[onEditMarker]) ? setDefaultPositionIfPreviousAlsoNull() : markers[onEditMarker].interactiveMap}
                 zoom={zoom} onClick={changeMarkerLocationOnMapClick}>
                 {markers.map((marker, idx) => !isNullMarker(marker) &&
                     <Marker key={`marker-${idx}`} id={idx} position={marker.interactiveMap} icon={getLeafletIcon(idx)}

@@ -35,7 +35,7 @@ const App = () => {
 
     useEffect(() => {
         setCookie('Markers', markers, {path: '/'});
-    }, [markers, onEditMarker]);
+    }, [markers, setCookie]);
 
 
     const resetCoordinates = () => {
