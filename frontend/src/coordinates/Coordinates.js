@@ -68,7 +68,8 @@ const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) =>
                     <Col xs={12} md={2}>
                         <Button color="info" disabled={onEditMarker === index}
                                 onClick={() => handleEdit(index)}>Edit</Button>
-                        <Button color="danger" onClick={() => handleDeletion(index)}>Delete</Button>
+                        <Button color="danger" disabled={markers.length <= 1}
+                                onClick={() => handleDeletion(index)}>Delete</Button>
                     </Col>
                 </Row>
             )}
