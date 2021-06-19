@@ -6,15 +6,15 @@ import 'react-notifications/dist/react-notifications.css';
 import InteractiveMap from './interactive_map/InteractiveMap'
 import InputMap from './input_map/InputMap'
 import Coordinates from './coordinates/Coordinates'
-import axios from 'axios';
 import CrsTable from "./response/CrsTable";
 import Header from "./partials/Header"
 import Footer from "./partials/Footer";
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import {NotificationContainer} from 'react-notifications';
 import {useCookies} from 'react-cookie';
+import {getCoordinatesBounds, getInteractiveMapAsArrayOfCoordinates} from "./utils/Coordinates";
+import Request from "./request/Request";
 
 const App = () => {
-
     const markersInitialValue = [
         {
             inputMap: [null, null],
@@ -24,12 +24,21 @@ const App = () => {
 
     const [cookies, setCookie] = useCookies(['find-coordinates']);
     const [markers, updateMarkers] = useState(markersInitialValue);
+    const [mapBounds, setMapBounds] = useState(null);
     const [onEditMarker, setOnEditMarker] = useState(0);
     const [response, setResponse] = useState(null);
 
+    useEffect(() => {
+        if (markers && markers !== markersInitialValue) {
+            setMapBounds(getCoordinatesBounds(
+                getInteractiveMapAsArrayOfCoordinates(markers)
+                )
+            )
+        }
+    }, [markers])
+
 
     useEffect(() => {
-        console.log(cookies.Markers)
         if (cookies.Markers != null || cookies.Markers) {
             updateMarkers(cookies.Markers)
             setOnEditMarker(-1);
@@ -48,29 +57,11 @@ const App = () => {
         setOnEditMarker(0);
     }
 
-    const requestForProjectionFind = event => {
-        event.preventDefault();
-        setOnEditMarker(-1);
-        NotificationManager.info("Calculation started...", 'Please wait');
-
-        console.log(markers);
-
-        axios.post(`${process.env.REACT_APP_API_URL}/api/projection`, {markers: markers})
-            .then(res => {
-                console.log(res);
-                if (res.status === 200) {
-                    NotificationManager.success('Result received.', 'Success!');
-                    setResponse(res.data)
-                }
-            })
-            .catch(err => {
-                NotificationManager.error(err + " Try again.", 'Error');
-            })
-    }
-
     return (
         <div className="App">
             <Container fluid>
+                <p>{JSON.stringify(markers)}</p>
+                <p>{JSON.stringify(mapBounds)}</p>
                 <Header/>
                 <Row className="mb-3">
                     <Col xs="hidden" md={1}/>
@@ -94,8 +85,10 @@ const App = () => {
                                     onClick={resetCoordinates}>Reset all coordinates</Button>
                         </Col>
                         <Col xs={6} md={{size: 2, offset: 5}}>
-                            <Button color="success" size="md" onClick={requestForProjectionFind}>Find
-                                Coordinates</Button>
+                            <Request markers={markers}
+                                     setOnEditMarker={setOnEditMarker}
+                                     mapBounds={mapBounds}
+                                     setResponse={setResponse}/>
                         </Col>
                     </Row>
                 </Form>
