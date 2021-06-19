@@ -2,7 +2,7 @@
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
 
-from backend.coordinates_transformer import get_possible_crs
+from backend.processor import process
 
 app = Flask(__name__)
 CORS(app)
@@ -25,9 +25,9 @@ def request_crs_find():
     markers = request.json['markers']
 
     input_values_map, expected_values_map = extract_values(markers)
-    validate_received_data(expected_values_map, input_values_map)
+    validate_received_data(input_values_map, expected_values_map)
 
-    result = get_possible_crs(input_values_map, expected_values_map)
+    result = process(input_values_map, expected_values_map)
 
     print(result)
     return jsonify({'crs_systems': result}), 200
@@ -42,10 +42,10 @@ def extract_values(markers):
     return input_values_map, expected_values_map
 
 
-def validate_received_data(expected_values_map, input_values_map):
-    if not input_values_map:
+def validate_received_data(map, map2):
+    if not map:
         abort(400)
-    if not expected_values_map:
+    if not map2:
         abort(400)
 
 

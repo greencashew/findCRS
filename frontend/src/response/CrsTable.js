@@ -3,6 +3,7 @@ import {Table} from "reactstrap";
 
 const CrsTable = (response) => {
 
+    console.log(response.data)
     return (
         <div>
             <h2>Most possible coordinate system:</h2>
@@ -10,10 +11,11 @@ const CrsTable = (response) => {
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>CRS Name</th>
                     <th>EPSG</th>
-                    <th>Result CRS</th>
-                    <th>Difference (km)</th>
+                    <th>MSE</th>
+                    <th>Shift X</th>
+                    <th>Shift Y</th>
+                    <th>Parameters</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -22,12 +24,14 @@ const CrsTable = (response) => {
                     response.response.crs_systems.map((element, index) => {
                         return <tr>
                             <th>{index}</th>
-                            <td>{element[0]}</td>
-                            <td>{element[1]}</td>
-                            <td>{element[2].map((coordinate) =>
-                                <p>Lat: <strong>{coordinate[0]}</strong><br/>Lon: <strong>{coordinate[1]}</strong></p>
-                            )}</td>
-                            <td>{element[3]}</td>
+                            <td>{element.CRS}</td>
+                            <td>{element.MSE}</td>
+                            <td>{element.shift_vector_x}</td>
+                            <td>{element.shift_vector_y}</td>
+                            {/*<td>{element[2].map((coordinate) =>*/}
+                            {/*    <p>Lat: <strong>{coordinate[0]}</strong><br/>Lon: <strong>{coordinate[1]}</strong></p>*/}
+                            {/*)}</td>*/}
+                            <td>{element.parameters}</td>
                         </tr>;
                     })
                 }

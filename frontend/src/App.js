@@ -29,7 +29,11 @@ const App = () => {
 
 
     useEffect(() => {
-        cookies.Markers && updateMarkers(cookies.Markers)
+        console.log(cookies.Markers)
+        if (cookies.Markers != null || cookies.Markers) {
+            updateMarkers(cookies.Markers)
+            setOnEditMarker(-1);
+        }
         // eslint-disable-next-line
     }, []);
 
@@ -40,12 +44,13 @@ const App = () => {
 
     const resetCoordinates = () => {
         updateMarkers(markersInitialValue);
-        setCookie('Markers', markersInitialValue, {path: '/'});
+        setCookie('Markers', null, {path: '/'});
         setOnEditMarker(0);
     }
 
     const requestForProjectionFind = event => {
         event.preventDefault();
+        setOnEditMarker(-1);
         NotificationManager.info("Calculation started...", 'Please wait');
 
         console.log(markers);

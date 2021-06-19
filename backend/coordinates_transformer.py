@@ -1,13 +1,12 @@
 import math
 
-from geopy import distance
 from pyproj import Transformer
 
-TARGET_CRS = "EPSG:4326"
+REFERENCE_MAP_CRS = "EPSG:4326"
 
 
-def get_possible_crs(inputs_map, expected_values):
-    INPUT_CRS_LIST = [
+def calculate_crs_list(inputs_map):
+    CRS_LIST = [
         ["WGS 84 / Pseudo-Mercator", "EPSG:3857", "World between 85.06°S and 85.06°N.", "m"],
         ["OSGB 1936 / British National Grid", "EPSG:27700",
          "United Kingdom (UK) - offshore to boundary of UKCS within 49°46'N to 61°01'N and 7°33'W to 3°33'E; onshore Great Britain (England, Wales and Scotland). Isle of Man onshore.",
@@ -15,14 +14,10 @@ def get_possible_crs(inputs_map, expected_values):
         ["RGF93 / Lambert-93", "EPSG:2154", "France - onshore and offshore, mainland and Corsica.", "1m"],
         ["Belge 1972 / Belgian Lambert 72", "EPSG:31370", "Belgium - onshore.", "m"],
         ["ETRS89 / TM35FIN(E,N)", "EPSG:3067", "Finland - onshore and offshore.", "1m"],
-        ["New Zealand - North Island, South Island, Stewart Island - onshore.", "m"],
         ["S-JTSK / Krovak East North", "EPSG:5514", "Czechia; Slovakia.", "6m"],
         ["ETRS89 / Poland CS92", "EPSG:2180", "Poland - onshore and offshore.", "1m"],
         ["ETRS89 / Poland CS2000 zone 8", "EPSG:2179", "Poland - east of 22°30'E.", "1m"],
         ["ETRS89 / Poland CS2000 zone 5", "EPSG:2176", "Poland - onshore and offshore west of 16°30'E.", "1m"],
-        ["EPSG topocentric example B", "EPSG:5820", "Description of the extent of the CRS.", "m"],
-        ["EPSG topocentric example A", "EPSG:5819", "Description of the extent of the CRS.", "m"],
-        ["EPSG vertical perspective example", "EPSG:5821", "Description of the extent of the CRS.", "m"],
         ["Korea 2000 / East Belt", "EPSG:5183", "Republic of Korea (South Korea) - onshore east of 128°E.", "1m"],
         ["PSAD56 / Peru east zone", "EPSG:24893", "Nigeria east of 10°30'E.", "15m"],
         ["ED50 / SPBA LCC", "EPSG:5643", "Europe - South Permian basin.", "10m"],
@@ -51,26 +46,21 @@ def get_possible_crs(inputs_map, expected_values):
         ["ED79", "EPSG:4668", "Peru - east of 73°W, onshore.", "42m"],
 
     ]
-    transformed_list = []
-    for inputCrs in INPUT_CRS_LIST:
-        print("CRS: {}".format(inputCrs))
+    crs_coordinates_dict = {}
+    for target_crs in CRS_LIST:
+        # print("CRS: {}".format(target_crs))
         try:
-            transformer = Transformer.from_crs(inputCrs[1], TARGET_CRS, always_xy=True)
+            transformer = Transformer.from_crs(crs_from=REFERENCE_MAP_CRS, crs_to=target_crs[1], always_xy=True)
             i = 0
             new_points = []
-            points_distance = 0
             for pt in transformer.itransform(inputs_map, switch=True):
                 if math.isinf(pt[0]) or math.isinf(pt[1]):
                     break
 
-                points_distance += distance.distance(expected_values[i], pt).km
-
-                new_points.append(pt)
+                new_points.append(pt[::-1])
                 i += 1
-            if points_distance == 0:
-                break
-            transformed_list.append([inputCrs[0], inputCrs[1], new_points, points_distance])
-        except:
+            crs_coordinates_dict[target_crs[1]] = new_points
+        except Exception as e:
+            print("[{}]: {}".format(target_crs[1], e))
             continue
-    transformed_list.sort(key=lambda x: x[3])
-    return transformed_list
+    return crs_coordinates_dict
