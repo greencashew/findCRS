@@ -14,33 +14,33 @@ export const getInteractiveMapAsArrayOfCoordinates = (markers) => {
  * @param {array} points Array of points
  *
  * Output:
- * [minX, minY, maxX, maxY]
+ * [minLat, minLng, maxLat, maxLng]
  */
 export const getCoordinatesBounds = (points) => {
 
-    let maxX = points[0][0];
-    let minX = points[0][0];
-    let maxY = points[0][1];
-    let minY = points[0][1];
+    let maxLat = points[0][0];
+    let minLat = points[0][0];
+    let maxLng = points[0][1];
+    let minLng = points[0][1];
 
     let i;
     for (i = 1; i < points.length; i++) {
         const x = points[i][0];
         const y = points[i][1];
 
-        if (x < minX)
-            minX = x;
+        if (x < minLat)
+            minLat = x;
 
-        if (x > maxX)
-            maxX = x;
+        if (x > maxLat)
+            maxLat = x;
 
-        if (y < minY)
-            minY = y;
+        if (y < minLng)
+            minLng = y;
 
-        if (y > maxY)
-            maxY = y;
+        if (y > maxLng)
+            maxLng = y;
     }
 
-    return [minX, minY, maxX, maxY]
+    return [minLat, minLng, maxLat, maxLng]
 };
 

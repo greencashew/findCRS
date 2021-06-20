@@ -1,10 +1,8 @@
 import numpy as np
 
-from backend.coordinates_transformer import calculate_crs_list
-from backend.transform import optimization_helmert_four
-from backend.transform_quality import mean_square_error
-
-inputMap = 'old-map-england.jpg'
+from backend.crs.coordinates_transformer import calculate_crs_list
+from backend.transformation.transform import optimization_helmert_four
+from backend.transformation.transform_quality import mean_square_error
 
 
 # gcps_pixel = [
@@ -26,6 +24,7 @@ inputMap = 'old-map-england.jpg'
 #     [15, 25, 270, -157],
 #     [30, 54, 549, -307],
 # ])
+
 
 def process(input_values_map, expected_values_map):
     results = []

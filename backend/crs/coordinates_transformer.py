@@ -4,7 +4,6 @@ from pyproj import Transformer
 
 REFERENCE_MAP_CRS = "EPSG:4326"
 
-
 def calculate_crs_list(inputs_map):
     CRS_LIST = [
         ["WGS 84 / Pseudo-Mercator", "EPSG:3857", "World between 85.06°S and 85.06°N.", "m"],

@@ -21,10 +21,10 @@ class CrsGatherSpider(scrapy.Spider):
             yield {
                 'epsg': response.xpath('//*[@id="content"]/h1/text()').get().strip(),
                 'name': response.xpath('//*[@id="content"]/p[1]/text()').get().strip(),
-                'wgs84_bounds_lat_min': wgs84_bounds[0],
-                'wgs84_bounds_lng_min': wgs84_bounds[1],
-                'wgs84_bounds_lat_max': wgs84_bounds[2],
-                'wgs84_bounds_lng_max': wgs84_bounds[3],
+                'wgs84_bounds_lng_min': wgs84_bounds[0],
+                'wgs84_bounds_lat_min': wgs84_bounds[1],
+                'wgs84_bounds_lng_max': wgs84_bounds[2],
+                'wgs84_bounds_lat_max': wgs84_bounds[3],
                 'scope': scope,
                 'area': area,
             }

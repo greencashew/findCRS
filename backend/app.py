@@ -7,8 +7,8 @@ from backend.processor import process
 app = Flask(__name__)
 CORS(app)
 
+app.config["DEBUG"] = True
 
-# app.config["DEBUG"] = True
 
 @app.route('/api/health', methods=['GET'])
 def health_check():
@@ -21,8 +21,13 @@ def request_crs_find():
         abort(400)
     if 'markers' not in request.json:
         abort(400)
+    if 'interactiveMapBounds' not in request.json:
+        abort(400)
 
     markers = request.json['markers']
+    interactiveMapBounds = request.json['interactiveMapBounds']
+
+    print(interactiveMapBounds)
 
     input_values_map, expected_values_map = extract_values(markers)
     validate_received_data(input_values_map, expected_values_map)
