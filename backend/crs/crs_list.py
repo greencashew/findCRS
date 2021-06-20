@@ -1,7 +1,10 @@
 import json
 import logging
+import os
 
-crs_list_file = open("../crs/crs_list.json", "r")
+from backend.definitions import ROOT_DIR
+
+crs_list_file = open(os.path.join(ROOT_DIR, "crs/crs_list.json"), "r")
 crs_json = json.loads(crs_list_file.read())
 
 

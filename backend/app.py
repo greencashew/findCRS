@@ -27,12 +27,10 @@ def request_crs_find():
     markers = request.json['markers']
     interactiveMapBounds = request.json['interactiveMapBounds']
 
-    print(interactiveMapBounds)
-
     input_values_map, expected_values_map = extract_values(markers)
     validate_received_data(input_values_map, expected_values_map)
 
-    result = process(input_values_map, expected_values_map)
+    result = process(input_values_map, expected_values_map, interactiveMapBounds)
 
     print(result)
     return jsonify({'crs_systems': result}), 200
