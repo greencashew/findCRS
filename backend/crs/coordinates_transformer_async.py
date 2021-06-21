@@ -6,24 +6,15 @@ from pyproj import Transformer
 
 REFERENCE_MAP_CRS = "EPSG:4326"
 
-crs_coordinates_list = []
 
-
-def convert_from_wgs84_to_crs_list(inputs_map, supported_crs_list):
+def async_convert_from_wgs84_to_crs_list(inputs_map, supported_crs_list):
     pool = multiprocessing.Pool(multiprocessing.cpu_count())
-
-    def collect_result(crs):
-        global crs_coordinates_list
-        if crs is not None:
-            crs_coordinates_list.append(crs)
-
-    for target_crs in supported_crs_list:
-        pool.apply_async(transform_crs, args=(inputs_map, target_crs), callback=collect_result)
-
+    crs_coordinates_list = pool.starmap_async(transform_crs,
+                                              [(inputs_map, target_crs) for target_crs in supported_crs_list]).get()
     pool.close()
-    pool.join()
 
-    return crs_coordinates_list
+    results = [x for x in crs_coordinates_list if x is not None]
+    return results
 
 
 def transform_crs(inputs_map, target_crs):
@@ -42,3 +33,4 @@ def transform_crs(inputs_map, target_crs):
         return {"crs": target_crs, "converted_points": new_points}
     except Exception as e:
         logging.error("[{}]: {}".format(epsg, e))
+        return

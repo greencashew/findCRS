@@ -1,6 +1,6 @@
 import numpy as np
 
-from backend.crs.coordinates_transformer_async import convert_from_wgs84_to_crs_list
+from backend.crs.coordinates_transformer_async import async_convert_from_wgs84_to_crs_list
 from backend.crs.crs_list import get_applicable_crs_list_for_bounds
 from backend.transformation.transform import optimization_helmert_four
 from backend.transformation.transform_quality import mean_square_error
@@ -30,7 +30,7 @@ from backend.transformation.transform_quality import mean_square_error
 def process(input_values_map, expected_values_map, bounds):
     results = []
     list_for_bounds = get_applicable_crs_list_for_bounds(bounds)
-    converted_points = convert_from_wgs84_to_crs_list(expected_values_map, list_for_bounds)
+    converted_points = async_convert_from_wgs84_to_crs_list(expected_values_map, list_for_bounds)
 
     for crs in converted_points:
         items = []
