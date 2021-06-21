@@ -36,7 +36,7 @@ def optimization_helmert_four(gcps_array):
     shift_vector_x = pred_x - reference_x
     shift_vector_y = pred_y - reference_y
 
-    return pred_x, pred_y, shift_vector_x, shift_vector_y, {"rotation": rotation, "pixel_resolution": pixel_resolution,
+    return pred_x, pred_y, shift_vector_x, shift_vector_y, {"rotation": rotation, "scale": pixel_resolution,
                                                             "shift_x": shift_x, "shift_y": shift_y}
 
 

@@ -1,0 +1,18 @@
+.table-response {
+  white-space: nowrap;
+  overflow: auto;
+  height: 400px;
+
+  thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #fff;
+  }
+}
+
+.table td:last-child,
+.table td:nth-last-child(2),
+.table td:first-child {
+  white-space: break-spaces;
+}

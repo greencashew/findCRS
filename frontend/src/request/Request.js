@@ -10,17 +10,14 @@ const Request = ({markers, setOnEditMarker, mapBounds, setResponse}) => {
         setOnEditMarker(-1);
         NotificationManager.info("Calculation started...", 'Please wait');
 
-        console.log(markers);
-
         axios.post(`${process.env.REACT_APP_API_URL}/api/projection`, {
             markers: markers,
             interactiveMapBounds: mapBounds
         })
             .then(res => {
-                console.log(res);
                 if (res.status === 200) {
                     NotificationManager.success('Result received.', 'Success!');
-                    setResponse(res.data)
+                    setResponse(res.data.crs_systems)
                 }
             })
             .catch(err => {

@@ -6,13 +6,13 @@ import 'react-notifications/dist/react-notifications.css';
 import InteractiveMap from './interactive_map/InteractiveMap'
 import InputMap from './input_map/InputMap'
 import Coordinates from './coordinates/Coordinates'
-import CrsTable from "./response/CrsTable";
 import Header from "./partials/Header"
 import Footer from "./partials/Footer";
 import {NotificationContainer} from 'react-notifications';
 import {useCookies} from 'react-cookie';
 import {getCoordinatesBounds, getInteractiveMapAsArrayOfCoordinates} from "./utils/Coordinates";
 import Request from "./request/Request";
+import CrsResponse from "./response/CrsResponse";
 
 const App = () => {
     const markersInitialValue = [
@@ -60,8 +60,6 @@ const App = () => {
     return (
         <div className="App">
             <Container fluid>
-                <p>{JSON.stringify(markers)}</p>
-                <p>{JSON.stringify(mapBounds)}</p>
                 <Header/>
                 <Row className="mb-3">
                     <Col xs="hidden" md={1}/>
@@ -95,7 +93,7 @@ const App = () => {
                 <Row className="mt-4">
                     <Col xs="hidden" md={1}/>
                     <Col xs={12} md={8}>
-                        {response && <CrsTable response={response}/>}
+                        {response && <CrsResponse data={response}/>}
                     </Col>
                 </Row>
                 <Footer/>
