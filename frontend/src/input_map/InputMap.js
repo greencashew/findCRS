@@ -7,7 +7,7 @@ import MarkerImage from "./MarkerImage";
 
 const old_map = require('./old-map-england.jpg')
 
-const InputMap = ({markers, updateMarkers, onEditMarker}) => {
+const InputMap = ({markers, updateMarkers, onEditMarker, resetCoordinates, activeTab}) => {
 
     const [image, setImage] = useState()
 
@@ -39,6 +39,7 @@ const InputMap = ({markers, updateMarkers, onEditMarker}) => {
     }
 
     function loadMap(imageSource) {
+        resetCoordinates()
         let img = new window.Image();
         img.src = imageSource;
         img.addEventListener("load", () => {
@@ -157,13 +158,16 @@ const InputMap = ({markers, updateMarkers, onEditMarker}) => {
                     </Layer>
                 </Stage>
             </div>
+            {activeTab === 'inputCoordinatesTab' &&
             <Col xs={12} sm={12} md={5} className="mt-2">
                 <FormGroup>
                     <Label for="upload-button">Add your map:</Label>
                     <Input type="file" id="upload-button" onChange={handleSetPhoto}/>
                 </FormGroup>
             </Col>
+            }
         </>
     )
 }
+
 export default InputMap;

@@ -88,13 +88,11 @@ const CrsResponse = (response) => {
         {
             text: 'ShiftX',
             dataField: 'shift_vector_x',
-            hidden: true,
             formatter: arrayFormatter,
         },
         {
             text: 'ShiftY',
             dataField: 'shift_vector_y',
-            hidden: true,
             formatter: arrayFormatter,
         },
         {

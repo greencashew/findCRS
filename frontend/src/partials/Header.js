@@ -4,8 +4,9 @@ import HowTo from '../how_to/HowTo'
 
 
 const Header = () => {
+
     return (
-        <header className="app-header bg-dark text-white mt-0 mb-5">
+        <header className="app-header bg-dark text-white mt-0 mb-3">
             <Navbar className="mr-auto container-fluid">
                 <h1>Find Coordinate System for historical maps</h1>
                 <HowTo/>

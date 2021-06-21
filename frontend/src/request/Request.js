@@ -3,11 +3,11 @@ import {Button} from "reactstrap";
 import {NotificationManager} from "react-notifications";
 import axios from "axios";
 
-const Request = ({markers, setOnEditMarker, mapBounds, setResponse}) => {
+const Request = ({markers, setOnEditMarker, mapBounds, setResponse, setActiveTab}) => {
 
     const requestForProjectionFind = (event) => {
         event.preventDefault();
-        setOnEditMarker(-1);
+        setOnEditMarker(null);
         NotificationManager.info("Calculation started...", 'Please wait');
 
         axios.post(`${process.env.REACT_APP_API_URL}/api/projection`, {
@@ -18,6 +18,7 @@ const Request = ({markers, setOnEditMarker, mapBounds, setResponse}) => {
                 if (res.status === 200) {
                     NotificationManager.success('Result received.', 'Success!');
                     setResponse(res.data.crs_systems)
+                    setActiveTab('resultsTab')
                 }
             })
             .catch(err => {
@@ -26,7 +27,8 @@ const Request = ({markers, setOnEditMarker, mapBounds, setResponse}) => {
     }
 
     return (
-        <Button color="success" size="md" onClick={requestForProjectionFind}>Find Coordinates</Button>
+        <Button color="success" size="md" onClick={requestForProjectionFind} disabled={markers.length < 3}>Find
+            CRS</Button>
     );
 }
 

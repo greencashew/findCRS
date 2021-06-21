@@ -44,16 +44,15 @@ const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) =>
             <Row>
                 <Col xs="hidden" md={1}/>
                 <Col xs={12} sm={5} md={4}>
-                    <p>Raster map coordinates:</p>
+                    <span>Raster map coordinates:</span>
                 </Col>
                 <Col xs={12} sm={5} md={4}>
-                    <p>Interactive map coordinates:</p>
+                    <span>Interactive map coordinates:</span>
                 </Col>
                 <Col xs="hidden" md={1}/>
             </Row>
             {markers.map((marker, index) =>
-                <Row key={index} className="mt-2">
-                    <Col xs="hidden" md={1}/>
+                <Row key={index} className="mt-2 justify-content-md-center">
                     <Col xs={12} sm={5} md={4}>
                         <Coordinate id={index} latitude={marker.inputMap[0]} longitude={marker.inputMap[1]}
                                     updateMarker={updateInputMapMarker} disabled={onEditMarker !== index}

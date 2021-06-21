@@ -1,13 +1,17 @@
 .table-response {
   white-space: nowrap;
   overflow: auto;
-  height: 400px;
+  height: 30vh;
 
   thead th {
     position: sticky;
     top: 0;
     z-index: 1;
     background: #fff;
+  }
+
+  p {
+    margin-bottom: 0;
   }
 }
 
