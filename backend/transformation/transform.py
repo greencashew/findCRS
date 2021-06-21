@@ -3,17 +3,18 @@ import numpy as np
 
 def optimization_helmert_four(gcps_array):
     gcps_number = len(gcps_array)
-    gravity_image_x, gravity_image_y, gravity_reference_x, gravity_reference_y = np.average(gcps_array, 0)
+    gravity_center_image_x, gravity_center_image_y, gravity_center_reference_x, gravity_center_reference_y = np.average(
+        gcps_array, 0)
 
     image_x = gcps_array[:, 0]
     image_y = gcps_array[:, 1]
     reference_x = gcps_array[:, 2]
     reference_y = gcps_array[:, 3]
 
-    delta_image_x = image_x - gravity_image_x
-    delta_image_y = image_y - gravity_image_y
-    delta_reference_x = reference_x - gravity_reference_x
-    delta_reference_y = reference_y - gravity_reference_y
+    delta_image_x = image_x - gravity_center_image_x
+    delta_image_y = image_y - gravity_center_image_y
+    delta_reference_x = reference_x - gravity_center_reference_x
+    delta_reference_y = reference_y - gravity_center_reference_y
 
     a_up, a_down, b_up, b_down = 0, 0, 0, 0
     for i in range(gcps_number):
@@ -22,18 +23,21 @@ def optimization_helmert_four(gcps_array):
         b_up += delta_image_x[i] * delta_reference_x[i] + delta_image_y[i] * delta_reference_y[i]
 
     b_down = a_down
-    a = a_up / a_down
-    scale = b_up / b_down
-    shift_x = gravity_image_y * a - gravity_image_x * scale + gravity_reference_x
-    shift_y = -gravity_image_x * a - gravity_image_y * scale + gravity_reference_y
+    rotation = a_up / a_down
+    pixel_resolution = b_up / b_down
+    shift_x = gravity_center_image_y * rotation - gravity_center_image_x * pixel_resolution + gravity_center_reference_x
+    shift_y = -gravity_center_image_x * rotation - gravity_center_image_y * pixel_resolution + gravity_center_reference_y
 
-    pred_x = (image_x - gravity_image_x) * scale - (image_y - gravity_image_y) * a + gravity_reference_x
-    pred_y = (image_x - gravity_image_x) * a + (image_y - gravity_image_y) * scale + gravity_reference_y
+    pred_x = (image_x - gravity_center_image_x) * pixel_resolution - (
+            image_y - gravity_center_image_y) * rotation + gravity_center_reference_x
+    pred_y = (image_x - gravity_center_image_x) * rotation + (
+            image_y - gravity_center_image_y) * pixel_resolution + gravity_center_reference_y
 
     shift_vector_x = pred_x - reference_x
     shift_vector_y = pred_y - reference_y
 
-    return pred_x, pred_y, shift_vector_x, shift_vector_y, [a, scale, shift_x, shift_y]
+    return pred_x, pred_y, shift_vector_x, shift_vector_y, {"rotation": rotation, "pixel_resolution": pixel_resolution,
+                                                            "shift_x": shift_x, "shift_y": shift_y}
 
 
 def optimization_polynomial(order, gcps_array, Ax_row, Ay_row, LX_row, LY_row):

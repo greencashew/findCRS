@@ -40,18 +40,14 @@ def process(input_values_map, expected_values_map, bounds):
         pred_x, pred_y, shift_vector_x, shift_vector_y, parameters = optimization_helmert_four(np.array(items))
         mse_overall, mse_x, mse_y = mean_square_error(shift_vector_x, shift_vector_y, len(np.array(items)))
 
-        results.append({"CRS": crs,
-                        "converted_points": crs['converted_points'],
+        results.append({"epsg": crs['crs']['epsg'],
+                        "crs": crs,
                         "pred_x": pred_x.tolist(),
                         "pred_y": pred_y.tolist(),
                         "shift_vector_x": shift_vector_x.tolist(),
                         "shift_vector_y": shift_vector_y.tolist(),
-                        "MSE": mse_overall,
+                        "mse": mse_overall,
                         "parameters": parameters})
-
-        print(results)
-
-    results.sort(key=lambda x: "MSE")
 
     # data_frame = pd.DataFrame(results,
     #                           columns=["crs", "pred_x", "pred_y", "shift_vector_x", "shift_vector_y", "mse_overall",
