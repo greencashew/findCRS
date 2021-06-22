@@ -2,11 +2,11 @@ import {Image} from "react-konva";
 import React from "react";
 import {markerIcons, markerPrimIcons} from "../interactive_map/MarkerIcons";
 
-const MarkerImage = ({idx, markers, updateMarkers, position, draggable, is_prim}) => {
+const MarkerImage = ({idx, markers, updateMarkers, position, draggable, is_prim, zoom}) => {
 
-    const MARKER_ICON_HEIGHT = 41;
-    const MARKER_ICON_WIDTH = 25;
-    const MARKER_ICON_OFFSET = {x: 12, y: MARKER_ICON_HEIGHT};
+    const MARKER_ICON_HEIGHT = 41 / zoom;
+    const MARKER_ICON_WIDTH = 25 / zoom;
+    const MARKER_ICON_OFFSET = {x: MARKER_ICON_WIDTH / 2, y: MARKER_ICON_HEIGHT};
 
     const handlePosition = e => {
         if (idx == null) {

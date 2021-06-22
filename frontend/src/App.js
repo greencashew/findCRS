@@ -80,7 +80,6 @@ const App = () => {
         <div className="App">
             <Container fluid className="justify-content-md-center">
                 <Header/>
-                <div>{JSON.stringify(shiftInputMarkers)}</div>
                 <Row className="mb-3 justify-content-md-center">
                     <Col xs="hidden" md={1}/>
                     <Col xs={12} sm={4} md={4}>

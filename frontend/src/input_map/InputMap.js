@@ -152,12 +152,12 @@ const InputMap = ({markers, updateMarkers, onEditMarker, resetCoordinates, activ
                         {markers.map((marker, idx) => !isNullMarker(marker) &&
                             <MarkerImage key={`marker-${idx}`} idx={idx} position={marker.inputMap}
                                          draggable={onEditMarker === idx}
-                                         markers={markers} updateMarkers={updateMarkers}
+                                         markers={markers} updateMarkers={updateMarkers} zoom={stageScale}
                             />
                         )}
                         {shiftInputMarkers && shiftInputMarkers.map((marker, idx) =>
                             <MarkerImage key={`marker-prim-${idx}`} idx={idx} position={marker}
-                                         markers={shiftInputMarkers} draggable={false} is_prim={true}
+                                         markers={shiftInputMarkers} draggable={false} is_prim={true} zoom={stageScale}
                             />
                         )}
                     </Layer>
