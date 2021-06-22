@@ -3,11 +3,12 @@ import {Button} from "reactstrap";
 import {NotificationManager} from "react-notifications";
 import axios from "axios";
 
-const Request = ({markers, setOnEditMarker, mapBounds, setResponse, setActiveTab}) => {
+const Request = ({markers, setNoEditMarker, mapBounds, setResponse, setActiveTab, resetShiftInputMarkers}) => {
 
     const requestForProjectionFind = (event) => {
         event.preventDefault();
-        setOnEditMarker(null);
+        setNoEditMarker();
+        resetShiftInputMarkers()
         NotificationManager.info("Calculation started...", 'Please wait');
 
         axios.post(`${process.env.REACT_APP_API_URL}/api/projection`, {

@@ -5,8 +5,11 @@ import {Badge, Input, InputGroup, InputGroupAddon} from "reactstrap";
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import './CrsResponse.scss'
+import {getInputMapMapAsArrayOfCoordinates, sumPointsArrays, toArrayOfPoints} from "../utils/Coordinates";
 
-const CrsResponse = (response) => {
+const CrsResponse = ({response, markers, setShiftInputMarkers}) => {
+
+    console.log(response)
 
     const [transformation, setTransformation] = useState('helmert_four');
 
@@ -117,12 +120,29 @@ const CrsResponse = (response) => {
     ];
 
     const defaultSorted = [{dataField: 'mse', order: 'asc'}];
+    const selectRow = {
+        mode: 'radio',
+        clickToSelect: true,
+        hideSelectColumn: true,
+        bgColor: '#c8e6c9',
+        onSelect: (row) => {
+            const sumPointsArrays1 = sumPointsArrays(getInputMapMapAsArrayOfCoordinates(markers), toArrayOfPoints(
+                row['shift_vector_x'], row['shift_vector_y']
+            ));
+
+            // console.log("Input: ", getInputMapMapAsArrayOfCoordinates(markers), ", shift:", toArrayOfPoints(
+            //     row['shift_vector_x'], row['shift_vector_y']
+            // ), ", sum: ", sumPointsArrays1)
+            setShiftInputMarkers(sumPointsArrays1)
+        },
+    };
+
 
     return (
         <div>
             <ToolkitProvider
                 keyField='epsg'
-                data={response.data[transformation]}
+                data={response[transformation]}
                 columns={columns}
                 search
                 exportCSV={{
@@ -135,13 +155,13 @@ const CrsResponse = (response) => {
                         <div>
                             <div className="clearfix">
                                 <Badge color="success" className="float-right">
-                                    Processed {response.data[transformation].length} potential CRS</Badge>
+                                    Processed {response[transformation].length} potential CRS</Badge>
                                 <InputGroup className="float-left transformation-select">
                                     <InputGroupAddon addonType="prepend">
                                         Choose transformation:
                                     </InputGroupAddon>
                                     <Input type="select" onChange={changeTransformationResults} value={transformation}>
-                                        {Object.keys(response.data).map(item => (
+                                        {Object.keys(response).map(item => (
                                             <option key={item} value={item}>
                                                 {item}
                                             </option>
@@ -163,6 +183,7 @@ const CrsResponse = (response) => {
                                 defaultSorted={defaultSorted}
                                 hover
                                 bordered
+                                selectRow={selectRow}
                                 classes="table-responsive table-response table-fixed"
                             />
                         </div>

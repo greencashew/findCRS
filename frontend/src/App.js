@@ -28,6 +28,7 @@ const App = () => {
     const [onEditMarker, setOnEditMarker] = useState(0);
     const [response, setResponse] = useState(null);
     const [activeTab, setActiveTab] = useState('inputCoordinatesTab');
+    const [shiftInputMarkers, setShiftInputMarkers] = useState(null);
 
     useEffect(() => {
         if (markers && markers !== markersInitialValue) {
@@ -43,7 +44,7 @@ const App = () => {
     useEffect(() => {
         if (cookies.Markers != null || cookies.Markers) {
             updateMarkers(cookies.Markers)
-            setOnEditMarker(null);
+            setNoEditMarker();
         }
         // eslint-disable-next-line
     }, []);
@@ -54,19 +55,38 @@ const App = () => {
 
     const resetCoordinates = () => {
         updateMarkers(markersInitialValue);
+        resetShiftInputMarkers()
+        resetOnEditMarker()
+        resetCookies()
+    }
+
+    const resetCookies = () => {
         setCookie('Markers', null, {path: '/'});
+    }
+
+    const resetShiftInputMarkers = () => {
+        setShiftInputMarkers(null)
+    }
+
+    const resetOnEditMarker = () => {
         setOnEditMarker(0);
+    }
+
+    const setNoEditMarker = () => {
+        setOnEditMarker(null);
     }
 
     return (
         <div className="App">
             <Container fluid className="justify-content-md-center">
                 <Header/>
+                <div>{JSON.stringify(shiftInputMarkers)}</div>
                 <Row className="mb-3 justify-content-md-center">
                     <Col xs="hidden" md={1}/>
                     <Col xs={12} sm={4} md={4}>
                         <InputMap markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}
-                                  resetCoordinates={resetCoordinates} activeTab={activeTab}/>
+                                  resetCoordinates={resetCoordinates} activeTab={activeTab}
+                                  shiftInputMarkers={shiftInputMarkers}/>
                     </Col>
                     <Col xs="hidden" md={1}/>
                     <Col xs={12} sm={4} md={4}>
@@ -89,7 +109,8 @@ const App = () => {
                                 </Col>
                                 <Col xs={6} md={{size: 2, offset: 5}}>
                                     <Request markers={markers}
-                                             setOnEditMarker={setOnEditMarker}
+                                             setNoEditMarker={setNoEditMarker}
+                                             resetShiftInputMarkers={resetShiftInputMarkers}
                                              mapBounds={mapBounds}
                                              setResponse={setResponse}
                                              setActiveTab={setActiveTab}
@@ -101,7 +122,8 @@ const App = () => {
                     <TabPane tabId="resultsTab">
                         <Row className="mt-4 justify-content-md-center">
                             <Col xs={12} md={9}>
-                                {response && <CrsResponse data={response}/>}
+                                {response && <CrsResponse response={response} markers={markers}
+                                                          setShiftInputMarkers={setShiftInputMarkers}/>}
                             </Col>
                         </Row>
                     </TabPane>

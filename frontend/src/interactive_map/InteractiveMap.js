@@ -4,8 +4,8 @@ import 'leaflet/dist/leaflet.css'
 import './InteractiveMap.css'
 import Search from "./LeafletGeoSearch"
 import L from "leaflet";
-import markerIcons from "./MarkerIcons";
 import MapScale from "./MapScale";
+import {markerIcons} from "./MarkerIcons";
 
 
 const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {

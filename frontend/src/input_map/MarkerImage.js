@@ -1,8 +1,8 @@
-import markerIcons from "../interactive_map/MarkerIcons";
 import {Image} from "react-konva";
 import React from "react";
+import {markerIcons, markerPrimIcons} from "../interactive_map/MarkerIcons";
 
-const MarkerImage = ({idx, markers, updateMarkers, position, draggable}) => {
+const MarkerImage = ({idx, markers, updateMarkers, position, draggable, is_prim}) => {
 
     const MARKER_ICON_HEIGHT = 41;
     const MARKER_ICON_WIDTH = 25;
@@ -14,7 +14,6 @@ const MarkerImage = ({idx, markers, updateMarkers, position, draggable}) => {
         }
         const x = e.target.x();
         const y = e.target.y();
-        console.log("POINT: x: " + x + ", y: " + y)
 
         let newMarkers = [...markers];
         newMarkers[idx].inputMap = [x, y]
@@ -33,7 +32,7 @@ const MarkerImage = ({idx, markers, updateMarkers, position, draggable}) => {
             y={position[1]}
             offset={MARKER_ICON_OFFSET}
             width={MARKER_ICON_WIDTH} height={MARKER_ICON_HEIGHT}
-            image={createHtmlImage(markerIcons[idx])}
+            image={is_prim ? createHtmlImage(markerPrimIcons[idx]) : createHtmlImage(markerIcons[idx])}
             draggable={draggable}
             onDragEnd={handlePosition}
         />

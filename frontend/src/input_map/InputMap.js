@@ -7,7 +7,7 @@ import MarkerImage from "./MarkerImage";
 
 const old_map = require('./old-map-england.jpg')
 
-const InputMap = ({markers, updateMarkers, onEditMarker, resetCoordinates, activeTab}) => {
+const InputMap = ({markers, updateMarkers, onEditMarker, resetCoordinates, activeTab, shiftInputMarkers}) => {
 
     const [image, setImage] = useState()
 
@@ -153,6 +153,11 @@ const InputMap = ({markers, updateMarkers, onEditMarker, resetCoordinates, activ
                             <MarkerImage key={`marker-${idx}`} idx={idx} position={marker.inputMap}
                                          draggable={onEditMarker === idx}
                                          markers={markers} updateMarkers={updateMarkers}
+                            />
+                        )}
+                        {shiftInputMarkers && shiftInputMarkers.map((marker, idx) =>
+                            <MarkerImage key={`marker-prim-${idx}`} idx={idx} position={marker}
+                                         markers={shiftInputMarkers} draggable={false} is_prim={true}
                             />
                         )}
                     </Layer>
