@@ -87,4 +87,17 @@ def optimization_polynomial(order, gcps_array, Ax_row, Ay_row, LX_row, LY_row):
     shift_vector_x = reference_x - np.array(pred_x)
     shift_vector_y = reference_y - np.array(pred_y)
 
-    return pred_x, pred_y, shift_vector_x, shift_vector_y, least_squared_reference_x[0], least_squared_reference_y[0]
+    return pred_x, pred_y, shift_vector_x, shift_vector_y, {"least_squared_x": least_squared_reference_x[0].tolist(),
+                                                            "least_squared_y": least_squared_reference_y[0].tolist()}
+
+
+def optimization_polynomial_first_order(gcps_array):
+    return optimization_polynomial(1, gcps_array, 0, 1, 2, 3)
+
+
+def optimization_polynomial_second_order(gcps_array):
+    return optimization_polynomial(2, gcps_array, 0, 1, 2, 3)
+
+
+def optimization_polynomial_third_order(gcps_array):
+    return optimization_polynomial(3, gcps_array, 0, 1, 2, 3)

@@ -1,19 +1,26 @@
-import React from "react";
+import React, {useState} from "react";
 import BootstrapTable from 'react-bootstrap-table-next';
 import ToolkitProvider, {ColumnToggle, CSVExport, Search} from 'react-bootstrap-table2-toolkit';
-import {Badge} from "reactstrap";
+import {Badge, Input, InputGroup, InputGroupAddon} from "reactstrap";
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import './CrsResponse.scss'
 
-
 const CrsResponse = (response) => {
+
+    const [transformation, setTransformation] = useState('helmert_four');
+
+    const changeTransformationResults = (event) => {
+        setTransformation(event.target.value);
+    };
 
     function objectFormatter(cell, row) {
         return (
             <span>
                 {Object.entries(cell).length > 0 && Object.entries(cell).map((element) => (
-                    <p><strong>{element[0]}</strong>: {element[1].toFixed(4)}</p>
+                    <p><strong>{element[0]}</strong>: {Array.isArray(element[1]) ?
+                        element[1].map((element) => <span title={element}>{element.toFixed(6)} </span>) :
+                        element[1].toFixed(4)}</p>
                 ))}
             </span>
         );
@@ -23,7 +30,7 @@ const CrsResponse = (response) => {
         return (
             <span>
                 {cell.length > 0 && cell.map((element) => (
-                    <p>{element.toFixed(4)}</p>
+                    <p title={element}>{element.toFixed(4)}</p>
                 ))}
             </span>
         );
@@ -33,7 +40,7 @@ const CrsResponse = (response) => {
         return (
             <span>
                 {cell.length > 0 && cell.map((element) => (
-                    <p>{element[0].toFixed(4)}, {element[1].toFixed(4)}</p>
+                    <p title={element}>{element[0].toFixed(4)}, {element[1].toFixed(4)}</p>
                 ))}
             </span>
         );
@@ -42,7 +49,7 @@ const CrsResponse = (response) => {
     function mseFormatter(cell, row) {
         return (
             <>
-                {cell.toFixed(4)}
+                {cell.toFixed(8)}
             </>
         )
     }
@@ -51,18 +58,16 @@ const CrsResponse = (response) => {
     const {ExportCSVButton} = CSVExport;
     const {ToggleList} = ColumnToggle;
 
-    const columns = [
-        {
-            text: 'Name',
-            dataField: "crs.crs.name",
-        },
+    const columns = [{
+        text: 'Name',
+        dataField: "crs.crs.name",
+    },
         {
             text: 'EPSG',
             dataField: 'crs.crs.epsg',
         },
         {
             text: 'MSE',
-            title: 'Mean Square Error',
             dataField: 'mse',
             sort: true,
             formatter: mseFormatter
@@ -111,16 +116,13 @@ const CrsResponse = (response) => {
         }
     ];
 
-    const defaultSorted = [{
-        dataField: 'mse',
-        order: 'asc'
-    }];
+    const defaultSorted = [{dataField: 'mse', order: 'asc'}];
 
     return (
         <div>
             <ToolkitProvider
                 keyField='epsg'
-                data={response.data}
+                data={response.data[transformation]}
                 columns={columns}
                 search
                 exportCSV={{
@@ -132,7 +134,20 @@ const CrsResponse = (response) => {
                     props => (
                         <div>
                             <div className="clearfix">
-                                <Badge color="success">Processed {response.data.length} potential CRS</Badge>
+                                <Badge color="success" className="float-right">
+                                    Processed {response.data[transformation].length} potential CRS</Badge>
+                                <InputGroup className="float-left transformation-select">
+                                    <InputGroupAddon addonType="prepend">
+                                        Choose transformation:
+                                    </InputGroupAddon>
+                                    <Input type="select" onChange={changeTransformationResults} value={transformation}>
+                                        {Object.keys(response.data).map(item => (
+                                            <option key={item} value={item}>
+                                                {item}
+                                            </option>
+                                        ))}
+                                    </Input>
+                                </InputGroup>
                             </div>
                             <div className="clearfix">
                                 <ToggleList {...props.columnToggleProps} className="float-left"/>
