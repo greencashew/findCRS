@@ -41,7 +41,7 @@ To run project locally you need to have installed:
 Frontend
 
 ```bash
-npm install
+yarn install
 ```
 
 Backend
@@ -67,7 +67,7 @@ Frontend:
 
 ```bash
 cd frontend
-npm start
+yarn start
 ```
 
 Backend:

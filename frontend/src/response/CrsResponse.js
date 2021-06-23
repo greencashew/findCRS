@@ -6,25 +6,30 @@ import {Badge, Input, InputGroup, InputGroupAddon} from "reactstrap";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import './CrsResponse.scss'
 import {getInputMapMapAsArrayOfCoordinates, sumPointsArrays, toArrayOfPoints} from "../utils/Coordinates";
+import {TRANSFORMATION_HELMERT_CONST, TRANSFORMATION_POLYNOMIAL_CONST} from "../config/const";
+import PolynomialFormatter from "./PolynomialFormatter";
 
 const CrsResponse = ({response, markers, setShiftInputMarkers}) => {
 
     console.log(response)
 
-    const [transformation, setTransformation] = useState('helmert_four');
+    const [transformation, setTransformation] = useState(TRANSFORMATION_HELMERT_CONST);
 
     const changeTransformationResults = (event) => {
         setTransformation(event.target.value);
     };
 
-    function objectFormatter(cell, row) {
+    function parametersFormatter(cell, row) {
         return (
             <span>
-                {Object.entries(cell).length > 0 && Object.entries(cell).map((element) => (
-                    <p><strong>{element[0]}</strong>: {Array.isArray(element[1]) ?
-                        element[1].map((element) => <span title={element}>{element.toFixed(6)} </span>) :
-                        element[1].toFixed(4)}</p>
-                ))}
+                {cell && cell[TRANSFORMATION_HELMERT_CONST] ?
+                    Object.entries(cell[TRANSFORMATION_HELMERT_CONST]).map((element) => (
+                        <p>
+                            <strong>{element[0]}</strong>:
+                            <span title={element} className="float-right"> {element[1].toFixed(4)}</span>
+                        </p>)) :
+                    <PolynomialFormatter cell={cell[TRANSFORMATION_POLYNOMIAL_CONST]} row={row}/>
+                }
             </span>
         );
     }
@@ -43,7 +48,7 @@ const CrsResponse = ({response, markers, setShiftInputMarkers}) => {
         return (
             <span>
                 {cell.length > 0 && cell.map((element) => (
-                    <p title={element}>{element[0].toFixed(4)}, {element[1].toFixed(4)}</p>
+                    <p title={element}>{element[0]}, {element[1]}</p>
                 ))}
             </span>
         );
@@ -68,17 +73,18 @@ const CrsResponse = ({response, markers, setShiftInputMarkers}) => {
         {
             text: 'EPSG',
             dataField: 'crs.crs.epsg',
+            headerTitle: () => 'EPSG Geodetic Parameter Dataset',
         },
         {
             text: 'MSE',
             dataField: 'mse',
             sort: true,
+            headerTitle: () => 'Mean Square Error',
             formatter: mseFormatter
         },
         {
             text: 'Converted Points',
             dataField: 'crs.converted_points',
-            hidden: true,
             formatter: convertedPointsFormatter
         },
         {
@@ -106,7 +112,7 @@ const CrsResponse = ({response, markers, setShiftInputMarkers}) => {
         {
             text: 'Parameters',
             dataField: 'parameters',
-            formatter: objectFormatter
+            formatter: parametersFormatter
         },
         {
             text: 'Area',
