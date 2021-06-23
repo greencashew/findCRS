@@ -1,5 +1,8 @@
 import numpy as np
 
+TRANSFORMATION_HELMERT_FOUR_CONST = "helmert_four"
+TRANSFORMATION_POLYNOMIAL_CONST = "polynomial"
+
 
 def optimization_helmert_four(gcps_array):
     gcps_number = len(gcps_array)
@@ -36,8 +39,12 @@ def optimization_helmert_four(gcps_array):
     shift_vector_x = pred_x - reference_x
     shift_vector_y = pred_y - reference_y
 
-    return pred_x, pred_y, shift_vector_x, shift_vector_y, {"rotation": rotation, "scale": pixel_resolution,
-                                                            "shift_x": shift_x, "shift_y": shift_y}
+    return pred_x, pred_y, shift_vector_x, shift_vector_y, {TRANSFORMATION_HELMERT_FOUR_CONST: {
+        "rotation": rotation,
+        "scale": pixel_resolution,
+        "shift_x": shift_x,
+        "shift_y": shift_y
+    }}
 
 
 def optimization_polynomial(order, gcps_array, Ax_row, Ay_row, LX_row, LY_row):
@@ -57,9 +64,9 @@ def optimization_polynomial(order, gcps_array, Ax_row, Ay_row, LX_row, LY_row):
         # X = a0 + a1x + a2y + a3xy + a4x^2 + a5y^2
         # Y = b0 + b1x + b2y + b3xy + b4x^2 + b5y^2
         matrix = np.zeros((gcps_number, 6), dtype=np.float)
-        matrix[:, 0] = 1  # a0
-        matrix[:, 1] = image_x  # a1
-        matrix[:, 2] = image_y  # a2
+        matrix[:, 0] = 1
+        matrix[:, 1] = image_x
+        matrix[:, 2] = image_y
         matrix[:, 3] = image_x * image_y
         matrix[:, 4] = image_x * image_x
         matrix[:, 5] = image_y * image_y
@@ -67,9 +74,9 @@ def optimization_polynomial(order, gcps_array, Ax_row, Ay_row, LX_row, LY_row):
         # X = a0 + a1x + a2y + a3xy + a4x^2 + a5y^2 + a6x^3 + a7x^2y + a8xy^2 + a9y^3
         # Y = b0 + b1x + b2y + b3xy + b4x^2 + b5y^2 + b6x^3 + b7x^2y + b8xy^2 + b9y^3
         matrix = np.zeros((gcps_number, 10), dtype=np.float)
-        matrix[:, 0] = 1  # a0
-        matrix[:, 1] = image_x  # a1
-        matrix[:, 2] = image_y  # a2
+        matrix[:, 0] = 1
+        matrix[:, 1] = image_x
+        matrix[:, 2] = image_y
         matrix[:, 3] = image_x * image_y
         matrix[:, 4] = image_x * image_x
         matrix[:, 5] = image_y * image_y
@@ -87,8 +94,14 @@ def optimization_polynomial(order, gcps_array, Ax_row, Ay_row, LX_row, LY_row):
     shift_vector_x = reference_x - np.array(pred_x)
     shift_vector_y = reference_y - np.array(pred_y)
 
-    return pred_x, pred_y, shift_vector_x, shift_vector_y, {"least_squared_x": least_squared_reference_x[0].tolist(),
-                                                            "least_squared_y": least_squared_reference_y[0].tolist()}
+    return pred_x, pred_y, shift_vector_x, shift_vector_y, {
+        TRANSFORMATION_POLYNOMIAL_CONST:
+            {
+                "order": order,
+                "least_squared_x": least_squared_reference_x[0].tolist(),
+                "least_squared_y": least_squared_reference_y[0].tolist()
+            }
+    }
 
 
 def optimization_polynomial_first_order(gcps_array):

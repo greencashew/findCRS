@@ -351,3 +351,26 @@ class Test(TestCase):
         converted_crs_list = convert_from_wgs84_to_crs_list(inputs_map, supported_crs_list)
 
         self.assertNotEqual(converted_crs_list, [])
+
+    def test_poland_cs92_transformation(self):
+        poland_cs93_coordinate_system = [{
+            "coord_ref_sys_code": 2180,
+            "epsg": "EPSG:2180",
+            "name": "ETRF2000-PL / CS92",
+            "coord_ref_sys_kind": "projected",
+            "bbox_south_bound_lat": 49,
+            "bbox_west_bound_lon": 14.14,
+            "bbox_north_bound_lat": 55.93,
+            "bbox_east_bound_lon": 24.15,
+            "details": "See ETRF2000-PL / CS2000 zones 2000/15, 2000/18, 2000/21 and 2000/24 (codes 2176-79) for large scale purposes.",
+            "area": "Poland"
+        }, ]
+
+        expected_values = [(54.60230099191582, 18.8141564949849),
+                           (53.927794135331645, 14.226018246080002),
+                           (49.005447494058096, 22.89090787814223),
+                           (50.85450904781293, 24.143268558899535)]
+        converted_crs_list = convert_from_wgs84_to_crs_list(expected_values, poland_cs93_coordinate_system)
+
+        print(converted_crs_list)
+        self.assertNotEqual(converted_crs_list, [])

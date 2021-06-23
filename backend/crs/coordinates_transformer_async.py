@@ -24,7 +24,7 @@ def transform_crs(inputs_map, target_crs):
         transformer = Transformer.from_crs(crs_from=REFERENCE_MAP_CRS, crs_to=epsg, always_xy=True)
         i = 0
         new_points = []
-        for point in transformer.itransform(inputs_map, switch=True):
+        for point in transformer.itransform(inputs_map, switch=True, direction="FORWARD"):
             if math.isinf(point[0]) or math.isinf(point[1]):
                 break
 

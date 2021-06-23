@@ -1,0 +1,14 @@
+[
+  {
+    "coord_ref_sys_code": 2180,
+    "epsg": "EPSG:2180",
+    "name": "ETRF2000-PL / CS92",
+    "coord_ref_sys_kind": "projected",
+    "bbox_south_bound_lat": 49,
+    "bbox_west_bound_lon": 14.14,
+    "bbox_north_bound_lat": 55.93,
+    "bbox_east_bound_lon": 24.15,
+    "details": "See ETRF2000-PL / CS2000 zones 2000/15, 2000/18, 2000/21 and 2000/24 (codes 2176-79) for large scale purposes.",
+    "area": "Poland"
+  }
+]
