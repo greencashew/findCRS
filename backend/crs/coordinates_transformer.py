@@ -3,7 +3,7 @@ import math
 
 from pyproj import Transformer
 
-REFERENCE_MAP_CRS = "EPSG:4326"
+REFERENCE_MAP_CRS = "EPSG:3857"
 
 
 def convert_from_wgs84_to_crs_list(inputs_map, supported_crs_list):
