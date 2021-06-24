@@ -47,12 +47,12 @@ def optimization_helmert_four(gcps_array):
     }}
 
 
-def optimization_polynomial(order, gcps_array, Ax_row, Ay_row, LX_row, LY_row):
+def optimization_polynomial(order, gcps_array):
     gcps_number = len(gcps_array)
-    image_x = gcps_array[:, Ax_row]
-    image_y = gcps_array[:, Ay_row]
-    reference_x = gcps_array[:, LX_row]
-    reference_y = gcps_array[:, LY_row]
+    image_x = gcps_array[:, 0]
+    image_y = gcps_array[:, 1]
+    reference_x = gcps_array[:, 2]
+    reference_y = gcps_array[:, 3]
     if order == 1:
         # X = a0 + a1x + a2y
         # Y = b0 + b1x + b2y
@@ -105,12 +105,12 @@ def optimization_polynomial(order, gcps_array, Ax_row, Ay_row, LX_row, LY_row):
 
 
 def optimization_polynomial_first_order(gcps_array):
-    return optimization_polynomial(1, gcps_array, 0, 1, 2, 3)
+    return optimization_polynomial(1, gcps_array)
 
 
 def optimization_polynomial_second_order(gcps_array):
-    return optimization_polynomial(2, gcps_array, 0, 1, 2, 3)
+    return optimization_polynomial(2, gcps_array)
 
 
 def optimization_polynomial_third_order(gcps_array):
-    return optimization_polynomial(3, gcps_array, 0, 1, 2, 3)
+    return optimization_polynomial(3, gcps_array)
