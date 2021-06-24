@@ -49,7 +49,6 @@ def optimization_helmert_four(gcps_array):
 
 def optimization_polynomial(order, gcps_array, Ax_row, Ay_row, LX_row, LY_row):
     gcps_number = len(gcps_array)
-    points = np.zeros((gcps_number, 4), dtype=np.float)
     image_x = gcps_array[:, Ax_row]
     image_y = gcps_array[:, Ay_row]
     reference_x = gcps_array[:, LX_row]
@@ -59,7 +58,8 @@ def optimization_polynomial(order, gcps_array, Ax_row, Ay_row, LX_row, LY_row):
         # Y = b0 + b1x + b2y
         matrix = np.zeros((gcps_number, 3), dtype=np.float)
         matrix[:, 0] = 1
-        matrix[:, 1:3] = points[:, 0:2]
+        matrix[:, 1] = image_x
+        matrix[:, 2] = image_y
     elif order == 2:
         # X = a0 + a1x + a2y + a3xy + a4x^2 + a5y^2
         # Y = b0 + b1x + b2y + b3xy + b4x^2 + b5y^2
