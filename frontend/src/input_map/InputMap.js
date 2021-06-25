@@ -94,7 +94,7 @@ const InputMap = ({markers, updateMarkers, onEditMarker, resetCoordinates, activ
 
         const newScale = zoomDirection > 0 ? oldScale / scaleBy : oldScale * scaleBy;
 
-        if (newScale < 0.3) {
+        if (newScale < 0.1) {
             return;
         }
 

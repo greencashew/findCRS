@@ -21,6 +21,7 @@
     "react-konva": "^17.0.2-0",
     "react-leaflet": "^2.8.0",
     "react-notifications": "^1.7.2",
+    "react-papaparse": "^3.16.1",
     "react-scripts": "^4.0.3",
     "react-zoom-pan-pinch": "^1.6.1",
     "reactstrap": "^8.9.0",

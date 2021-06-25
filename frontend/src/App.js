@@ -13,6 +13,7 @@ import {getCoordinatesBounds, getInteractiveMapAsArrayOfCoordinates} from "./uti
 import Request from "./request/Request";
 import CrsResponse from "./response/CrsResponse";
 import TabNavigation from "./partials/TabNavigation";
+import ExportMarkersToCsv from "./utils/ExportMarkersToCsv";
 
 const App = () => {
     const markersInitialValue = [
@@ -102,6 +103,7 @@ const App = () => {
                             <Coordinates markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}
                                          setOnEditMarker={setOnEditMarker}/>
                             <Row className="mt-4 justify-content-md-center">
+                                <ExportMarkersToCsv markers={markers}/>
                                 <Col xs={6} md={2}>
                                     <Button color="warning" size="md"
                                             onClick={resetCoordinates}>Reset all coordinates</Button>
