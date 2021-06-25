@@ -103,7 +103,6 @@ const App = () => {
                             <Coordinates markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}
                                          setOnEditMarker={setOnEditMarker}/>
                             <Row className="mt-4 justify-content-md-center">
-                                <ExportMarkersToCsv markers={markers}/>
                                 <Col xs={6} md={2}>
                                     <Button color="warning" size="md"
                                             onClick={resetCoordinates}>Reset all coordinates</Button>
@@ -117,6 +116,9 @@ const App = () => {
                                              setActiveTab={setActiveTab}
                                     />
                                 </Col>
+                            </Row>
+                            <Row className="mt-4 justify-content-md-center">
+                                <ExportMarkersToCsv markers={markers}/>
                             </Row>
                         </Form>
                     </TabPane>
