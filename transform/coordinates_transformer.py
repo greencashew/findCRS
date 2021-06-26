@@ -1,7 +1,7 @@
 import pandas as pd
 from pyproj import Transformer
 
-REFERENCE_MAP_CRS = "EPSG:3857"
+REFERENCE_MAP_CRS = "EPSG:4326"
 TARGET_CRS = "EPSG:2180"
 
 if __name__ == "__main__":
