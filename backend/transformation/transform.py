@@ -14,10 +14,10 @@ def optimization_helmert_four(gcps_array):
     ref_x = gcps_array[:, 2]
     ref_y = gcps_array[:, 3]
 
-    delta_image_x = ref_x - gravity_center_image_x
-    delta_image_y = ref_y - gravity_center_image_y
-    delta_reference_x = img_x - gravity_center_reference_x
-    delta_reference_y = img_y - gravity_center_reference_y
+    delta_image_x = img_x - gravity_center_image_x
+    delta_image_y = img_y - gravity_center_image_y
+    delta_reference_x = ref_x - gravity_center_reference_x
+    delta_reference_y = ref_y - gravity_center_reference_y
 
     a_numerator, a_denominator, b_nominator, b_denominator = 0, 0, 0, 0
     for i in range(gcps_number):
