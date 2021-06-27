@@ -31,10 +31,8 @@ def optimization_helmert_four(gcps_array):
     shift_x = gravity_center_image_y * rotation - gravity_center_image_x * pixel_resolution + gravity_center_reference_x
     shift_y = -gravity_center_image_x * rotation - gravity_center_image_y * pixel_resolution + gravity_center_reference_y
 
-    pred_x = (ref_x - gravity_center_image_x) * pixel_resolution - (
-            ref_y - gravity_center_image_y) * rotation + gravity_center_reference_x
-    pred_y = (ref_x - gravity_center_image_x) * rotation + (
-            ref_y - gravity_center_image_y) * pixel_resolution + gravity_center_reference_y
+    pred_x = delta_reference_x * pixel_resolution - delta_reference_y * rotation + gravity_center_reference_x
+    pred_y = delta_reference_x * rotation + delta_reference_y * pixel_resolution + gravity_center_reference_y
 
     shift_vector_x = pred_x - img_x
     shift_vector_y = pred_y - img_y
