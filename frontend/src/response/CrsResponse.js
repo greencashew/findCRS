@@ -115,6 +115,10 @@ const CrsResponse = ({response, markers, setShiftInputMarkers}) => {
             formatter: parametersFormatter
         },
         {
+            text: 'Units [x y]',
+            dataField: 'crs.units',
+        },
+        {
             text: 'Area',
             dataField: 'crs.crs.area',
         },

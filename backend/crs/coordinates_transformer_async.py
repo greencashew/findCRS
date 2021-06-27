@@ -2,7 +2,7 @@ import logging
 import math
 import multiprocessing
 
-from pyproj import Transformer
+from pyproj import Transformer, CRS
 
 REFERENCE_MAP_CRS = "EPSG:4326"
 
@@ -21,6 +21,7 @@ def transform_crs(inputs_map, target_crs):
     logging.debug("CRS: {}".format(target_crs))
     epsg = target_crs['epsg']
     try:
+        crs_details = CRS(epsg)
         transformer = Transformer.from_crs(crs_from=REFERENCE_MAP_CRS, crs_to=epsg, always_xy=True)
         i = 0
         new_points = []
@@ -30,7 +31,9 @@ def transform_crs(inputs_map, target_crs):
 
             new_points.append(point[::-1])
             i += 1
-        return {"crs": target_crs, "converted_points": new_points}
+        return {"crs": target_crs,
+                "units": crs_details.axis_info[0].unit_name + " " + crs_details.axis_info[1].unit_name,
+                "converted_points": new_points}
     except Exception as e:
         logging.error("[{}]: {}".format(epsg, e))
         return
