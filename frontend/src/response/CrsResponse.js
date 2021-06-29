@@ -137,7 +137,7 @@ const CrsResponse = ({response, markers, setShiftInputMarkers}) => {
         bgColor: '#c8e6c9',
         onSelect: (row) => {
             const sumPointsArrays1 = sumPointsArrays(getInputMapMapAsArrayOfCoordinates(markers), toArrayOfPoints(
-                row['shift_vector_x'], row['shift_vector_y']
+                row['pred_x'], row['pred_y']
             ));
 
             // console.log("Input: ", getInputMapMapAsArrayOfCoordinates(markers), ", shift:", toArrayOfPoints(

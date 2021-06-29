@@ -1,51 +1,54 @@
 import numpy as np
+from numpy import rad2deg, arctan, sqrt
 
 TRANSFORMATION_HELMERT_FOUR_CONST = "helmert_four"
 TRANSFORMATION_POLYNOMIAL_CONST = "polynomial"
 
 
-def optimization_helmert_four(gcps_array):
+def estimation_helmert_four(gcps_array):
     gcps_number = len(gcps_array)
-    gravity_center_image_x, gravity_center_image_y, gravity_center_reference_x, gravity_center_reference_y = np.average(
+    X0, Y0, x0, y0 = np.average(
         gcps_array, 0)
 
-    img_x = gcps_array[:, 0]
-    img_y = gcps_array[:, 1]
-    ref_x = gcps_array[:, 2]
-    ref_y = gcps_array[:, 3]
+    x = gcps_array[:, 2]
+    y = gcps_array[:, 3]
+    X = gcps_array[:, 0]
+    Y = gcps_array[:, 1]
 
-    delta_image_x = img_x - gravity_center_image_x
-    delta_image_y = img_y - gravity_center_image_y
-    delta_reference_x = ref_x - gravity_center_reference_x
-    delta_reference_y = ref_y - gravity_center_reference_y
+    xi = x - x0
+    yi = y - y0
+    Xi = X - X0
+    Yi = Y - Y0
 
-    a_numerator, a_denominator, b_nominator, b_denominator = 0, 0, 0, 0
+    s_numerator, c_numerator, denominator = 0, 0, 0
     for i in range(gcps_number):
-        a_numerator += delta_image_x[i] * delta_reference_y[i] - delta_image_y[i] * delta_reference_x[i]
-        a_denominator += delta_image_x[i] * delta_image_x[i] + delta_image_y[i] * delta_image_y[i]
-        b_nominator += delta_image_x[i] * delta_reference_x[i] + delta_image_y[i] * delta_reference_y[i]
-        b_denominator = a_denominator
+        c_numerator += Xi[i] * xi[i] + Yi[i] * yi[i]
+        s_numerator += Xi[i] * yi[i] - Yi[i] * xi[i]
+        denominator += xi[i] * xi[i] + yi[i] * yi[i]
 
-    rotation = a_numerator / a_denominator
-    pixel_resolution = b_nominator / b_denominator
-    shift_x = gravity_center_image_y * rotation - gravity_center_image_x * pixel_resolution + gravity_center_reference_x
-    shift_y = -gravity_center_image_x * rotation - gravity_center_image_y * pixel_resolution + gravity_center_reference_y
+    c_factor = c_numerator / denominator  # scale, rotation factor
+    s_factor = s_numerator / denominator  # scale, rotation factor
 
-    pred_x = delta_reference_x * pixel_resolution - delta_reference_y * rotation + gravity_center_reference_x
-    pred_y = delta_reference_x * rotation + delta_reference_y * pixel_resolution + gravity_center_reference_y
+    rotation = rad2deg(arctan(s_factor / c_factor))
+    scale = sqrt(s_factor * s_factor + c_factor * c_factor)
+    shift_x = X0 - c_factor * x0 + s_factor * y0
+    shift_y = Y0 - c_factor * y0 - s_factor * x0
 
-    shift_vector_x = pred_x - img_x
-    shift_vector_y = pred_y - img_y
+    pred_x = X0 + c_factor * xi + s_factor * yi
+    pred_y = Y0 + c_factor * yi - s_factor * xi
+
+    shift_vector_x = pred_x - X
+    shift_vector_y = pred_y - Y
 
     return pred_x, pred_y, shift_vector_x, shift_vector_y, {TRANSFORMATION_HELMERT_FOUR_CONST: {
-        "rotation": rotation,
-        "scale": pixel_resolution,
+        "rotation (deg)": rotation,
+        "scale": scale,
         "shift_x": shift_x,
         "shift_y": shift_y
     }}
 
 
-def optimization_polynomial(order, gcps_array):
+def estimation_polynomial(order, gcps_array):
     gcps_number = len(gcps_array)
     img_x = gcps_array[:, 0]
     img_y = gcps_array[:, 1]
@@ -102,13 +105,13 @@ def optimization_polynomial(order, gcps_array):
     }
 
 
-def optimization_polynomial_first_order(gcps_array):
-    return optimization_polynomial(1, gcps_array)
+def estimation_polynomial_first_order(gcps_array):
+    return estimation_polynomial(1, gcps_array)
 
 
-def optimization_polynomial_second_order(gcps_array):
-    return optimization_polynomial(2, gcps_array)
+def estimation_polynomial_second_order(gcps_array):
+    return estimation_polynomial(2, gcps_array)
 
 
-def optimization_polynomial_third_order(gcps_array):
-    return optimization_polynomial(3, gcps_array)
+def estimation_polynomial_third_order(gcps_array):
+    return estimation_polynomial(3, gcps_array)
