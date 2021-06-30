@@ -5,9 +5,10 @@ import {Badge, Input, InputGroup, InputGroupAddon} from "reactstrap";
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import './CrsResponse.scss'
-import {getInputMapMapAsArrayOfCoordinates, sumPointsArrays, toArrayOfPoints} from "../utils/Coordinates";
+import {toArrayOfPoints} from "../utils/Coordinates";
 import {TRANSFORMATION_HELMERT_CONST, TRANSFORMATION_POLYNOMIAL_CONST} from "../config/const";
 import PolynomialFormatter from "./PolynomialFormatter";
+import {CSVDownloader} from "react-papaparse";
 
 const CrsResponse = ({response, markers, setShiftInputMarkers}) => {
 
@@ -136,9 +137,9 @@ const CrsResponse = ({response, markers, setShiftInputMarkers}) => {
         hideSelectColumn: true,
         bgColor: '#c8e6c9',
         onSelect: (row) => {
-            const sumPointsArrays1 = sumPointsArrays(getInputMapMapAsArrayOfCoordinates(markers), toArrayOfPoints(
+            const sumPointsArrays1 = toArrayOfPoints(
                 row['pred_x'], row['pred_y']
-            ));
+            );
 
             // console.log("Input: ", getInputMapMapAsArrayOfCoordinates(markers), ", shift:", toArrayOfPoints(
             //     row['shift_vector_x'], row['shift_vector_y']

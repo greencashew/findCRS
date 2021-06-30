@@ -39,12 +39,12 @@ def extract_values(markers):
     input_values_map = []
     expected_values_map = []
     for marker in markers:
-        input_values_map.append((float(marker.get('inputMap')[0]), inverseValues(float(marker.get('inputMap')[1]))))
+        input_values_map.append((float(marker.get('inputMap')[0]), inverse_values(float(marker.get('inputMap')[1]))))
         expected_values_map.append((float(marker.get('interactiveMap')[0]), float(marker.get('interactiveMap')[1])))
     return input_values_map, expected_values_map
 
 
-def inverseValues(values):
+def inverse_values(values):
     return values * -1
 
 
