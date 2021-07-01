@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Map, Marker, TileLayer, withLeaflet} from "react-leaflet";
+import React, {useRef, useState} from "react";
+import {FeatureGroup, Map, Marker, TileLayer, withLeaflet} from "react-leaflet";
 import 'leaflet/dist/leaflet.css'
 import './InteractiveMap.css'
 import Search from "./LeafletGeoSearch"
@@ -10,7 +10,10 @@ import {markerIcons} from "./MarkerIcons";
 
 const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
 
+    const interactiveMapRef = useRef(null);
+    const markersRef = useRef(null);
     const [zoom, setZoom] = useState(10);
+    const [center, setCenter] = useState([51.10283426063734, 17.064867493793372]);
 
     const getLeafletIcon = (index) => new L.Icon({
         iconUrl: markerIcons[index],
@@ -31,26 +34,31 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
         updateMarkers(newMarkers);
     }
 
+    const setBoundariesForMarkers = () => {
+        const map = interactiveMapRef?.current.leafletElement;
+        const group = markersRef?.current.leafletElement;
+        map.fitBounds(group.getBounds());
+    }
+
     function isNullMarker(marker) {
         return marker == null || marker.interactiveMap[0] === null || marker.interactiveMap[1] === null;
     }
 
     const GeoSearch = withLeaflet(Search);
-
-    function setDefaultPositionIfPreviousAlsoNull() {
-        return onEditMarker - 1 < 0 || isNullMarker(markers[onEditMarker - 1]) ? [51.10283426063734, 17.064867493793372] : markers[onEditMarker - 1].interactiveMap;
-    }
-
     return (
         <div>
             <Map
-                center={isNullMarker(markers[onEditMarker]) ? setDefaultPositionIfPreviousAlsoNull() : markers[onEditMarker].interactiveMap}
+                center={center}
                 zoom={zoom}
                 onClick={changeMarkerLocationOnMapClick}
+                ref={interactiveMapRef}
             >
-                {markers.map((marker, idx) => !isNullMarker(marker) &&
-                    <Marker key={`marker-${idx}`} id={idx} position={marker.interactiveMap} icon={getLeafletIcon(idx)}/>
-                )}
+                <FeatureGroup ref={markersRef}>
+                    {markers.map((marker, idx) => !isNullMarker(marker) &&
+                        <Marker key={`marker-${idx}`} id={idx} position={marker.interactiveMap}
+                                icon={getLeafletIcon(idx)}/>
+                    )}
+                </FeatureGroup>
                 <GeoSearch/>
                 <MapScale/>
                 <TileLayer
@@ -58,6 +66,8 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
                     attribution='&copy; '
                 />
             </Map>
+
+            <button onClick={setBoundariesForMarkers}>Recenter to all points</button>
         </div>
     )
 }
