@@ -5,7 +5,7 @@ import {getInputAndInteractiveMapAsArrayOfCoordinates, getInteractiveMapAsArrayO
 const ExportMarkersToCsv = ({markers}) => {
 
     const CSV_HEADER = ["Pixel X", "Pixel Y", "Reference Lat", "Reference Lng"];
-    return <div>
+    return <div className="col-md-4 col-sm-6">
         <CSVDownloader
             type="button"
             filename={'interactive-map-input'}

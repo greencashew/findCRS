@@ -6,6 +6,7 @@ img {
     height: 50vh;
     max-width: 100%;
     cursor: pointer;
+    position: relative;
 }
 
 .app-header {
@@ -23,10 +24,10 @@ img {
 
 .footer a {
     color: #91c6ff;
+    text-decoration: none;
 }
 
 .footer a:hover {
     color: #6eaef3;
-    text-decoration: none;
 }
 

@@ -11,7 +11,7 @@ const TabNavigation = ({response, activeTab, setActiveTab}) => {
     }
 
     return (
-        <Nav tabs xs={12} md={9}>
+        <Nav tabs xs={12} md={9} className="col-md-2 col-sm-4">
             <NavItem>
                 <NavLink
                     className={classnames({active: activeTab === INPUT_COORDINATES_TAB})}
