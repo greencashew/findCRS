@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader, NavLink} from 'reactstrap';
 
 
 function HowTo() {
@@ -10,8 +10,8 @@ function HowTo() {
     const closeBtn = <button className="close" onClick={toggle}>&times;</button>;
 
     return (
-        <div>
-            <Button color="warning" size="md" onClick={toggle}>Help</Button>
+        <>
+            <NavLink onClick={toggle}>Help</NavLink>
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle} close={closeBtn}>Usage</ModalHeader>
                 <ModalBody>
@@ -33,7 +33,7 @@ function HowTo() {
                     <Button color="primary" onClick={toggle}>Exit</Button>
                 </ModalFooter>
             </Modal>
-        </div>
+        </>
     )
 }
 

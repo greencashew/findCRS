@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Col, Container, Form, Row, TabContent, TabPane} from 'reactstrap';
-import './App.css';
+import './App.scss';
 import 'react-notifications/dist/react-notifications.css';
 import InteractiveMap from './interactive_map/InteractiveMap'
 import InputMap from './input_map/InputMap'

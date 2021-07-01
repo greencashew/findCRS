@@ -1,0 +1,60 @@
+img {
+  max-width: 100%;
+}
+
+.map, .leaflet-container {
+  height: 50vh;
+  max-width: 100%;
+  cursor: pointer;
+  position: relative;
+}
+
+.app-header {
+  margin-left: -.75rem;
+  margin-right: -.75rem;
+
+  a {
+    color: #fff;
+    cursor: pointer;
+    line-height: 1;
+
+    &:visited, &:focus {
+      color: #fff;
+    }
+
+    &:hover {
+      color: #6eaef3;
+    }
+
+    &.active {
+      color: #91c6ff;
+    }
+
+    h1 {
+      font-size: 1rem;
+      padding: 0;
+      margin-bottom: 0;
+      margin-top: 0;
+      font-weight: 800;
+    }
+  }
+
+  .navbar {
+    padding-bottom: 0;
+    padding-top: 0;
+  }
+}
+
+.footer {
+  margin-top: 100px;
+}
+
+.footer a {
+  color: #91c6ff;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #6eaef3;
+}
+
