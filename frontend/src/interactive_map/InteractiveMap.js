@@ -21,17 +21,6 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
         shadowSize: [41, 41]
     });
 
-    const updateMarkerLocation = (event) => {
-        if (onEditMarker == null) {
-            return;
-        }
-        let newMarkers = [...markers];
-        const id = event.target.options.id;
-        const latLng = event.target.getLatLng();
-        newMarkers[id].interactiveMap = [latLng.wrap().lat, latLng.wrap().lng];
-        updateMarkers(newMarkers);
-    }
-
     const changeMarkerLocationOnMapClick = (event) => {
         if (onEditMarker == null) {
             return;
@@ -56,10 +45,11 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
         <div>
             <Map
                 center={isNullMarker(markers[onEditMarker]) ? setDefaultPositionIfPreviousAlsoNull() : markers[onEditMarker].interactiveMap}
-                zoom={zoom} onClick={changeMarkerLocationOnMapClick}>
+                zoom={zoom}
+                onClick={changeMarkerLocationOnMapClick}
+            >
                 {markers.map((marker, idx) => !isNullMarker(marker) &&
-                    <Marker key={`marker-${idx}`} id={idx} position={marker.interactiveMap} icon={getLeafletIcon(idx)}
-                            draggable={onEditMarker === idx} onDragend={updateMarkerLocation}/>
+                    <Marker key={`marker-${idx}`} id={idx} position={marker.interactiveMap} icon={getLeafletIcon(idx)}/>
                 )}
                 <GeoSearch/>
                 <MapScale/>
