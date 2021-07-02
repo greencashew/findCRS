@@ -11,10 +11,11 @@ import {
     UncontrolledDropdown
 } from "reactstrap";
 import React, {useState} from "react";
-import HowTo from '../how_to/HowTo'
+import HowTo from './HowTo'
+import MarkersToCsv, {ImportMarkersFromCsv} from "../marker_structure/operations/MarkersToCsv";
 
 
-const Header = () => {
+const Header = ({markers}) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
 
@@ -27,14 +28,14 @@ const Header = () => {
                     <Nav className="mr-auto" navbar>
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle nav caret>
-                                File
+                                Input Coordinates
                             </DropdownToggle>
                             <DropdownMenu right>
                                 <DropdownItem>
-                                    Load Coordinates from csv
+                                    <ImportMarkersFromCsv markers={markers}/>
                                 </DropdownItem>
                                 <DropdownItem>
-                                    Export coordinates to csv
+                                    <MarkersToCsv markers={markers}/>
                                 </DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
@@ -43,8 +44,6 @@ const Header = () => {
                         </NavItem>
                     </Nav>
                 </Collapse>
-
-
             </Navbar>
         </header>
     )

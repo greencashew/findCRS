@@ -2,8 +2,8 @@ import {Nav, NavItem, NavLink} from "reactstrap";
 import classnames from "classnames";
 import React from "react";
 
-const INPUT_COORDINATES_TAB = 'inputCoordinatesTab';
-const RESULTS_TAB = 'resultsTab';
+export const INPUT_COORDINATES_TAB = 'inputCoordinatesTab';
+export const RESULTS_TAB = 'resultsTab';
 
 const TabNavigation = ({response, activeTab, setActiveTab}) => {
     const toggle = tab => {

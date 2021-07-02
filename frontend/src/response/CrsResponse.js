@@ -5,10 +5,9 @@ import {Badge, Input, InputGroup, InputGroupAddon} from "reactstrap";
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import './CrsResponse.scss'
-import {toArrayOfPoints} from "../utils/Coordinates";
+import {toArrayOfPoints} from "../marker_structure/CoordinateUtils";
 import {TRANSFORMATION_HELMERT_CONST, TRANSFORMATION_POLYNOMIAL_CONST} from "../config/const";
 import PolynomialFormatter from "./PolynomialFormatter";
-import {CSVDownloader} from "react-papaparse";
 
 const CrsResponse = ({response, markers, setShiftInputMarkers}) => {
 

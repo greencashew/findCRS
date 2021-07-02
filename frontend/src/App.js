@@ -9,11 +9,10 @@ import Header from "./partials/Header"
 import Footer from "./partials/Footer";
 import {NotificationContainer} from 'react-notifications';
 import {useCookies} from 'react-cookie';
-import {getCoordinatesBounds, getInteractiveMapAsArrayOfCoordinates} from "./utils/Coordinates";
+import {getCoordinatesBounds, getInteractiveMapAsArrayOfCoordinates} from "./marker_structure/CoordinateUtils";
 import Request from "./request/Request";
 import CrsResponse from "./response/CrsResponse";
-import TabNavigation from "./partials/TabNavigation";
-import ExportMarkersToCsv from "./utils/ExportMarkersToCsv";
+import TabNavigation, {INPUT_COORDINATES_TAB, RESULTS_TAB} from "./partials/TabNavigation";
 
 const App = () => {
     const markersInitialValue = [
@@ -28,7 +27,7 @@ const App = () => {
     const [mapBounds, setMapBounds] = useState(null);
     const [onEditMarker, setOnEditMarker] = useState(0);
     const [response, setResponse] = useState(null);
-    const [activeTab, setActiveTab] = useState('inputCoordinatesTab');
+    const [activeTab, setActiveTab] = useState(INPUT_COORDINATES_TAB);
     const [shiftInputMarkers, setShiftInputMarkers] = useState(null);
 
     useEffect(() => {
@@ -80,7 +79,7 @@ const App = () => {
     return (
         <div className="App">
             <Container fluid className="justify-content-md-center">
-                <Header/>
+                <Header markers={markers}/>
                 <Row className="mb-3 justify-content-md-center">
                     <Col xs="hidden" md={1}/>
                     <Col xs={12} sm={4} md={4}>
@@ -98,7 +97,7 @@ const App = () => {
                     <TabNavigation response={response} activeTab={activeTab} setActiveTab={setActiveTab}/>
                 </Row>
                 <TabContent activeTab={activeTab}>
-                    <TabPane tabId="inputCoordinatesTab">
+                    <TabPane tabId={INPUT_COORDINATES_TAB}>
                         <Form>
                             <Coordinates markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}
                                          setOnEditMarker={setOnEditMarker}/>
@@ -117,12 +116,9 @@ const App = () => {
                                     />
                                 </Col>
                             </Row>
-                            <Row className="mt-4 justify-content-md-center">
-                                <ExportMarkersToCsv markers={markers}/>
-                            </Row>
                         </Form>
                     </TabPane>
-                    <TabPane tabId="resultsTab">
+                    <TabPane tabId={RESULTS_TAB}>
                         <Row className="mt-4 justify-content-md-center">
                             <Col xs={12} md={9}>
                                 {response && <CrsResponse response={response} markers={markers}
