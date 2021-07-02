@@ -77,9 +77,9 @@ const App = () => {
     }
 
     return (
-        <div className="App">
-            <Container fluid className="justify-content-md-center">
-                <Header markers={markers}/>
+        <div className="app">
+            <Header markers={markers}/>
+            <Container fluid className="justify-content-md-center main-container">
                 <Row className="mb-3 justify-content-md-center">
                     <Col xs="hidden" md={1}/>
                     <Col xs={12} sm={4} md={4}>

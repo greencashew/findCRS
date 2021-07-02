@@ -20,7 +20,7 @@ const Header = ({markers}) => {
     const toggle = () => setIsOpen(!isOpen);
 
     return (
-        <header className="app-header bg-dark text-white mt-0 mb-3">
+        <header className="app-header bg-dark text-white">
             <Navbar className="mr-auto container-fluid" expand="sm">
                 <NavbarBrand href="#" className="mr-auto"><h1>Find CRS</h1></NavbarBrand>
                 <NavbarToggler onClick={toggle}/>
