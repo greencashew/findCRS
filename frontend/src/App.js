@@ -14,16 +14,19 @@ import Request from "./request/Request";
 import CrsResponse from "./response/CrsResponse";
 import TabNavigation, {INPUT_COORDINATES_TAB, RESULTS_TAB} from "./partials/TabNavigation";
 
+export const DEFAULT_MARKER_STRUCTURE = [
+    {
+        label: null,
+        inputMap: [null, null],
+        interactiveMap: [null, null],
+    }
+];
+
 const App = () => {
-    const markersInitialValue = [
-        {
-            inputMap: [null, null],
-            interactiveMap: [null, null],
-        }
-    ];
+
 
     const [cookies, setCookie] = useCookies(['find-coordinates']);
-    const [markers, updateMarkers] = useState(markersInitialValue);
+    const [markers, updateMarkers] = useState(DEFAULT_MARKER_STRUCTURE);
     const [mapBounds, setMapBounds] = useState(null);
     const [onEditMarker, setOnEditMarker] = useState(0);
     const [response, setResponse] = useState(null);
@@ -31,7 +34,7 @@ const App = () => {
     const [shiftInputMarkers, setShiftInputMarkers] = useState(null);
 
     useEffect(() => {
-        if (markers && markers !== markersInitialValue) {
+        if (markers && markers !== DEFAULT_MARKER_STRUCTURE) {
             setMapBounds(getCoordinatesBounds(
                 getInteractiveMapAsArrayOfCoordinates(markers)
                 )
@@ -54,7 +57,7 @@ const App = () => {
     }, [markers, setCookie]);
 
     const resetCoordinates = () => {
-        updateMarkers(markersInitialValue);
+        updateMarkers(DEFAULT_MARKER_STRUCTURE);
         resetShiftInputMarkers()
         resetOnEditMarker()
         resetCookies()

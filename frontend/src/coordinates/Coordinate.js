@@ -1,6 +1,5 @@
 import {Input, InputGroup, InputGroupAddon, InputGroupText} from "reactstrap";
 import React from "react";
-import './Coordinate.css'
 import "../interactive_map/MarkerIcons"
 import {markerIcons} from "../interactive_map/MarkerIcons";
 
