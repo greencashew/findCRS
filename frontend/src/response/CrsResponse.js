@@ -1,205 +1,204 @@
-import React, {useState} from "react";
-import BootstrapTable from 'react-bootstrap-table-next';
-import ToolkitProvider, {ColumnToggle, CSVExport, Search} from 'react-bootstrap-table2-toolkit';
-import {Badge, Input, InputGroup, InputGroupAddon} from "reactstrap";
-
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import React, {useState} from 'react'
+import {useFilters, useSortBy, useTable} from "react-table";
+import {Badge, Input, InputGroup, InputGroupAddon, Table} from "reactstrap";
 import './CrsResponse.scss'
+import {TRANSFORMATION_HELMERT_CONST} from "../config/const";
+import {faAngleDown, faAngleUp} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {arrayFormatter, convertedPointsFormatter, mseFormatter, parametersFormatter} from "./Formatters";
+import {DefaultColumnFilter, NumberRangeColumnFilter, SelectColumnFilter,} from "./ColumnFilters";
 import {toArrayOfPoints} from "../marker_structure/CoordinateUtils";
-import {TRANSFORMATION_HELMERT_CONST, TRANSFORMATION_POLYNOMIAL_CONST} from "../config/const";
-import PolynomialFormatter from "./PolynomialFormatter";
 
-const CrsResponse = ({response, markers, setShiftInputMarkers}) => {
-
-    console.log(response)
-
+function CrsResponse({response, setShiftInputMarkers}) {
     const [transformation, setTransformation] = useState(TRANSFORMATION_HELMERT_CONST);
+    const [activeRow, setActiveRow] = useState(null)
 
     const changeTransformationResults = (event) => {
         setTransformation(event.target.value);
+        resetSelectedRow()
     };
 
-    function parametersFormatter(cell, row) {
-        return (
-            <span>
-                {cell && cell[TRANSFORMATION_HELMERT_CONST] ?
-                    Object.entries(cell[TRANSFORMATION_HELMERT_CONST]).map((element) => (
-                        <p>
-                            <strong>{element[0]}</strong>:
-                            <span title={element} className="float-right"> {element[1].toFixed(4)}</span>
-                        </p>)) :
-                    <PolynomialFormatter cell={cell[TRANSFORMATION_POLYNOMIAL_CONST]} row={row}/>
-                }
-            </span>
+    const defaultColumn = React.useMemo(
+        () => ({
+            // Let's set up our default Filter UI
+            Filter: DefaultColumnFilter,
+        }),
+        []
+    )
+
+    const resetSelectedRow = () => {
+        setActiveRow(null)
+        setShiftInputMarkers(null)
+    }
+
+    const setPredictedPoints = (event, row) => {
+        const index = row.index;
+        const sumPointsArrays1 = toArrayOfPoints(
+            response[transformation][index]['pred_x'], response[transformation][index]['pred_y']
         );
+        setShiftInputMarkers(sumPointsArrays1)
+        console.log(row)
+        setActiveRow(index)
     }
 
-    function arrayFormatter(cell, row) {
-        return (
-            <span>
-                {cell.length > 0 && cell.map((element) => (
-                    <p title={element}>{element.toFixed(4)}</p>
-                ))}
-            </span>
-        );
-    }
+    const columns = React.useMemo(
+        () => [
+            {
+                Header: 'Name',
+                accessor: "crs.crs.name",
+            },
+            {
+                Header: 'EPSG',
+                accessor: 'crs.crs.epsg',
+            },
+            {
+                Header: 'MSE',
+                accessor: 'mse',
+                disableFilters: true,
+                Cell: props => mseFormatter(props.value),
+                Filter: NumberRangeColumnFilter,
+            },
+            {
+                Header: 'Converted Points',
+                accessor: 'crs.converted_points',
+                disableFilters: true,
+                Cell: props => convertedPointsFormatter(props.value)
+            },
+            {
+                Header: 'PredX',
+                accessor: 'pred_x',
+                disableFilters: true,
+                Cell: props => arrayFormatter(props.value)
+            },
+            {
+                Header: 'PredY',
+                accessor: 'pred_y',
+                disableFilters: true,
+                Cell: props => arrayFormatter(props.value)
+            },
+            {
+                Header: 'ShiftX',
+                accessor: 'shift_vector_x',
+                disableFilters: true,
+                Cell: props => arrayFormatter(props.value)
+            },
+            {
+                Header: 'ShiftY',
+                accessor: 'shift_vector_y',
+                disableFilters: true,
+                Cell: props => arrayFormatter(props.value)
+            },
+            {
+                Header: 'Parameters',
+                accessor: 'parameters',
+                disableFilters: true,
+                Cell: props => parametersFormatter(props.value)
+            },
+            {
+                Header: 'Units [x y]',
+                accessor: 'crs.units',
+                Filter: SelectColumnFilter,
+                filter: 'includes',
+            },
+            // {
+            //     Header: 'Area',
+            //     accessor: 'crs.crs.area',
+            // },
+            // {
+            //     Header: 'Details',
+            //     accessor: 'crs.crs.details',
+            // }
+        ],
+        []
+    )
 
-    function convertedPointsFormatter(cell, row) {
-        return (
-            <span>
-                {cell.length > 0 && cell.map((element) => (
-                    <p title={element}>{element[0]}, {element[1]}</p>
-                ))}
-            </span>
-        );
-    }
-
-    function mseFormatter(cell, row) {
-        return (
-            <>
-                {cell.toFixed(8)}
-            </>
-        )
-    }
-
-    const {SearchBar} = Search;
-    const {ExportCSVButton} = CSVExport;
-    const {ToggleList} = ColumnToggle;
-
-    const columns = [{
-        text: 'Name',
-        dataField: "crs.crs.name",
-    },
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow,
+    } = useTable(
         {
-            text: 'EPSG',
-            dataField: 'crs.crs.epsg',
-            headerTitle: () => 'EPSG Geodetic Parameter Dataset',
+            columns,
+            data: response[transformation],
+            defaultColumn, // Be sure to pass the defaultColumn option
+            initialState: {
+                sortBy: [
+                    {
+                        id: 'mse',
+                        desc: false
+                    }
+                ],
+                filters: [
+                    {
+                        id: 'crs.units',
+                        value: 'metre metre',
+                    },
+                ],
+            }
         },
-        {
-            text: 'MSE',
-            dataField: 'mse',
-            sort: true,
-            headerTitle: () => 'Mean Square Error',
-            formatter: mseFormatter
-        },
-        {
-            text: 'Converted Points',
-            dataField: 'crs.converted_points',
-            formatter: convertedPointsFormatter
-        },
-        {
-            text: 'PredX',
-            dataField: 'pred_x',
-            hidden: true,
-            formatter: arrayFormatter,
-        },
-        {
-            text: 'PredY',
-            dataField: 'pred_y',
-            hidden: true,
-            formatter: arrayFormatter,
-        },
-        {
-            text: 'ShiftX',
-            dataField: 'shift_vector_x',
-            formatter: arrayFormatter,
-        },
-        {
-            text: 'ShiftY',
-            dataField: 'shift_vector_y',
-            formatter: arrayFormatter,
-        },
-        {
-            text: 'Parameters',
-            dataField: 'parameters',
-            formatter: parametersFormatter
-        },
-        {
-            text: 'Units [x y]',
-            dataField: 'crs.units',
-        },
-        {
-            text: 'Area',
-            dataField: 'crs.crs.area',
-        },
-        {
-            text: 'Details',
-            dataField: 'crs.crs.details',
-            hidden: true,
-        }
-    ];
-
-    const defaultSorted = [{dataField: 'mse', order: 'asc'}];
-    const selectRow = {
-        mode: 'radio',
-        clickToSelect: true,
-        hideSelectColumn: true,
-        bgColor: '#c8e6c9',
-        onSelect: (row) => {
-            const sumPointsArrays1 = toArrayOfPoints(
-                row['pred_x'], row['pred_y']
-            );
-
-            // console.log("Input: ", getInputMapMapAsArrayOfCoordinates(markers), ", shift:", toArrayOfPoints(
-            //     row['shift_vector_x'], row['shift_vector_y']
-            // ), ", sum: ", sumPointsArrays1)
-            setShiftInputMarkers(sumPointsArrays1)
-        },
-    };
-
+        useFilters,
+        useSortBy,
+    )
 
     return (
         <div>
-            <ToolkitProvider
-                keyField='epsg'
-                data={response[transformation]}
-                columns={columns}
-                search
-                exportCSV={{
-                    fileName: 'calculated_crs_systems.csv',
-                }}
-                columnToggle
-            >
-                {
-                    props => (
-                        <div>
-                            <div className="clearfix">
-                                <Badge color="success" className="float-right">
-                                    Processed {response[transformation].length} potential CRS</Badge>
-                                <InputGroup className="float-left transformation-select">
-                                    <InputGroupAddon addonType="prepend">
-                                        Choose transformation:
-                                    </InputGroupAddon>
-                                    <Input type="select" onChange={changeTransformationResults} value={transformation}>
-                                        {Object.keys(response).map(item => (
-                                            <option key={item} value={item}>
-                                                {item}
-                                            </option>
-                                        ))}
-                                    </Input>
-                                </InputGroup>
-                            </div>
-                            <div className="clearfix">
-                                <ToggleList {...props.columnToggleProps} className="float-left"/>
-                                <ExportCSVButton className="btn btn-warning btn-md float-right" {...props.csvProps}>Export
-                                    CSV</ExportCSVButton>
-                                <div className="float-right">
-                                    <SearchBar {...props.searchProps} />
-                                </div>
-                            </div>
-
-                            <BootstrapTable
-                                {...props.baseProps}
-                                defaultSorted={defaultSorted}
-                                hover
-                                bordered
-                                selectRow={selectRow}
-                                classes="table-responsive table-response table-fixed"
-                            />
-                        </div>
-                    )
-                }
-            </ToolkitProvider>
+            <div className="clearfix">
+                <Badge color="success" className="bg-success">
+                    Processed {response[transformation].length} potential CRS</Badge>
+                <InputGroup className="float-left transformation-select">
+                    <InputGroupAddon addonType="prepend">
+                        Choose transformation:
+                    </InputGroupAddon>
+                    <Input type="select" onChange={changeTransformationResults} value={transformation}>
+                        {Object.keys(response).map(item => (
+                            <option key={item} value={item}>
+                                {item}
+                            </option>
+                        ))}
+                    </Input>
+                </InputGroup>
+            </div>
+            <Table {...getTableProps()} bordered hover className="table-response">
+                <thead>
+                {headerGroups.map(headerGroup => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map(column => (
+                            <th>
+                                {column.render('Header')}
+                                <span>
+                    {column.isSorted
+                        ? column.isSortedDesc
+                            ? <FontAwesomeIcon icon={faAngleDown}/>
+                            : <FontAwesomeIcon icon={faAngleUp}/>
+                        : ''}
+                  </span>
+                                <div>{column.canFilter ? column.render('Filter') : null}</div>
+                            </th>
+                        ))}
+                    </tr>
+                ))}
+                </thead>
+                <tbody {...getTableBodyProps()}>
+                {rows.map(
+                    (row, i) => {
+                        prepareRow(row);
+                        return (
+                            <tr {...row.getRowProps({onClick: (e) => setPredictedPoints(e, row)})}
+                                className={row.index === activeRow ? "active" : ""}
+                            >
+                                {row.cells.map(cell => {
+                                    return (
+                                        <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                    )
+                                })}
+                            </tr>
+                        )
+                    }
+                )}
+                </tbody>
+            </Table>
         </div>
     )
 }

@@ -123,7 +123,7 @@ const App = () => {
                     </TabPane>
                     <TabPane tabId={RESULTS_TAB}>
                         <Row className="mt-4 justify-content-md-center">
-                            <Col xs={12} md={9}>
+                            <Col xs={12} md={12}>
                                 {response && <CrsResponse response={response} markers={markers}
                                                           setShiftInputMarkers={setShiftInputMarkers}/>}
                             </Col>

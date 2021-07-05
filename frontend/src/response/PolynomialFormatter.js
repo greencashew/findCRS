@@ -1,6 +1,6 @@
 import React from "react";
 
-const PolynomialFormatter = ({cell, row}) => {
+const PolynomialFormatter = ({cell}) => {
 
     const SQUARE = "²"
     const CUBE = "³"
