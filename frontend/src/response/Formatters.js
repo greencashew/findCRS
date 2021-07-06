@@ -9,7 +9,7 @@ export function parametersFormatter(cell) {
                     Object.entries(cell[TRANSFORMATION_HELMERT_CONST]).map((element) => (
                         <p>
                             <strong>{element[0]}</strong>:
-                            <span title={element} className="float-right"> {element[1].toFixed(4)}</span>
+                            <span title={element} className="float-right"> {element[1].toFixed(6)}</span>
                         </p>)) :
                     <PolynomialFormatter cell={cell[TRANSFORMATION_POLYNOMIAL_CONST]}/>
                 }

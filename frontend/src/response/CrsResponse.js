@@ -5,7 +5,7 @@ import './CrsResponse.scss'
 import {TRANSFORMATION_HELMERT_CONST} from "../config/const";
 import {faAngleDown, faAngleUp} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {arrayFormatter, convertedPointsFormatter, mseFormatter, parametersFormatter} from "./Formatters";
+import {arrayFormatter, convertedPointsFormatter, parametersFormatter} from "./Formatters";
 import {DefaultColumnFilter, NumberRangeColumnFilter, SelectColumnFilter,} from "./ColumnFilters";
 import {toArrayOfPoints} from "../marker_structure/CoordinateUtils";
 
@@ -55,7 +55,7 @@ function CrsResponse({response, setShiftInputMarkers}) {
                 Header: 'MSE',
                 accessor: 'mse',
                 disableFilters: true,
-                Cell: props => mseFormatter(props.value),
+                // Cell: props => mseFormatter(props.value),
                 Filter: NumberRangeColumnFilter,
             },
             {
@@ -124,12 +124,12 @@ function CrsResponse({response, setShiftInputMarkers}) {
             data: response[transformation],
             defaultColumn, // Be sure to pass the defaultColumn option
             initialState: {
-                sortBy: [
-                    {
-                        id: 'mse',
-                        desc: false
-                    }
-                ],
+                // sortBy: [
+                //     {
+                //         id: 'mse',
+                //         desc: false
+                //     }
+                // ],
                 filters: [
                     {
                         id: 'crs.units',
@@ -164,6 +164,7 @@ function CrsResponse({response, setShiftInputMarkers}) {
                 <thead>
                 {headerGroups.map(headerGroup => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
+                        <th>#</th>
                         {headerGroup.headers.map(column => (
                             <th>
                                 {column.render('Header')}
@@ -188,6 +189,7 @@ function CrsResponse({response, setShiftInputMarkers}) {
                             <tr {...row.getRowProps({onClick: (e) => setPredictedPoints(e, row)})}
                                 className={row.index === activeRow ? "active" : ""}
                             >
+                                <td>{i + 1}</td>
                                 {row.cells.map(cell => {
                                     return (
                                         <td {...cell.getCellProps()}>{cell.render('Cell')}</td>

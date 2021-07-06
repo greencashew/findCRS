@@ -36,19 +36,21 @@ def calculate_conversion_for(estimation_function, converted_points, input_values
             items.append([*input_values_map[i], *list(crs['converted_points'][i])])
 
         results.append(calculate_estimation_for(estimation_function, items, crs))
-    return results
+    return sorted(results, key=lambda x: x['mse'])
 
 
 def calculate_estimation_for(function, array_of_items, crs):
     pred_x, pred_y, shift_vector_x, shift_vector_y, parameters = function(np.array(array_of_items))
-    mse_overall, mse_x, mse_y = mean_square_error(shift_vector_x, shift_vector_y, len(np.array(array_of_items)))
+    mse_overall = mean_square_error(shift_vector_x, shift_vector_y, len(np.array(array_of_items)))
     pred_y = pred_y * -1
 
-    return {"epsg": crs['crs']['epsg'],
-            "crs": crs,
-            "pred_x": pred_x.tolist(),
-            "pred_y": pred_y.tolist(),
-            "shift_vector_x": shift_vector_x.tolist(),
-            "shift_vector_y": shift_vector_y.tolist(),
-            "mse": mse_overall,
-            "parameters": parameters}
+    return {
+        "epsg": crs['crs']['epsg'],
+        "crs": crs,
+        "pred_x": pred_x.tolist(),
+        "pred_y": pred_y.tolist(),
+        "shift_vector_x": shift_vector_x.tolist(),
+        "shift_vector_y": shift_vector_y.tolist(),
+        "mse": mse_overall,
+        "parameters": parameters
+    }
