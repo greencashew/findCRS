@@ -125,7 +125,7 @@ const InputMap = ({markers, updateMarkers, onEditMarker, resetCoordinates, activ
         const pos = transform.point(event.target.getStage().getPointerPosition());
 
         let newMarkers = [...markers];
-        newMarkers[onEditMarker].inputMap = [pos.x, pos.y]
+        newMarkers[onEditMarker].inputMap = [Math.round(pos.x), Math.round(pos.y)]
         updateMarkers(newMarkers);
     }
 
