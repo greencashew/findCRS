@@ -39,7 +39,6 @@ const InputMap = ({markers, updateMarkers, onEditMarker, resetCoordinates, activ
     }
 
     function loadMap(imageSource) {
-        resetCoordinates()
         let img = new window.Image();
         img.src = imageSource;
         img.addEventListener("load", () => {

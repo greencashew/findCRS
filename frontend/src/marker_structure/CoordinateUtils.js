@@ -6,7 +6,7 @@
  * [["12","43"],[53.45517706219938,-4.425208990156079],[51.97134580885172,-5.199443277362889]]
  */
 export const getInteractiveMapAsArrayOfCoordinates = (markers) => {
-    return markers.map(el => el.interactiveMap);
+    return markers.map(el => [...el.interactiveMap]);
 };
 
 /**

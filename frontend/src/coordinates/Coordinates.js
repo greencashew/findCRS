@@ -4,10 +4,14 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowsAlt, faPencilAlt, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 import Coordinate from "./Coordinate"
 import './Coordinates.scss'
-import {DEFAULT_MARKER_STRUCTURE} from "../App";
 
 const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) => {
     const MAX_ITEM_NUMBER_TO_ADD = 8;
+    const DEFAULT_MARKER_STRUCTURE = {
+        label: null,
+        inputMap: [null, null],
+        interactiveMap: [null, null],
+    };
 
     const handleDeletion = (index) => {
         if (index === onEditMarker) {
