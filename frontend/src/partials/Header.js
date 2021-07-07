@@ -13,9 +13,10 @@ import {
 import React, {useState} from "react";
 import HowTo from './HowTo'
 import MarkersToCsv, {ImportMarkersFromCsv} from "../marker_structure/operations/MarkersToCsv";
+import MarkersJsonPayloadModal from "../marker_structure/MarkersJsonPayloadModal";
 
 
-const Header = ({markers}) => {
+const Header = ({markers, updateMarkers}) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
 
@@ -32,7 +33,7 @@ const Header = ({markers}) => {
                             </DropdownToggle>
                             <DropdownMenu right>
                                 <DropdownItem>
-                                    <ImportMarkersFromCsv markers={markers}/>
+                                    <ImportMarkersFromCsv updateMarkers={updateMarkers}/>
                                 </DropdownItem>
                                 <DropdownItem>
                                     <MarkersToCsv markers={markers}/>
@@ -41,6 +42,9 @@ const Header = ({markers}) => {
                         </UncontrolledDropdown>
                         <NavItem>
                             <HowTo/>
+                        </NavItem>
+                        <NavItem>
+                            <MarkersJsonPayloadModal markers={markers}/>
                         </NavItem>
                     </Nav>
                 </Collapse>

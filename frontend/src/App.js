@@ -80,7 +80,7 @@ const App = () => {
 
     return (
         <div className="app">
-            <Header markers={markers}/>
+            <Header markers={markers} updateMarkers={updateMarkers}/>
             <Container fluid className="justify-content-md-center main-container">
                 <Row className="mb-3 justify-content-md-center">
                     <Col xs="hidden" md={1}/>

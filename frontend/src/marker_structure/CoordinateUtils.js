@@ -20,8 +20,8 @@ export const getInputMapMapAsArrayOfCoordinates = (markers) => {
     return markers.map(el => el.inputMap);
 };
 
-export const getInputAndInteractiveMapAsArrayOfCoordinates = (markers) => {
-    return markers.map(el => [...el.inputMap, ...el.interactiveMap]);
+export const getMarkersAsArrayOfCoordinates = (markers) => {
+    return markers.map(el => [el.label, ...el.inputMap, ...el.interactiveMap]);
 };
 
 /**

@@ -75,6 +75,7 @@ const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) =>
                     <Col xs={12} sm={2} md={1}>
                         <Input id={index} type="text" name="label"
                                onChange={updateLabel}
+                               value={marker.label || ""}
                                disabled={onEditMarker !== index}/>
                     </Col>
                     <Col xs={12} sm={5} md={4}>
