@@ -42,6 +42,10 @@ export const ImportMarkersFromCsv = ({updateMarkers}) => {
             const referenceLat = data[3];
             const referenceLng = data[4];
 
+            if (!pixelX && !pixelY && !referenceLat && !referenceLng) {
+                continue;
+            }
+
             newMarkers.push({
                 label: label,
                 inputMap: [pixelX, pixelY],
