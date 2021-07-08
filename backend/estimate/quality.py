@@ -9,4 +9,4 @@ def mean_square_error(shift_vector_x, shift_vector_y, gcps_number):
     for i in range(gcps_number):
         squared_vector_sum += shift_vector[i] * shift_vector[i]
 
-    return squared_vector_sum
+    return squared_vector_sum / gcps_number
