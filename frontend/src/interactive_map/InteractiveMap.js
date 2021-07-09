@@ -13,7 +13,7 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
     const interactiveMapRef = useRef(null);
     const markersRef = useRef(null);
     const [zoom, setZoom] = useState(10);
-    const [center, setCenter] = useState([51.10283426063734, 17.064867493793372]);
+    const [center] = useState([51.10283426063734, 17.064867493793372]);
 
     const getLeafletIcon = (index) => new L.Icon({
         iconUrl: markerIcons[index],
