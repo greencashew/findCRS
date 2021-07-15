@@ -130,12 +130,12 @@ function CrsResponse({response, setShiftInputMarkers}) {
                 //         desc: false
                 //     }
                 // ],
-                filters: [
-                    {
-                        id: 'crs.units',
-                        value: 'metre metre',
-                    },
-                ],
+                // filters: [
+                //     {
+                //         id: 'crs.units',
+                //         value: 'metre metre',
+                //     },
+                // ],
             }
         },
         useFilters,

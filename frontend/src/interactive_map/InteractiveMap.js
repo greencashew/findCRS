@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {FeatureGroup, Map, Marker, TileLayer, withLeaflet} from "react-leaflet";
 import 'leaflet/dist/leaflet.css'
 import './InteractiveMap.css'
@@ -6,14 +6,15 @@ import Search from "./LeafletGeoSearch"
 import L from "leaflet";
 import MapScale from "./MapScale";
 import {markerIcons} from "./MarkerIcons";
+import {NotificationManager} from "react-notifications";
 
 
-const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
+const InteractiveMap = ({markers, updateMarkers, onEditMarker, onCenterMarker}) => {
 
     const interactiveMapRef = useRef(null);
     const markersRef = useRef(null);
     const [zoom, setZoom] = useState(10);
-    const [center] = useState([51.10283426063734, 17.064867493793372]);
+    const [center, setCenter] = useState([51.10283426063734, 17.064867493793372]);
 
     const getLeafletIcon = (index) => new L.Icon({
         iconUrl: markerIcons[index],
@@ -23,6 +24,20 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
         popupAnchor: [1, -34],
         shadowSize: [41, 41]
     });
+
+    useEffect(() => {
+        setCenter(undefined);
+        if (onCenterMarker !== undefined) {
+            if (!isNullMarker(markers[onCenterMarker])) {
+                setCenter(markers[onCenterMarker].interactiveMap);
+            } else {
+                NotificationManager.info("Unable to center as coordinates are not set up properly")
+            }
+        } else {
+            const map = markersRef?.current?.leafletElement;
+            map && setBoundariesForMarkers();
+        }
+    }, [onCenterMarker, markers]);
 
     const changeMarkerLocationOnMapClick = (event) => {
         if (onEditMarker == null) {
@@ -66,8 +81,6 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker}) => {
                     attribution='&copy; '
                 />
             </Map>
-
-            <button onClick={setBoundariesForMarkers}>Recenter to all points</button>
         </div>
     )
 }

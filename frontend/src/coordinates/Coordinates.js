@@ -5,7 +5,7 @@ import {faArrowsAlt, faPencilAlt, faPlus, faTrash} from "@fortawesome/free-solid
 import Coordinate from "./Coordinate"
 import './Coordinates.scss'
 
-const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) => {
+const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker, setOnCenterMarker}) => {
     const MAX_ITEM_NUMBER_TO_ADD = 8;
     const DEFAULT_MARKER_STRUCTURE = {
         label: null,
@@ -22,6 +22,10 @@ const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) =>
 
     const handleEdit = (index) => {
         setOnEditMarker(index);
+    }
+
+    const handleRecenter = (index) => {
+        setOnCenterMarker(index);
     }
 
     const handleOnAddItem = () => {
@@ -65,7 +69,7 @@ const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) =>
                     <span>Interactive map coordinates:</span>
                 </Col>
                 <Col xs={12} sm={2} md={2}>
-                    <Button color="warning" title="Recenter marker">
+                    <Button color="warning" title="Recenter marker" onClick={() => handleRecenter(undefined)}>
                         <FontAwesomeIcon icon={faArrowsAlt}/> Recenter all markers
                     </Button>
                 </Col>
@@ -90,7 +94,7 @@ const Coordinates = ({markers, updateMarkers, onEditMarker, setOnEditMarker}) =>
                                     latLong={true}/>
                     </Col>
                     <Col xs={12} md={2} className="coordinates-navigation">
-                        <Button color="warning" title="Recenter marker">
+                        <Button color="warning" title="Recenter marker" onClick={() => handleRecenter(index)}>
                             <FontAwesomeIcon icon={faArrowsAlt}/>
                         </Button>
                         <Button color="info" title="Edit" disabled={onEditMarker === index}

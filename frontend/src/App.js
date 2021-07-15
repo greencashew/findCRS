@@ -28,6 +28,7 @@ const App = () => {
     const [markers, updateMarkers] = useState(DEFAULT_MARKER_STRUCTURE_ARRAY);
     const [mapBounds, setMapBounds] = useState(null);
     const [onEditMarker, setOnEditMarker] = useState(0);
+    const [onCenterMarker, setOnCenterMarker] = useState(null);
     const [response, setResponse] = useState(null);
     const [activeTab, setActiveTab] = useState(INPUT_COORDINATES_TAB);
     const [shiftInputMarkers, setShiftInputMarkers] = useState(null);
@@ -91,7 +92,8 @@ const App = () => {
                     </Col>
                     <Col xs="hidden" md={1}/>
                     <Col xs={12} sm={4} md={4}>
-                        <InteractiveMap markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}/>
+                        <InteractiveMap markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}
+                                        onCenterMarker={onCenterMarker}/>
                     </Col>
                     <Col xs="hidden" md={1}/>
                 </Row>
@@ -102,7 +104,7 @@ const App = () => {
                     <TabPane tabId={INPUT_COORDINATES_TAB}>
                         <Form>
                             <Coordinates markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}
-                                         setOnEditMarker={setOnEditMarker}/>
+                                         setOnEditMarker={setOnEditMarker} setOnCenterMarker={setOnCenterMarker}/>
                             <Row className="mt-4 justify-content-md-center">
                                 <Col xs={6} md={2}>
                                     <Button color="warning" size="md"
