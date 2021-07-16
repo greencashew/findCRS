@@ -31,8 +31,8 @@ def estimation_helmert_four(gcps_array):
 
     rotation = rad2deg(arctan(s_factor / c_factor))
     scale = sqrt(s_factor * s_factor + c_factor * c_factor)
-    shift_x = X0 - c_factor * x0 + s_factor * y0
-    shift_y = Y0 - c_factor * y0 - s_factor * x0
+    shift_x = X0 - c_factor * x0 - s_factor * y0
+    shift_y = Y0 + s_factor * x0 - c_factor * y0
 
     pred_x = X0 + c_factor * xi + s_factor * yi
     pred_y = Y0 + c_factor * yi - s_factor * xi
