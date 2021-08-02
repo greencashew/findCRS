@@ -6,7 +6,6 @@ import Search from "./LeafletGeoSearch"
 import L from "leaflet";
 import MapScale from "./MapScale";
 import {markerIcons} from "./MarkerIcons";
-import {NotificationManager} from "react-notifications";
 
 
 const InteractiveMap = ({markers, updateMarkers, onEditMarker, onCenterMarker}) => {
@@ -30,8 +29,6 @@ const InteractiveMap = ({markers, updateMarkers, onEditMarker, onCenterMarker}) 
         if (onCenterMarker !== undefined) {
             if (!isNullMarker(markers[onCenterMarker])) {
                 setCenter(markers[onCenterMarker].interactiveMap);
-            } else {
-                NotificationManager.info("Unable to center as coordinates are not set up properly")
             }
         } else {
             const map = markersRef?.current?.leafletElement;
