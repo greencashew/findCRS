@@ -8,6 +8,7 @@ import {
     NavbarBrand,
     NavbarToggler,
     NavItem,
+    NavLink,
     UncontrolledDropdown
 } from "reactstrap";
 import React, {useState} from "react";
@@ -45,6 +46,9 @@ const Header = ({markers, updateMarkers}) => {
                         </NavItem>
                         <NavItem>
                             <MarkersJsonPayloadModal markers={markers}/>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="https://github.com/greencashew/findCRS">Source code</NavLink>
                         </NavItem>
                     </Nav>
                 </Collapse>

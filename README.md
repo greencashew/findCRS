@@ -41,8 +41,19 @@ To run project locally you need to have installed:
 Frontend
 
 ```bash
+cd frontend
 yarn install
 ```
+
+By default, frontend is connected with remote backend (REACT_APP_API_URL=https://find-coordinates.herokuapp.com). To
+connect with local backend it is required to create **.env.local** file:
+
+```bash
+cd frontend
+echo REACT_APP_API_URL=http://127.0.0.1:8000 > .env.local
+```
+
+Please remember to specify your local **adress:port**.
 
 Backend
 

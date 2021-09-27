@@ -1,4 +1,4 @@
-pyproj~=2.6.1.post1
+pyproj
 Flask~=1.1.2
 flask-cors
 gunicorn
