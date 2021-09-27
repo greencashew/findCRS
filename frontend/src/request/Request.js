@@ -23,7 +23,8 @@ const Request = ({markers, setNoEditMarker, mapBounds, setResponse, setActiveTab
                 }
             })
             .catch(err => {
-                NotificationManager.error(err + " Try again.", 'Error');
+                console.log(err.response)
+                NotificationManager.error(err.response.data + ". Try again.", err.response.statusText);
             })
     }
 
