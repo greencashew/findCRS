@@ -7,50 +7,16 @@ import {FeatureGroup, ImageOverlay, Map, Marker} from "react-leaflet";
 
 const old_map = require('./old-map-england.jpg')
 
-const InputMap = ({markers, updateMarkers, onEditMarker, resetCoordinates, activeTab, shiftInputMarkers}) => {
+const InputMap = ({markers, updateMarkers, onEditMarker, onCenterMarker, activeTab, shiftInputMarkers}) => {
+
+    const mapRef = useRef(null);
+    const markersRef = useRef(null);
 
     const [image, setImage] = useState()
     const [zoom, setZoom] = useState(10);
     const [bounds, setBounds] = useState([[0, 0], [900, 1600]])
     const stageCanvasParentRef = useRef(null);
-
-
-    useEffect(() => {
-        setImage(old_map.default);
-        // eslint-disable-next-line
-    }, []);
-
-    const changeMarkerLocationOnMapClick = (event) => {
-        if (onEditMarker == null) {
-            return;
-        }
-        setZoom(event.target._zoom)
-        let newMarkers = [...markers];
-        newMarkers[onEditMarker].inputMap = [event.latlng.lat, event.latlng.lng]
-        updateMarkers(newMarkers);
-    }
-
-    const updateMarkerLocation = (event) => {
-        if (onEditMarker == null) {
-            return;
-        }
-        let newMarkers = [...markers];
-        const id = event.target.options.id;
-        const latLng = event.target.getLatLng();
-        newMarkers[id].inputMap = [latLng.lat, latLng.lng];
-        updateMarkers(newMarkers);
-    }
-
-    const handleSetPhoto = e => {
-        if (e.target.files.length) {
-            const img = new window.Image();
-            img.src = URL.createObjectURL(e.target.files[0]);
-            img.onload = function () {
-                setBounds([[0, 0], [img.width, img.height]])
-                setImage(img.src)
-            }
-        }
-    };
+    const [center, setCenter] = useState(null);
 
     const getLeafletIcon = (index) => new L.Icon({
         iconUrl: markerIcons[index],
@@ -70,6 +36,50 @@ const InputMap = ({markers, updateMarkers, onEditMarker, resetCoordinates, activ
         shadowSize: [41, 41]
     });
 
+    useEffect(() => {
+        setImage(old_map.default);
+        // eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
+        setCenter(undefined);
+        if (onCenterMarker !== undefined) {
+            if (!isNullMarker(markers[onCenterMarker])) {
+                setCenter(markers[onCenterMarker].inputMap);
+            }
+        } else {
+            const map = markersRef?.current?.leafletElement;
+            map && setBoundariesForMarkers();
+        }
+    }, [onCenterMarker, markers]);
+
+    const setBoundariesForMarkers = () => {
+        const map = mapRef?.current.leafletElement;
+        const group = markersRef?.current.leafletElement;
+        map.fitBounds(group.getBounds());
+    }
+
+    const changeMarkerLocationOnMapClick = (event) => {
+        if (onEditMarker == null) {
+            return;
+        }
+        setZoom(event.target._zoom)
+        let newMarkers = [...markers];
+        newMarkers[onEditMarker].inputMap = [event.latlng.lat, event.latlng.lng]
+        updateMarkers(newMarkers);
+    }
+
+    const handleSetPhoto = e => {
+        if (e.target.files.length) {
+            const img = new window.Image();
+            img.src = URL.createObjectURL(e.target.files[0]);
+            img.onload = function () {
+                setBounds([[0, 0], [img.width, img.height]])
+                setImage(img.src)
+            }
+        }
+    };
+
     function isNullMarker(marker) {
         return marker == null || marker.inputMap[0] === null || marker.inputMap[1] === null;
     }
@@ -85,15 +95,17 @@ const InputMap = ({markers, updateMarkers, onEditMarker, resetCoordinates, activ
                 <Map crs={myCRS} minZoom={-20} bounds={bounds}
                      onClick={changeMarkerLocationOnMapClick}
                      zoom={zoom}
+                     center={center}
+                     ref={mapRef}
                 >
                     <ImageOverlay
                         bounds={bounds}
                         url={image}
                     />
-                    <FeatureGroup>
+                    <FeatureGroup ref={markersRef}>
                         {markers.map((marker, idx) => !isNullMarker(marker) &&
                             <Marker key={`marker-${idx}`} id={idx} position={marker.inputMap}
-                                    icon={getLeafletIcon(idx)} draggable={true} ondragEnd={updateMarkerLocation}/>
+                                    icon={getLeafletIcon(idx)}/>
                         )}
                         {shiftInputMarkers && shiftInputMarkers.map((marker, idx) =>
                             <Marker key={`marker-prim-${idx}`} idx={idx} position={marker}

@@ -86,8 +86,8 @@ const App = () => {
                 <Row className="mb-3 justify-content-md-center">
                     <Col xs={12} sm={4} md={4}>
                         <InputMap markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}
-                                  resetCoordinates={resetCoordinates} activeTab={activeTab}
-                                  shiftInputMarkers={shiftInputMarkers}/>
+                                  activeTab={activeTab}
+                                  shiftInputMarkers={shiftInputMarkers} onCenterMarker={onCenterMarker}/>
                     </Col>
                     <Col xs="hidden" md={1}/>
                     <Col xs={12} sm={4} md={4}>
