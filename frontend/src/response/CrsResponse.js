@@ -34,10 +34,9 @@ function CrsResponse({response, setShiftInputMarkers}) {
     const setPredictedPoints = (event, row) => {
         const index = row.index;
         const sumPointsArrays1 = toArrayOfPoints(
-            response[transformation][index]['pred_x'], response[transformation][index]['pred_y']
+            response[transformation][index]['pred_y'], response[transformation][index]['pred_x']
         );
         setShiftInputMarkers(sumPointsArrays1)
-        console.log(row)
         setActiveRow(index)
     }
 
@@ -65,14 +64,14 @@ function CrsResponse({response, setShiftInputMarkers}) {
                 Cell: props => convertedPointsFormatter(props.value)
             },
             {
-                Header: 'PredX',
-                accessor: 'pred_x',
+                Header: 'PredY',
+                accessor: 'pred_y',
                 disableFilters: true,
                 Cell: props => arrayFormatter(props.value)
             },
             {
-                Header: 'PredY',
-                accessor: 'pred_y',
+                Header: 'PredX',
+                accessor: 'pred_x',
                 disableFilters: true,
                 Cell: props => arrayFormatter(props.value)
             },

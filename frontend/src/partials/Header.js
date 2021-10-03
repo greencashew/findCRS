@@ -47,9 +47,6 @@ const Header = ({markers, updateMarkers}) => {
                         <NavItem>
                             <MarkersJsonPayloadModal markers={markers}/>
                         </NavItem>
-                        <NavItem>
-                            <NavLink href="https://github.com/greencashew/findCRS">Source code</NavLink>
-                        </NavItem>
                     </Nav>
                 </Collapse>
                 <NavLink href="https://github.com/greencashew/findCRS">Source code <span><svg

@@ -39,7 +39,7 @@ def request_crs_find():
 
 @app.errorhandler(Exception)
 def handle_exception(e):
-    logging.error("Exception occured.", exc_info=True)
+    logging.error("Exception occurred.", exc_info=True)
     return str(e), 500
 
 

@@ -40,9 +40,9 @@ def calculate_conversion_for(estimation_function, converted_points, input_values
 
 
 def calculate_estimation_for(function, array_of_items, crs):
-    pred_x, pred_y, shift_vector_x, shift_vector_y, parameters = function(np.array(array_of_items))
+    pred_y, pred_x, shift_vector_x, shift_vector_y, parameters = function(np.array(array_of_items))
     mse_overall = mean_square_error(shift_vector_x, shift_vector_y, len(np.array(array_of_items)))
-    pred_y = pred_y * -1
+    pred_x = pred_x * -1
 
     return {
         "epsg": crs['crs']['epsg'],

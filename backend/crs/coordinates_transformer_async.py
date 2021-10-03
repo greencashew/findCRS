@@ -29,7 +29,7 @@ def transform_crs(inputs_map, target_crs):
             if math.isinf(point[0]) or math.isinf(point[1]):
                 break
 
-            new_points.append(point[::-1])
+            new_points.append(point)
             i += 1
         return {"crs": target_crs,
                 "units": crs_details.axis_info[0].unit_name + " " + crs_details.axis_info[1].unit_name,

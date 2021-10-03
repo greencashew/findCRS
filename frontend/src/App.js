@@ -81,21 +81,19 @@ const App = () => {
 
     return (
         <div className="app">
-            <Header markers={markers} updateMarkers={updateMarkers}/>
+            <Header markers={markers} updateMarkers={updateMarkers} response={response}/>
             <Container fluid className="justify-content-md-center main-container">
                 <Row className="mb-3 justify-content-md-center">
-                    <Col xs="hidden" md={1}/>
                     <Col xs={12} sm={4} md={4}>
                         <InputMap markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}
-                                  resetCoordinates={resetCoordinates} activeTab={activeTab}
-                                  shiftInputMarkers={shiftInputMarkers}/>
+                                  activeTab={activeTab}
+                                  shiftInputMarkers={shiftInputMarkers} onCenterMarker={onCenterMarker}/>
                     </Col>
                     <Col xs="hidden" md={1}/>
                     <Col xs={12} sm={4} md={4}>
                         <InteractiveMap markers={markers} updateMarkers={updateMarkers} onEditMarker={onEditMarker}
                                         onCenterMarker={onCenterMarker}/>
                     </Col>
-                    <Col xs="hidden" md={1}/>
                 </Row>
                 <Row className="justify-content-md-center mb-2">
                     <TabNavigation response={response} activeTab={activeTab} setActiveTab={setActiveTab}/>
