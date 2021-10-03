@@ -104,12 +104,12 @@ intervention, it significantly narrows the search scope.
 ## Opis Applikacji
 
 Historyczne mapy rastrowe z reguły nie posiadają zidentyfikowanego układu współrzędnych. Wielość możliwości sprawia iż
-problem doboru odpowiedniego układu odniesienia potrafi być czasochłonny i nieefektywny (w szczególności w~przypadku
+problem doboru odpowiedniego układu odniesienia potrafi być czasochłonny i nieefektywny (w szczególności w przypadku
 doboru mało znanych układów). Celem tego badania było sporządzenie systemu wspomagającego znajdowanie
 najodpowiedniejszego układu współrzędnych oraz najlepszych możliwych parametrów transformacji dla kalibrowanej mapy
 rastrowej. Dobór jest wykonywany poprzez: znalezienie punktów kontrolnych na mapie rastrowej oraz referencyjnej,
 przekształcenie układu odniesienia mapy referencyjnej do najlepiej rokujących układów, optymalizacji mapy rastrowej
 względem kandydującego układu odniesienia, obliczenia błędu średniokwadratowego na podstawie przesunięcia podczas
-transformacji, posortowanie wyników w~oparciu o błąd w kolejności rosnącej oraz pokazanie przesunięć na mapie rastrowej.
+transformacji, posortowanie wyników w oparciu o błąd w kolejności rosnącej oraz pokazanie przesunięć na mapie rastrowej.
 Badanie to wykazało, iż metoda ta jest skuteczna. Rozwiązanie to pomimo tego iż nie daje gwarancji znalezienia
 odpowiedniego odwzorowania bez dodatkowej ingerencji użytkownika, znacznie zawęża pulę poszukiwań.
