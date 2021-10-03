@@ -34,13 +34,13 @@ const Coordinate = ({id, latitude, longitude, updateMarker, disabled, latLong}) 
                 <InputGroupText><img alt="markerIcon" className="markerIcon" src={markerIcons[id]}/></InputGroupText>
             </InputGroupAddon>
             <InputGroupAddon addonType="prepend">
-                <InputGroupText>{latLong ? "Latitude:" : "Pixel X:"}</InputGroupText>
+                <InputGroupText>{latLong ? "Latitude:" : "Pixel Y:"}</InputGroupText>
             </InputGroupAddon>
             <Input type="number" step="0.0000000000000001" name="latitude" value={latitude || ""} placeholder="00.00"
                    onChange={handleChange} disabled={disabled}
             />
             <InputGroupAddon addonType="prepend">
-                <InputGroupText>{latLong ? "Longitude:" : "Pixel Y:"}</InputGroupText>
+                <InputGroupText>{latLong ? "Longitude:" : "Pixel X:"}</InputGroupText>
             </InputGroupAddon>
             <Input type="number" step="0.0000000000000001" name="longitude" value={longitude || ""} placeholder="00.00"
                    onChange={handleChange} disabled={disabled}/>

@@ -3,7 +3,7 @@ import {CSVDownloader, CSVReader} from 'react-papaparse';
 import {getMarkersAsArrayOfCoordinates} from "../CoordinateUtils";
 import {NotificationManager} from "react-notifications";
 
-const CSV_HEADER = ["Label", "PixelX", "PixelY", "ReferenceLat", "ReferenceLng"];
+const CSV_HEADER = ["Label", "PixelY", "PixelX", "ReferenceLat", "ReferenceLng"];
 
 const MarkersToCsv = ({markers}) => {
     return <>
@@ -37,8 +37,8 @@ export const ImportMarkersFromCsv = ({updateMarkers}) => {
         for (let i = 1; i < response.length; i++) {
             const data = response[i].data;
             const label = data[0];
-            const pixelX = data[1];
-            const pixelY = data[2];
+            const pixelY = data[1];
+            const pixelX = data[2];
             const referenceLat = data[3];
             const referenceLng = data[4];
 
@@ -48,7 +48,7 @@ export const ImportMarkersFromCsv = ({updateMarkers}) => {
 
             newMarkers.push({
                 label: label,
-                inputMap: [pixelX, pixelY],
+                inputMap: [pixelY, pixelX],
                 interactiveMap: [referenceLat, referenceLng]
             })
         }
