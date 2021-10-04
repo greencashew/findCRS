@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {Col, FormGroup, Input, Label} from "reactstrap";
+import './InputMap.scss'
 
 import L from "leaflet";
 import {markerIcons, markerPrimIcons} from "../interactive_map/MarkerIcons";
@@ -13,7 +14,7 @@ const InputMap = ({markers, updateMarkers, onEditMarker, onCenterMarker, activeT
     const markersRef = useRef(null);
 
     const [image, setImage] = useState()
-    const [zoom, setZoom] = useState(10);
+    const [zoom, setZoom] = useState(-1);
     const [bounds, setBounds] = useState([[0, 0], [900, 1600]])
     const stageCanvasParentRef = useRef(null);
     const [center, setCenter] = useState(null);
@@ -91,7 +92,7 @@ const InputMap = ({markers, updateMarkers, onEditMarker, onCenterMarker, activeT
 
     return (
         <>
-            <div className="map" ref={stageCanvasParentRef}>
+            <div className="input-map map" ref={stageCanvasParentRef}>
                 <Map crs={myCRS} minZoom={-20} bounds={bounds}
                      onClick={changeMarkerLocationOnMapClick}
                      zoom={zoom}
