@@ -7,7 +7,7 @@ function HowTo() {
 
     const toggle = () => setModal(!modal);
 
-    const closeBtn = <button className="close" onClick={toggle}>&times;</button>;
+    const closeBtn = <button className="btn-close" onClick={toggle}/>;
 
     return (
         <>

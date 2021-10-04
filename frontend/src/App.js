@@ -9,7 +9,7 @@ import Header from "./partials/Header"
 import Footer from "./partials/Footer";
 import {NotificationContainer} from 'react-notifications';
 import {useCookies} from 'react-cookie';
-import {getCoordinatesBounds, getInteractiveMapAsArrayOfCoordinates} from "./marker_structure/CoordinateUtils";
+import {getCoordinatesBounds, getInteractiveMapAsArrayOfCoordinates} from "./data_structure/input/CoordinateUtils";
 import Request from "./request/Request";
 import CrsResponse from "./response/CrsResponse";
 import TabNavigation, {INPUT_COORDINATES_TAB, RESULTS_TAB} from "./partials/TabNavigation";

@@ -1,13 +1,14 @@
 import React, {useState} from 'react'
 import {useFilters, useSortBy, useTable} from "react-table";
-import {Badge, Input, InputGroup, InputGroupAddon, Table} from "reactstrap";
+import {Badge, Col, Input, InputGroup, InputGroupAddon, Row, Table} from "reactstrap";
 import './CrsResponse.scss'
 import {TRANSFORMATION_HELMERT_CONST} from "../config/const";
 import {faAngleDown, faAngleUp} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {arrayFormatter, convertedPointsFormatter, parametersFormatter} from "./Formatters";
+import {arrayFormatter, convertedPointsFormatter, mseFormatter, parametersFormatter} from "./Formatters";
 import {DefaultColumnFilter, NumberRangeColumnFilter, SelectColumnFilter,} from "./ColumnFilters";
-import {toArrayOfPoints} from "../marker_structure/CoordinateUtils";
+import {toArrayOfPoints} from "../data_structure/input/CoordinateUtils";
+import ExportResponseAsCSV from "./export/ExportResponse";
 
 function CrsResponse({response, setShiftInputMarkers}) {
     const [transformation, setTransformation] = useState(TRANSFORMATION_HELMERT_CONST);
@@ -54,7 +55,7 @@ function CrsResponse({response, setShiftInputMarkers}) {
                 Header: 'MSE',
                 accessor: 'mse',
                 disableFilters: true,
-                // Cell: props => mseFormatter(props.value),
+                Cell: props => mseFormatter(props.value),
                 Filter: NumberRangeColumnFilter,
             },
             {
@@ -143,22 +144,27 @@ function CrsResponse({response, setShiftInputMarkers}) {
 
     return (
         <div>
-            <div className="clearfix">
-                <Badge color="success" className="bg-success">
-                    Processed {response[transformation].length} potential CRS</Badge>
-                <InputGroup className="float-left transformation-select">
-                    <InputGroupAddon addonType="prepend">
-                        Choose transformation:
-                    </InputGroupAddon>
-                    <Input type="select" onChange={changeTransformationResults} value={transformation}>
-                        {Object.keys(response).map(item => (
-                            <option key={item} value={item}>
-                                {item}
-                            </option>
-                        ))}
-                    </Input>
-                </InputGroup>
-            </div>
+            <Row className="justify-content-between align-items-end">
+                <Col sm={12} md={4}>
+                    <Badge color="success" className="bg-success">
+                        Processed {response[transformation].length} potential CRS</Badge>
+                    <InputGroup className="float-left">
+                        <InputGroupAddon addonType="prepend">
+                            Choose transformation:
+                        </InputGroupAddon>
+                        <Input type="select" onChange={changeTransformationResults} value={transformation}>
+                            {Object.keys(response).map(item => (
+                                <option key={item} value={item}>
+                                    {item}
+                                </option>
+                            ))}
+                        </Input>
+                    </InputGroup>
+                </Col>
+                <Col sm={12} md={2}>
+                    <ExportResponseAsCSV transformation={response[transformation]}/>
+                </Col>
+            </Row>
             <Table {...getTableProps()} bordered hover className="table-response">
                 <thead>
                 {headerGroups.map(headerGroup => (

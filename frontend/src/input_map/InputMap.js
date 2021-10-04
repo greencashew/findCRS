@@ -119,7 +119,8 @@ const InputMap = ({markers, updateMarkers, onEditMarker, onCenterMarker, activeT
             <Col xs={12} sm={12} md={5} className="mt-2">
                 <FormGroup>
                     <Label for="upload-button">Add your map:</Label>
-                    <Input type="file" id="upload-button" onChange={handleSetPhoto}/>
+                    <Input type="file" id="upload-button" onChange={handleSetPhoto}
+                           accept=".gif,.jpg,.jpeg,.png,.tif,.geotiff"/>
                 </FormGroup>
             </Col>
             }

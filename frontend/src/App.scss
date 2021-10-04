@@ -35,6 +35,12 @@ img {
       color: #91c6ff;
     }
 
+    &.disabled {
+      color: #6c757d !important;
+      pointer-events: none;
+      cursor: default;
+    }
+
     h1 {
       font-size: 1rem;
       padding: 0;
