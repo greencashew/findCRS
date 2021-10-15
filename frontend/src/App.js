@@ -26,7 +26,7 @@ const App = () => {
     const [cookies, setCookie] = useCookies(['find-coordinates']);
 
     const [markers, updateMarkers] = useState(DEFAULT_MARKER_STRUCTURE_ARRAY);
-    const [mapBounds, setMapBounds] = useState(null);
+    const [interactiveMapBounds, setInteractiveMapBounds] = useState(null);
     const [onEditMarker, setOnEditMarker] = useState(0);
     const [onCenterMarker, setOnCenterMarker] = useState(null);
     const [response, setResponse] = useState(null);
@@ -35,8 +35,8 @@ const App = () => {
 
     useEffect(() => {
         if (markers && markers !== DEFAULT_MARKER_STRUCTURE_ARRAY) {
-            setMapBounds(getCoordinatesBounds(
-                getInteractiveMapAsArrayOfCoordinates(markers)
+            setInteractiveMapBounds(getCoordinatesBounds(
+                    getInteractiveMapAsArrayOfCoordinates(markers)
                 )
             )
         }
@@ -112,7 +112,7 @@ const App = () => {
                                     <Request markers={markers}
                                              setNoEditMarker={setNoEditMarker}
                                              resetShiftInputMarkers={resetShiftInputMarkers}
-                                             mapBounds={mapBounds}
+                                             interactiveMapBounds={interactiveMapBounds}
                                              setResponse={setResponse}
                                              setActiveTab={setActiveTab}
                                     />

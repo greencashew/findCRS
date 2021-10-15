@@ -3,7 +3,14 @@ import {Button} from "reactstrap";
 import {NotificationManager} from "react-notifications";
 import axios from "axios";
 
-const Request = ({markers, setNoEditMarker, mapBounds, setResponse, setActiveTab, resetShiftInputMarkers}) => {
+const Request = ({
+                     markers,
+                     setNoEditMarker,
+                     interactiveMapBounds,
+                     setResponse,
+                     setActiveTab,
+                     resetShiftInputMarkers
+                 }) => {
 
     const requestForProjectionFind = (event) => {
         event.preventDefault();
@@ -13,7 +20,7 @@ const Request = ({markers, setNoEditMarker, mapBounds, setResponse, setActiveTab
 
         axios.post(`${process.env.REACT_APP_API_URL}/api/projection`, {
             markers: markers,
-            interactiveMapBounds: mapBounds
+            interactiveMapBounds: interactiveMapBounds
         })
             .then(res => {
                 if (res.status === 200) {
