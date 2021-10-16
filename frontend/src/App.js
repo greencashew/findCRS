@@ -58,9 +58,10 @@ const App = () => {
 
     const resetCoordinates = () => {
         updateMarkers(DEFAULT_MARKER_STRUCTURE_ARRAY);
-        resetShiftInputMarkers()
-        resetOnEditMarker()
-        resetCookies()
+        resetInteractiveMapBounds();
+        resetShiftInputMarkers();
+        resetOnEditMarker();
+        resetCookies();
     }
 
     const resetCookies = () => {
@@ -73,6 +74,10 @@ const App = () => {
 
     const resetOnEditMarker = () => {
         setOnEditMarker(0);
+    }
+
+    const resetInteractiveMapBounds = () => {
+        setInteractiveMapBounds(null);
     }
 
     const setNoEditMarker = () => {
