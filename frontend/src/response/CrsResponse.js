@@ -2,10 +2,10 @@ import React, {useState} from 'react'
 import {useFilters, useSortBy, useTable} from "react-table";
 import {Badge, Col, Input, InputGroup, InputGroupAddon, Row, Table} from "reactstrap";
 import './CrsResponse.scss'
-import {TRANSFORMATION_HELMERT_CONST} from "../config/const";
+import {TRANSFORMATION_HELMERT_CONST} from "./const";
 import {faAngleDown, faAngleUp} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {arrayFormatter, convertedPointsFormatter, mseFormatter, parametersFormatter} from "./Formatters";
+import {arrayFormatter, convertedPointsFormatter, mseFormatter, parametersFormatter} from "./formatter/Formatters";
 import {DefaultColumnFilter, NumberRangeColumnFilter, SelectColumnFilter,} from "./ColumnFilters";
 import {toArrayOfPoints} from "../data_structure/input/CoordinateUtils";
 import ExportResponseAsCSV from "./export/ExportResponse";

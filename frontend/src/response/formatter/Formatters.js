@@ -1,4 +1,4 @@
-import {TRANSFORMATION_HELMERT_CONST, TRANSFORMATION_POLYNOMIAL_CONST} from "../config/const";
+import {TRANSFORMATION_HELMERT_CONST, TRANSFORMATION_POLYNOMIAL_CONST} from "../const";
 import PolynomialFormatter from "./PolynomialFormatter";
 import React from "react";
 
