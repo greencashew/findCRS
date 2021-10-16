@@ -11,9 +11,9 @@ import {
     UncontrolledDropdown
 } from "reactstrap";
 import React, {useState} from "react";
-import HowTo from './HowTo'
-import MarkersToCsv, {ImportMarkersFromCsv} from "../data_structure/input/operations/MarkersToCsv";
-import ViewDropDownItemJsonPayloadModal from "../data_structure/ViewDropDownItemJsonPayloadModal";
+import HowTo from '../partials/HowTo'
+import MarkersToCsv, {ImportMarkersFromCsv} from "./operations/MarkersToCsv";
+import ViewDropDownItemJsonPayloadModal from "./ViewDropDownItemJsonPayloadModal";
 
 
 const Header = ({markers, updateMarkers, response}) => {

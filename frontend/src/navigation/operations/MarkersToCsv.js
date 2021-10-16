@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {CSVDownloader, CSVReader} from 'react-papaparse';
-import {getMarkersAsArrayOfCoordinates} from "../CoordinateUtils";
+import {getMarkersAsArrayOfCoordinates} from "../../data_structure/input/CoordinateUtils";
 import {NotificationManager} from "react-notifications";
 
 const CSV_HEADER = ["Label", "PixelY", "PixelX", "ReferenceLat", "ReferenceLng"];

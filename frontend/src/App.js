@@ -5,7 +5,7 @@ import 'react-notifications/dist/react-notifications.css';
 import InteractiveMap from './interactive_map/InteractiveMap'
 import InputMap from './input_map/InputMap'
 import Coordinates from './coordinates/Coordinates'
-import Header from "./partials/Header"
+import Header from "./navigation/Header"
 import Footer from "./partials/Footer";
 import {NotificationContainer} from 'react-notifications';
 import {useCookies} from 'react-cookie';
