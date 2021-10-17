@@ -10,7 +10,7 @@ import {DefaultColumnFilter, NumberRangeColumnFilter, SelectColumnFilter,} from 
 import {toArrayOfPoints} from "../data_structure/input/CoordinateUtils";
 import ExportResponseAsCSV from "./export/ExportResponse";
 
-function CrsResponse({response, setShiftInputMarkers}) {
+function CrsResponse({response, markers, setShiftInputMarkers}) {
     const [transformation, setTransformation] = useState(TRANSFORMATION_HELMERT_CONST);
     const [activeRow, setActiveRow] = useState(null)
 
@@ -162,7 +162,8 @@ function CrsResponse({response, setShiftInputMarkers}) {
                     </InputGroup>
                 </Col>
                 <Col sm={12} md={2}>
-                    <ExportResponseAsCSV transformation={response[transformation]}/>
+                    <ExportResponseAsCSV transformation={response[transformation]} transformation_name={transformation}
+                                         markers={markers}/>
                 </Col>
             </Row>
             <Table {...getTableProps()} bordered hover className="table-response">
